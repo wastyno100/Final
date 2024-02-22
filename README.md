@@ -11,4 +11,5 @@ git push origin 이름초성
 
 ## VUE3
 실행은 npm run dev를 사용합시다.  
-문법은 Composition API로 사용합시다.
+문법은 Composition API로 사용합시다.  
+https://vuejs.org/guide/essentials/application.html
