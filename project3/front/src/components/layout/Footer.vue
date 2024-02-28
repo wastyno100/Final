@@ -2,10 +2,7 @@
 </script>
 
 <template>
-  <v-footer color="primary" app>
-    푸터임
+  <v-footer app color="primary" absolute>
+    푸터임 
   </v-footer>
 </template>
-
-<style scoped>
-</style>

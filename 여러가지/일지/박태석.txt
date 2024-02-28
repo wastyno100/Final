@@ -1,0 +1,10 @@
+2024-02-28
+	(관리자 페이지 기본 틀 작업)
+		const changeList = (no) => listNo.value = no;
+			- onclick으로 받은 해당 카테고리의 번호를 listNo에 추가하고, v-if로 해당 번호에 맞는 컴포넌트를 출력
+	
+	(헤더 페이지 기본 틀 작업)
+		const router = useRouter()
+			- router기능을 사용하기 위함
+		const link = (url) => router.push(url);
+			- onclick으로 받은 해당 카테고리의 url로 이동
