@@ -1,5 +1,5 @@
 <script setup>
-import MainItem from '../components/MainItem.vue'
+import MainItem from '../components/main/MainItem.vue'
 </script>
 
 <template>
