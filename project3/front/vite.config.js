@@ -13,6 +13,11 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  //빌드 결과물이 spring boot 프로젝트 내의 static 디렉토리에 생성되도록 설정
+  //npm run build를 실행하면 boot 프로젝트 내의 static 폴더에 빌드 결과물이 생성
+  build: {
+    outDir:"../backend/src/main/resources/static",
+  },
   server: {
     proxy: {
       '/api': {  //#1. axios라이브러리 등으로 http 요청인데 api로 시작하면,

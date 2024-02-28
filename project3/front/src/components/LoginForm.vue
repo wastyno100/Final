@@ -9,7 +9,7 @@ import { ref } from "vue";
     if(email.value == null && pass.value == null){
       alert("입력부터 해라")
     }else {
-      await fetch('/api/testData', {
+      await fetch('/api/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -17,8 +17,9 @@ import { ref } from "vue";
       body: JSON.stringify({ email:email.value, pass:pass.value})
     }).then((res) => res.json()).then( data => {
       console.log('받은결과:', data)
-      if(data){
+      if(data.status === "success" ){
         alert("로그인 성공");
+        console.log('Values:', data.values);
         location.href = "/";
       } else(
         alert("실패")
