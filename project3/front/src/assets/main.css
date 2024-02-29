@@ -1,5 +1,5 @@
 
-
+/* 해상도 1024px 이상 */
 @media only screen and (min-width: 1024px) {
   body { margin: 0px 200px; }
 }

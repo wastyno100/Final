@@ -8,11 +8,20 @@
 </script>
 
 <template>
-  <v-app-bar app color="primary" absolute>
-    <v-toolbar-title @click="link('/')" style="cursor: pointer;">로고</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-btn @click="link('/')">홈</v-btn>
-    <v-btn @click="link('#')">아무거나1</v-btn>
-    <v-btn @click="link('#')">아무거나2</v-btn>
-  </v-app-bar>
+  <v-container>
+    <v-app-bar app absolute height="100" class="bg-light-blue-darken-3">
+      <v-row>
+        <v-col cols="1" class="pl-6">
+          <v-toolbar-title @click="link('/')" style="cursor: pointer;">로고</v-toolbar-title>
+        </v-col>
+        <v-col cols="12" class="text-center">
+          <v-btn @click="link('/')">홈</v-btn>
+          <v-btn @click="link('#')">아무거나1</v-btn>
+          <v-btn @click="link('#')">아무거나2</v-btn>
+          <v-btn @click="link('#')">아무거나3</v-btn>
+          <v-btn @click="link('#')">아무거나4</v-btn>
+        </v-col>
+      </v-row>
+    </v-app-bar>
+  </v-container>
 </template>

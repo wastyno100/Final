@@ -5,13 +5,13 @@ import AdminReport from '../components/admin/AdminReport.vue'
 import AdminQna from '../components/admin/AdminQna.vue'
 import AdminSales from '../components/admin/AdminSales.vue'
 
-// onclick으로 변하는 값으로 리렌더링 하기 위해 ref사용
+// onclick에서 변하는 값으로 컴포넌트가 리렌더링 되기 위해 ref사용
 const listNo = ref(1)
 
 // ref로 초기화한 값을 변경하려면 .value를 붙여야함
 const changeList = (no) => listNo.value = no;
 
-// 카테고리를 v-for문으로 돌리기위해 배열에 담음
+// 카테고리를 v-for로 돌리기위해 배열에 담음
 const categorys = [
   { no: 1, name: '유저관리', icon: 'mdi-account-group' },
   { no: 2, name: '신고내역', icon: 'mdi-alert-circle' },
@@ -41,7 +41,7 @@ const categorys = [
 
         <!-- 카테고리에 맞는 페이지 출력 -->
         <v-col cols="9">
-          <v-card class="elevation-2 rounded-lg pa-6">
+          <v-card class="elevation-2 rounded-lg pa-6" max-width="750">
             <v-card-title class="custom-card-title">관리자 페이지</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
