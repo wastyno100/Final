@@ -20,6 +20,6 @@
       <v-card height="500" elevation="3" class="mt-4">
         <v-card-item>dd</v-card-item>
       </v-card>
-
+      <v-pagination :length="4"></v-pagination>
       <v-btn class="mt-4" block>버튼</v-btn>
 </template>
