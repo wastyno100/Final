@@ -18,6 +18,10 @@ const categorys = [
   { no: 3, name: '문의답변', icon: 'mdi-email' },
   { no: 4, name: '매출확인', icon: 'mdi-cash-multiple' },
 ]
+const 하하 = () => {
+  fetch("/api/test").then((res) => res.json())
+}
+하하()
 </script>
 
 <template>
