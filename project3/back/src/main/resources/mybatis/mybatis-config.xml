@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 설정 옵션들을 여기에 추가 -->
+    <!-- sqlSessionTemplate / typeAliases(경로 별칭 부여) /
+    mapper MyBatis 에서 SQL 매퍼 파일을 등록하는 태그. mapper 태그를 사용하여 등록할 매퍼 파일의 경로를 지정
+    등을 지정
+    -->
+
+
+</configuration>

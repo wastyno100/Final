@@ -1,15 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
   const email = ref(null);
   const pass = ref(null);
+  const router = useRouter();
 
   // 로그인 테스트입니다.
   async function goLogin() {
     if(email.value == null && pass.value == null){
       alert("입력부터 해라")
     }else {
-      await fetch('/api/testData', {
+      await fetch('/api/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +21,8 @@ import { ref } from "vue";
       console.log('받은결과:', data)
       if(data){
         alert("로그인 성공");
-        location.href = "/";
+        console.log("userData");
+        router.push("/");
       } else(
         alert("실패")
       )
