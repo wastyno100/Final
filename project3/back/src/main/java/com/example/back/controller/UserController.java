@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/user")
+@RequestMapping("/login")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     @CrossOrigin(origins = "*")
     public String login() throws Exception {
         List<UserDto> userData = userService.userData();

@@ -21,7 +21,7 @@ import { useRouter } from "vue-router";
       console.log('받은결과:', data)
       if(data){
         alert("로그인 성공");
-        console.log("userData");
+        console.log(data);
         router.push("/");
       } else(
         alert("실패")
@@ -32,6 +32,12 @@ import { useRouter } from "vue-router";
   }
 </script>
 
+<!-- <input
+  :value="text"
+  @input="event => text = event.target.value">
+
+== <input v-model="text"> -->
+
 <template>
   <v-main>
     <v-sheet width="300" class="mx-auto">
@@ -40,6 +46,10 @@ import { useRouter } from "vue-router";
           v-model="email"
           label="이메일"
         ></v-text-field>
+        <!-- <v-text-field
+          v-model="userId"
+          label="아이디"
+          ></v-text-field> -->
 
         <v-text-field
           v-model="pass"
