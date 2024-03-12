@@ -4,6 +4,9 @@ import LoginView from '../views/LoginView.vue'
 import AdminView from '../views/AdminView.vue'
 import MenuListView from "@/views/MenuListView.vue";
 import MemberView from '@/views/MemberView.vue';
+import BoardView from "@/views/BoardView.vue";
+import BoardDetailView from "@/views/BoardDetailView.vue";
+import BoardWriteView from "@/views/BoardWriteView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +35,21 @@ const router = createRouter({
       path: '/Member',
       name: 'Member',
       component: MemberView
+    },
+    {
+      path: '/board',
+      name: 'board',
+      component: BoardView
+    },
+    {
+      path: '/board/detail',
+      name: 'detail',
+      component: BoardDetailView,
+    },
+    {
+      path: '/board/write',
+      name: 'write',
+      component: BoardWriteView,
     },
   ]
 })
