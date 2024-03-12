@@ -18,10 +18,7 @@ const categorys = [
   { no: 3, name: '문의답변', icon: 'mdi-email' },
   { no: 4, name: '매출확인', icon: 'mdi-cash-multiple' },
 ]
-const 하하 = () => {
-  fetch("/api/test").then((res) => res.json())
-}
-하하()
+
 </script>
 
 <template>
@@ -29,8 +26,8 @@ const 하하 = () => {
     <v-container>
       <v-row>
         <!-- 카테고리 리스트 -->
-        <v-col cols="2">
-          <v-card class="elevation-2 rounded-lg text-center" max-width="100">
+        <v-col cols="3" class="d-flex justify-end">
+          <v-card class="elevation-2 rounded-lg text-center" max-width="100" height="220">
             <v-list nav dense>
               <v-list-item-group v-for="item in categorys" v-bind:key="item.no">
                 <v-list-item @click="changeList(item.no)">
