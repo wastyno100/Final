@@ -5,9 +5,9 @@
   <v-main>
     <v-row class="testk">
       <v-col cols="12">
-        <v-infinite-scroll :items="menulist" :onLoad="load">
+        <v-infinite-scroll :items="menulist.slice(0, 12)" :onLoad="menulist > null ? load : null">
           <v-row>
-              <v-col cols="12" md="3" v-for="item in menulist" :key="item.no">
+              <v-col cols="12" md="3" v-for="item in menulist.slice(0, 12)" :key="item.no">
             <v-card  class="mx-auto mt-3" width="200px" height="250px">
               <v-img
                 weight="200px"
@@ -42,15 +42,20 @@ const menulist = ref ([
   { no: 3, title: '문어3', price: '70000', content:'완도산 문어3' },
   { no: 4, title: '문어4', price: '70000', content:'완도산 문어4' },
   { no: 5, title: '문어4', price: '70000', content:'완도산 문어5' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어6' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어7' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어8' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어9' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어10' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어11' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어12' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어13' },
-  { no: 4, title: '문어4', price: '70000', content:'완도산 문어14' }
+  { no: 6, title: '문어4', price: '70000', content:'완도산 문어6' },
+  { no: 7, title: '문어4', price: '70000', content:'완도산 문어7' },
+  { no: 8, title: '문어4', price: '70000', content:'완도산 문어8' },
+  { no: 9, title: '문어4', price: '70000', content:'완도산 문어9' },
+  { no: 10, title: '문어4', price: '70000', content:'완도산 문어10' },
+  { no: 11, title: '문어4', price: '70000', content:'완도산 문어11' },
+  { no: 12, title: '문어4', price: '70000', content:'완도산 문어12' },
+  { no: 13, title: '문어4', price: '70000', content:'완도산 문어13' },
+  { no: 14, title: '문어4', price: '70000', content:'완도산 문어14' },
+  { no: 14, title: '문어4', price: '70000', content:'완도산 문어14' },
+  { no: 14, title: '문어4', price: '70000', content:'완도산 문어14' },
+  { no: 14, title: '문어4', price: '70000', content:'완도산 문어14' },
+  { no: 14, title: '문어4', price: '70000', content:'완도산 문어14' },
+
 ]);
 
 // 비동기 API 함수
