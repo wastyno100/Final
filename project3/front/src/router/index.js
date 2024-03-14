@@ -7,6 +7,7 @@ import MemberView from '@/views/MemberView.vue';
 import BoardView from "@/views/BoardView.vue";
 import BoardDetailView from "@/views/BoardDetailView.vue";
 import BoardWriteView from "@/views/BoardWriteView.vue";
+import BoardUpdateView from "@/views/BoardUpdateView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/board/write',
       name: 'write',
       component: BoardWriteView,
+    },
+    {
+      path: '/board/update',
+      name: 'update',
+      component: BoardUpdateView,
     },
   ]
 })
