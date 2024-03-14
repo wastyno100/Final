@@ -21,8 +21,8 @@ const changeList = (item) => {
       </v-card>
       </v-row>
       <v-row justify="center">  
-        <v-col cols="8">
-          <v-card class="elevation-2 rounded-lg pa-8 v-text-h6" style="font-size: 14px;" max-width="800">
+        <v-col cols="9">
+          <v-card class="elevation-2 rounded-lg pa-8 v-text-h6" style="font-size: 13px;" max-width="800">
             <BoardNotice v-if="categorys == 0" />
             <BoardEvent v-if="categorys == 1" />
           </v-card>

@@ -16,5 +16,22 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDto> boardData() {
         return boardMapper.boardData();
     }
+
+    public List<BoardDto> boardDetail(int boardNo) {
+        return boardMapper.boardDetail(boardNo);
+    }
+
+    public void boardWrite(BoardDto boardDto) {
+        boardMapper.boardWrite(boardDto);
+    }
+
+    public void boardUpdate(BoardDto boardDto){
+        boardMapper.boardUpdate(boardDto);
+    }
+
+    public void boardDelete(int boardNo) {
+        boardMapper.boardDelete(boardNo);
+    }
+
 }
 

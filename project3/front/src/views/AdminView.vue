@@ -26,7 +26,7 @@ const categorys = [
     <v-container>
       <v-row>
         <!-- 카테고리 리스트 -->
-        <v-col cols="3" class="d-flex justify-end">
+        <v-col cols="2" class="d-flex justify-end">
           <v-card class="elevation-2 rounded-lg text-center" max-width="100" height="220">
             <v-list nav dense>
               <v-list-item-group v-for="item in categorys" v-bind:key="item.no">
@@ -41,7 +41,7 @@ const categorys = [
         <!-- 카테고리 리스트 끝 -->
 
         <!-- 카테고리에 맞는 페이지 출력 -->
-        <v-col cols="9">
+        <v-col cols="8">
           <v-card class="elevation-2 rounded-lg pa-6" max-width="750">
             <v-card-title class="custom-card-title">관리자 페이지</v-card-title>
             <v-divider></v-divider>
@@ -53,6 +53,7 @@ const categorys = [
             </v-card-text>
           </v-card>
         </v-col>
+        <v-col cols="2"/>
         <!-- 카테고리 페이지 끝 -->
       </v-row>
     </v-container>

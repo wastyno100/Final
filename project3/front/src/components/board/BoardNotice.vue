@@ -13,11 +13,19 @@ const allPage = computed(() => {
   return Math.ceil(testData.value.length / pageGroup)
 }) // 데이터의 개수를 페이지당 보여줄 항목수로 나누고 올림 함
 
+// 검색용
+const searchText = ref("")
+const searchCate = ref("제목")
+
 const getData = async () => {
   const res = await axios.get('/api/notice')
-
+  
   // 데이터 내림차순 (공지, 이벤트 만들때 써보자)
   testData.value = res.data.sort((a, b) => b.boardNo - a.boardNo)
+
+  testData.value.forEach((item) => {
+    item.boardDate = item.boardDate.replace(/^(\d{4})-(\d{2})-(\d{2}).*/, '$1-$2-$3')
+  })
 }
 
 onMounted(() => {
@@ -27,8 +35,8 @@ onMounted(() => {
 const showItem = computed(() => {
   const start = (currentPage.value - 1) * pageGroup
   const end = start + pageGroup
-  console.log(testData.value)
-  return testData.value.slice(start, end)
+  if(searchFind.value) return searchFind.value
+  else return testData.value.slice(start, end)
 })
 
 // 페이지가 바뀔때 해당하는 항목으로 업데이트
@@ -37,6 +45,17 @@ const pageUpdate = () => {
   const end = start + pageGroup
   showItem.value = testData.value.slice(start, end)
 }
+
+// 검색 텍스트에 맞는 항목을 필터링
+const searchFind = computed(() => {
+  if(searchText.value) {
+    return testData.value.filter((item) => {
+      if(searchCate.value == "제목") return item.title.includes(searchText.value) 
+      if(searchCate.value == "내용") return item.content.includes(searchText.value)
+    })
+  }
+  else return ""
+})
 </script> 
   
 
@@ -46,7 +65,11 @@ const pageUpdate = () => {
     <v-card-text>
       <v-row justify="center">
         <v-col cols="3">
-          
+          <v-select
+            v-model="searchCate"
+            label="검색"
+            :items="['제목', '내용']"
+          ></v-select>
         </v-col>
         <v-col cols="6">
           <v-text-field
@@ -63,7 +86,7 @@ const pageUpdate = () => {
         </v-col>
       </v-row>
     </v-card-text>
-    <v-card height="500" elevation="3" class="mt-4">
+    <v-card height="450" elevation="3" class="mt-4">
       <v-card-item
         v-for="item in showItem"
         v-bind:key="item"

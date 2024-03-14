@@ -17,3 +17,7 @@
 @media all and (max-width:479px) {
   body { margin: 0px 0px; }
 }
+
+body {
+  background: rgb(41, 158, 204);
+}
