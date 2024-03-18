@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MenuMapper {
-    List<MenuDto> findAll();
+    List<MenuDto> menuList();
+
+    List<MenuDto> menuDetail(int menuNo);
 }

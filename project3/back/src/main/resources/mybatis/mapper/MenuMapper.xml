@@ -2,8 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.back.mapper.MenuMapper">
 
-    <select id="findAll" resultType="com.example.back.dto.MenuDto">
-        SELECT * FROM MenuDto
+    <select id="menuList" resultType="MenuDto">
+        SELECT * FROM menu ORDER BY menuNo DESC
     </select>
 
+    <select id="menuDetail" resultType="MenuDto">
+        SELECT
+            *
+        FROM menu
+        WHERE menuNo = #{menuNo}
+    </select>
+
+    <resultMap id="infoMenuResultMap" type="MenuDto">
+        <id property="menuNo" column="menuNo" />
+        <result property="goodsNum" column="goodsNum" />
+        <result property="menuPrice" column="menuPrice" />
+        <result property="menuCate" column="menuCate" />
+        <result property="menuTitle" column="menuTitle" />
+        <result property="menuContent" column="menuContent" />
+        <result property="readCount" column="read_count" />
+        <result property="regDate" column="reg_date" />
+        <result property="heart" column="heart" />
+        <result property="mImg" column="mImg" />
+    </resultMap>
 </mapper>
+

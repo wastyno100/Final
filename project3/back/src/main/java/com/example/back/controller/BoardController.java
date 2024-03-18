@@ -17,7 +17,6 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/notice")
-    @CrossOrigin(origins = "*")
     public List<BoardDto> board() throws Exception {
         List<BoardDto> boardData = boardService.boardData();
 
