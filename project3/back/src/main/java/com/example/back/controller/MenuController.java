@@ -29,7 +29,7 @@ public class MenuController {
         return menuService.menuList();
     }
 
-    @GetMapping("/boardDetail")
+    @GetMapping("/menuDetail")
     @CrossOrigin(origins = "*")
     public List<MenuDto> noticeDetail(int menuNo) throws Exception {
         List<MenuDto> menuDetail = menuService.menuDetail(menuNo);
