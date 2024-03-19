@@ -9,4 +9,13 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
      List<BoardDto> boardData();
+
+     List<BoardDto> boardDetail(int boardNo);
+
+     void boardWrite(BoardDto boardDto);
+
+     void boardUpdate(BoardDto boardDto);
+
+     void boardDelete(int boardNo);
+
 }

@@ -1,27 +1,56 @@
 <script setup>
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter()
 // 게시글 목록에서 선택한 게시글 번호를 선물로 받음
 const {dataObj} = history.state;
-// 게시글 내용 넣어줄거임
+// 게시글 내용 넣기
 const boardData = ref({})
 
 // 게시글 번호를 서버로 보내서 해당 게시물의 데이터들만 가져오자
 // 게시글 업데이트도 put을 사용해서 해버리자
 const getData = async() => {
-  await axios.get(`/api/noticeDetail?boardNo=${dataObj.no}`)
+  await axios.get(`/api/boardDetail?boardNo=${dataObj.no}`)
   .then((res) => { 
     console.log('@@@@@@@', res.data)
-    boardData.value = res.data 
+    boardData.value = res.data[0]
   })
 }
+
+// 삭제는 관리자만 가능하게 바꾸자
+const delData = async() => {
+  await axios.delete(`/api/boardDelete?boardNo=${dataObj.no}`)  
+  .then((res) => {
+    if(res.status == 200) { 
+      alert("게시글 삭제를 성공 했습니다.")
+      router.push('/board')
+     }
+    else alert("게시글 삭제를 실패 했습니다.")
+  })
+}
+
 onMounted(() => { getData() })
 </script>
 
 <template>
   <v-main>
-    <h2>게시물 번호는 {{ dataObj.no }}번 입니다.</h2>
+    <v-container>
+      <h3>{{ boardData.boardNo }}번</h3><br>
+      제목: {{ boardData.title }}<br>
+      내용: {{ boardData.content }}<br>
+      카테고리: {{ boardData.boardCate }}<br>
+      작성일: {{ boardData.boardDate }}<br>
+      <v-btn @click="
+          router.push({
+            name: 'update',
+            state: {dataObj: { no: boardData.boardNo }}
+          })"
+          text="수정" /><br>
+      <v-btn @click="delData" text="삭제" />
+    </v-container>
+  
   </v-main>
 </template>
 
