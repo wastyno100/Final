@@ -1,16 +1,17 @@
-package com.example.back.dto;
+package com.example.back.domain;
 
-
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
-
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class User {
     private int userNo;
     private String id;
     private String pass;
@@ -22,10 +23,4 @@ public class UserDto {
     private String phone;
     private String email_get;
     private Timestamp join_date;
-
-    @Data
-    public static class LoginRequest{
-        private String id;
-        private String pass;
-    }
 }

@@ -1,26 +1,53 @@
 package com.example.back.controller;
 
+
+import com.example.back.domain.User;
 import com.example.back.dto.UserDto;
 import com.example.back.service.UserService;
-import jakarta.annotation.Resource;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.http.HttpResponse;
 
 @RestController
-@RequestMapping("/login")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     @CrossOrigin(origins = "*")
-    public String login() throws Exception {
-        List<UserDto> userData = userService.userData();
-        System.out.println(userData);
-        return "User Data: " + userData;
+    public int login(@RequestBody UserDto.LoginRequest loginRequest,
+                        Model model,
+                        HttpSession session,
+                        HttpServletResponse response)
+                         throws IOException {
+        System.out.println("@@@@@" + loginRequest.getId() + loginRequest.getPass());
+        int result = userService.login(loginRequest.getId(), loginRequest.getPass());
+
+//        if(result == -1){
+//            return result;
+//        }
+//        else if(result == 0){
+//            return result;
+//        }
+            User user = userService.getUser(loginRequest.getId());
+
+            session.setAttribute("isLogin", true);
+
+            model.addAttribute("user", user);
+
+            System.out.print("로그인 성공");
+
+            return result;
 
     }
-}
+ }
+
+

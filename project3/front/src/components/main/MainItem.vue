@@ -14,7 +14,6 @@
     숫자.value = Math.floor(Math.random() * 9) + 1;
     console.log(숫자.value)
   }
-
 </script>
 
 <template>
