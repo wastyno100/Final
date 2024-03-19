@@ -37,7 +37,7 @@ const router = createRouter({
       path: '/MenuDetail',
       name: 'MenuDetail',
       component: MenuDetail,
-      props: true,
+      props: true
     },
     {
       path: '/Member',
