@@ -13,8 +13,8 @@ public class BoardServiceImpl implements BoardService {
     private BoardMapper boardMapper;
 
     @Override
-    public List<BoardDto> boardData() {
-        return boardMapper.boardData();
+    public List<BoardDto> boardData(String boardCate) {
+        return boardMapper.boardData(boardCate);
     }
 
     public List<BoardDto> boardDetail(int boardNo) {

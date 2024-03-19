@@ -5,29 +5,26 @@ import com.example.back.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-//@RequestMapping("/user")
 public class BoardController {
 
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/notice")
-    public List<BoardDto> board() throws Exception {
-        List<BoardDto> boardData = boardService.boardData();
+    @GetMapping("/boardList")
+    @CrossOrigin(origins = "*")
+    public List<BoardDto> board(@RequestParam("boardCate") String boardCate) throws Exception {
+        List<BoardDto> boardData = boardService.boardData(boardCate);
 
         return boardData;
     }
 
     @GetMapping("/boardDetail")
     @CrossOrigin(origins = "*")
-    public List<BoardDto> noticeDetail(int boardNo) throws Exception {
+    public List<BoardDto> boardDetail(int boardNo) throws Exception {
         List<BoardDto> boardDetail = boardService.boardDetail(boardNo);
-        System.out.println("Dsadsadas"+boardDetail);
 
         return boardDetail;
     }
@@ -35,7 +32,6 @@ public class BoardController {
     @PostMapping("/boardWrite")
     @CrossOrigin(origins = "*")
     public void boardWrite(@RequestBody BoardDto boardDto) throws Exception {
-        System.out.println("@@@@@@@@@@@@@@@@@" + boardDto);
         boardService.boardWrite(boardDto);
 
     }
@@ -43,7 +39,6 @@ public class BoardController {
     @PutMapping("/boardUpdate")
     @CrossOrigin(origins = "*")
     public void boardUpdate(@RequestBody BoardDto boardDto) {
-        System.out.println("gdgd" + boardDto);
         boardService.boardUpdate(boardDto);
     }
 

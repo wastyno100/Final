@@ -18,7 +18,7 @@ const searchText = ref("")
 const searchCate = ref("제목")
 
 const getData = async () => {
-  const res = await axios.get('/api/notice')
+  const res = await axios.get('/api/boardList?boardCate=공지사항')
   
   // 데이터 내림차순 (공지, 이벤트 만들때 써보자)
   testData.value = res.data.sort((a, b) => b.boardNo - a.boardNo)
