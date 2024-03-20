@@ -12,4 +12,5 @@ public interface UserMapper {
 
      User getUser(String id);
 //     String getUser(String id);
+     void addUser(User user);
 }

@@ -4,6 +4,8 @@ import com.example.back.domain.User;
 import com.example.back.dto.UserDto;
 import com.example.back.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,9 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     private UserDto.LoginRequest loginRequest;
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
@@ -32,14 +35,23 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return result;
         }
-
-        if (pass.equals(user.getPass())) {
+        //입력한 비밀번호와 데이터베이스의 인코딩된 비밀번호를 매치
+        if (passwordEncoder.matches(pass, user.getPass())) {
             result = 1; // 비밀번호가 일치하면 로그인 성공
         } else {
             result = 0; // 비밀번호가 일치하지 않으면 로그인 실패
         }
 
         return result;
+    }
+
+    @Override
+    public void addUser(User user) {
+        //비밀번호를 저장할 때 BCryptPasswordEncoder를 통해 비밀번호를 암호화
+        user.setPass(passwordEncoder.encode(user.getPass()));
+//        user.setPass(user.getPass());
+        System.out.println(user.getPass());
+        userMapper.addUser(user);
     }
 }
 

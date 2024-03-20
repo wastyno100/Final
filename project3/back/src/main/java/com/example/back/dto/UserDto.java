@@ -20,8 +20,14 @@ public class UserDto {
     private String address1;
     private String address2;
     private String phone;
-    private String email_get;
-    private Timestamp join_date;
+    private Boolean emailGet;
+    private Timestamp joinDate;
+
+    private String emailId;
+    private String emailDomain;
+    private String phone1;
+    private String phone2;
+    private String phone3;
 
     @Data
     public static class LoginRequest{
