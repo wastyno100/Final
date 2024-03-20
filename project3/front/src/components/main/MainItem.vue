@@ -24,6 +24,7 @@
     <v-btn @click="link('/board')">공지벤트</v-btn><br /><br />
     <v-btn @click="link('/admin')">관리자 하러가기</v-btn>
     <v-btn @click="link('/menuList')">메뉴 보러가기</v-btn><br><br><br><br>
+    <v-btn @click="link('/menuCart')">장바구니 보러가기</v-btn><br><br><br><br>
 
     
     <v-container>

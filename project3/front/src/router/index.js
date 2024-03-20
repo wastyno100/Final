@@ -9,6 +9,7 @@ import BoardDetailView from "@/views/BoardDetailView.vue";
 import BoardWriteView from "@/views/BoardWriteView.vue";
 import BoardUpdateView from "@/views/BoardUpdateView.vue";
 import MenuDetail from '@/views/MenuDetail.vue'
+import MenuCart from '@/views/MenuCart.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,7 +38,11 @@ const router = createRouter({
       path: '/MenuDetail',
       name: 'MenuDetail',
       component: MenuDetail,
-      props: true
+    },
+    {
+      path: '/menuCart',
+      name: 'MenuCart',
+      component: MenuCart,
     },
     {
       path: '/Member',
