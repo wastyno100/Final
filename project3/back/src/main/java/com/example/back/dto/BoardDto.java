@@ -12,7 +12,10 @@ public class BoardDto {
     private String content;
     private String boardCate;
     private String boardDate;
+    private String eventStart;
+    private String eventEnd;
     private String boardImg;
+
     private int userNo;
 }
 

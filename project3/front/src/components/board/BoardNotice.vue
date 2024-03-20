@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -20,17 +20,13 @@ const searchCate = ref("제목")
 const getData = async () => {
   const res = await axios.get('/api/boardList?boardCate=공지사항')
   
-  // 데이터 내림차순 (공지, 이벤트 만들때 써보자)
+  // 데이터 내림차순
   testData.value = res.data.sort((a, b) => b.boardNo - a.boardNo)
 
   testData.value.forEach((item) => {
     item.boardDate = item.boardDate.replace(/^(\d{4})-(\d{2})-(\d{2}).*/, '$1-$2-$3')
   })
 }
-
-onMounted(() => {
-  getData()
-})
 
 const showItem = computed(() => {
   const start = (currentPage.value - 1) * pageGroup
@@ -55,6 +51,25 @@ const searchFind = computed(() => {
     })
   }
   else return ""
+})
+
+const goDetail = (item) => {
+  router.push({
+    name: 'detail',
+    state: {dataObj: { no: item.boardNo }}
+  })
+}
+
+// 현재 페이지 감지해서 세션에 저장
+watch(currentPage, () => {
+  sessionStorage.setItem('noticePage', currentPage.value)
+})
+
+onMounted(() => {
+  getData()
+  
+  // 페이지 돌아왔을때 세션에 저장되어있는 페이지 가져옴
+  currentPage.value = JSON.parse(sessionStorage.getItem('noticePage')) || 1
 })
 </script> 
   
@@ -92,12 +107,7 @@ const searchFind = computed(() => {
         v-bind:key="item"
         class="text-center mt-1"
         :class="{ 'v-row-hover': true }"
-        @click="
-          router.push({
-            name: 'detail',
-            state: {dataObj: { no: item.boardNo }}
-          })
-        ">
+        @click="goDetail(item)">
         <v-row>
           <v-col>
             <span>{{ item.boardNo }}</span>

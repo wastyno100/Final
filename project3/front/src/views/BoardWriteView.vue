@@ -8,13 +8,17 @@ const router = useRouter()
 const file = ref([])
 const src = ref([])
 
-const title = ref();
-const content = ref();
-const boardCate = ref();
-
 // 현재 날짜
 const date = new Date()
 const today = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`
+
+const title = ref();
+const content = ref();
+const boardCate = ref();
+const eventStart = ref(today);
+const eventEnd = ref(today);
+
+
 
 // 이미지 미리보기
 const fileChange = (e) => {
@@ -23,20 +27,32 @@ const fileChange = (e) => {
     const blob = new Blob([file], { type: file.type })
     return URL.createObjectURL(blob)
   })
-
+  
   src.value = previews
 }
 
 // 게시글 저장하기 위한 요청, 이미지는 수정해야됨
-const reqAxios = () => {
-  axios.post("/api/boardWrite",{
-    title: title.value,
-    content: content.value,
-    boardCate: boardCate.value,
-    // boardImg: file.value[0],
+const reqAxios = async () => {
+  const formData = new FormData();
+  
+  formData.append('title', title.value);
+  formData.append('content', content.value);
+  formData.append('boardCate', boardCate.value);
+
+  if(boardCate.value == "이벤트"){
+    formData.append('eventStart', eventStart.value + " 00:00:00");
+    formData.append('eventEnd', eventEnd.value + " 00:00:00");
+  }
+  file.value.forEach((item) => {
+    formData.append('uploadImg', item);
   })
-  .then((res) => { 
-    if(res.status == 200) router.push("/board") 
+  
+  await axios.post("/api/boardWrite", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then((res) => { 
+    if(res.status == 200) router.push("/board")
     else alert("게시글 작성을 실패 했습니다.")
   })
 }
@@ -57,6 +73,12 @@ const reqAxios = () => {
                 <v-text-field v-model="today" label="작성일" readonly></v-text-field>
               </v-col>
             </v-row>
+
+            <v-row v-if="boardCate == '이벤트'" justify="center">
+              <v-col cols="3"><v-text-field v-model="eventStart" label="이벤트 시작일" /></v-col>
+              <v-col cols="3"><v-text-field v-model="eventEnd" label="이벤트 종료일" /></v-col>
+            </v-row>
+
             <v-row
               ><v-select
                 v-model="boardCate"

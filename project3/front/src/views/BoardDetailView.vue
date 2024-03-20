@@ -8,6 +8,8 @@ const router = useRouter()
 const {dataObj} = history.state;
 // 게시글 내용 넣기
 const boardData = ref({})
+// 서버에서 받은 이미지파일
+const imgFile = ref([])
 
 // 게시글 번호를 서버로 보내서 해당 게시물의 데이터들만 가져오자
 // 게시글 업데이트도 put을 사용해서 해버리자
@@ -16,6 +18,7 @@ const getData = async() => {
   .then((res) => { 
     console.log('@@@@@@@', res.data)
     boardData.value = res.data[0]
+    boardData.value.boardImg = JSON.parse(res.data[0].boardImg)
   })
 }
 
@@ -31,12 +34,26 @@ const delData = async() => {
   })
 }
 
-onMounted(() => { getData() })
+// 서버에 이미지 요청
+const getImg = () => {
+  boardData.value.boardImg.forEach( async (name) => {
+    await axios.get(`/api/getImage/${name}`)
+    .then((res) => {
+      imgFile.value.push(res.data)
+    })
+  });
+}
+
+onMounted(() => { 
+  getData().then(() => { getImg() })
+  })
 </script>
 
 <template>
   <v-main>
     <v-container>
+      <img v-for="(item, i) in imgFile" :src="item" :key="i"/>
+
       <h3>{{ boardData.boardNo }}번</h3><br>
       제목: {{ boardData.title }}<br>
       내용: {{ boardData.content }}<br>
