@@ -10,4 +10,6 @@ public interface UserService {
     User getUser(String id);
 
     int login(String id, String pass);
+
+    void addUser(User user);
 }

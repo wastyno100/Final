@@ -48,6 +48,18 @@ public class UserController {
             return result;
 
     }
+    @PostMapping("/joinUser")
+    @CrossOrigin(origins = "*")
+    public String joinUser(@RequestBody User user){
+        System.out.println(user);
+        user.setEmail(user.getEmailId() + "@" + user.getEmailDomain());
+        user.setPhone(user.getPhone1() + "-" + user.getPhone2() + "-" + user.getPhone3());
+        if (user.getEmailGet() != null) {
+            user.setEmailGet(user.getEmailGet());
+        }
+        userService.addUser(user);
+        return "회원가입이 성공적으로 완료되었습니다.";
+    }
  }
 
 

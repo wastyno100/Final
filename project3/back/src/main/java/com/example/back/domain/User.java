@@ -1,9 +1,6 @@
 package com.example.back.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -21,6 +18,12 @@ public class User {
     private String address1;
     private String address2;
     private String phone;
-    private String email_get;
-    private Timestamp join_date;
+    private Boolean emailGet;
+    private Timestamp joinDate;
+
+    private String emailId;
+    private String emailDomain;
+    private String phone1;
+    private String phone2;
+    private String phone3;
 }

@@ -2,96 +2,171 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from "axios";
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
 
 
 const router = useRouter();
-// const id = ref(null);
 
+const name = ref('');
 const userId = ref('');
+const pass = ref('');
+const zipcode = ref('');
+const address1 = ref('');
+const address2= ref('');
+const emailId = ref('');
+const emailDomain = ref('');
+const phone1 = ref('');
+const phone2 = ref('');
+const phone3 = ref('');
+const emailGet = ref('');
 
+async function joinFormCheck(){
+        // joinFormFieldsCheck();
 
-function joinFormCheck(){
-    const joinFormFields = [
-        {id:'userId', label:'아이디'},
-        {id:'pass', label:'비밀번호'},
-        {id:'pass2', label:'비밀번호확인'},
-        {id:'zipcode', label:'우편번호'},
-        {id:'address', label:'자택주소'},
-        {id:'address2', label:'상세주소'},
-        {id:'address', label:'자택주소'},
-        {id:'emailId', label:'이메일 아이디'},
-        {id:'custom', label:'직접입력'},
-        {id:'mobile1', label:'휴대전화'},
-        {id:'mobile2', label:'휴대전화'},
-        {id:'mobile3', label:'휴대전화'},
-    ];
-    for(const field of joinFormFields){
-    const value = document.querySelector(`#${field.id}`).value;
-    if (value.trim() === '') {
-        alert(`${field.label} 칸이 입력되지 않았습니다.`);
-        document.querySelector(`#${field.id}`).focus();
-        return;
+        try{
+        await axios.post(`/api/joinUser`, {
+        name: name.value,
+        id: userId.value,
+        pass: pass.value,
+        zipcode: zipcode.value,
+        address1: address1.value,
+        address2: address2.value,
+        emailId: emailId.value,
+        emailDomain: emailDomain.value,
+        phone1: phone1.value,
+        phone2: phone2.value,
+        phone3: phone3.value,
+        emailGet: emailGet.value,
+    }).then((res)=> {
+        console.log(res.data);
+    alert("회원가입이 성공적으로 완료되었습니다.")
+    router.push('/');
+    })
+    
     }
-
+    catch (error) {
+      console.error("회원가입 요청 실패:", error);
+      alert("회원가입 요청 실패");
     }
-   
 }
 
-// const postcode = () =>{
-//     return new Promise((resolve)=>{
-//         const script = document.createElement('script');
-//         script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
-//         script.onload = resolve;
-//         document.head.appendChild(script)
-//     })
+// function joinFormFieldsCheck(){
+//     const joinFormFields = [
+//         {id:'name', label:'이름'},
+//         {id:'userId', label:'아이디'},
+//         {id:'pass', label:'비밀번호'},
+//         {id:'pass2', label:'비밀번호확인'},
+//         {id:'zipcode', label:'우편번호'},
+//         {id:'address1', label:'자택주소'},
+//         {id:'address2', label:'상세주소'},
+//         {id:'emailId', label:'이메일 아이디'},
+//         {id:'emailDomain', label:'이메일 도메인'},
+//         {id:'customDomain', label:'직접입력'}
+//     ];
+
+//     //모든필드가 채워졌다는 변수 선언
+//     // let allFieldsFilled = true;
+
+//     //모든 필드가 채워지지 않은 상태
+//     //alert 창으로 해당하는 칸에 입력이 되지 않았다는 것을 출력
+//     for(const field of joinFormFields){
+//     const value = document.querySelector(`#${field.id}`).value;    
+//     if (value.trim() === '') {
+//         alert(`${field.label} 칸이 입력되지 않았습니다.`);
+//         document.querySelector(`#${field.id}`).focus();
+//         return;
+//     } 
+//     }
+    
+   
 // }
 
-// onMounted(async () => {
-//     await postcode();
-// })
+//우편번호 api
 
+//해당 api의 팝업창을 띄우기 위해 설정한 코드
+const btnZipcode = () => {
+   document.getElementById("btnZipcode").addEventListener("click", findZipcode);
+}
 
-// function btnZipcode() { 
-//     new daum.Postcode({
-//         oncomplete: function(data) {
-//             var addr = ''; // 주소 변수
-//             var extraAddr = ''; // 참고항목 변수
+//우편번호 api를 가져오기 위한 코드
+const postcode = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+    script.onload = resolve;
+    document.head.appendChild(script);
+  });
+  
+};
 
-//             // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-//             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-//                 addr = data.roadAddress;
-//             } else { // 사용자가 지번 주소를 선택했을 경우(J)
-//                 addr = data.roadAddress;
-//             }
+async function initialize() {
+  await postcode(); // 스크립트가 로드될 때까지 대기
+  btnZipcode(); // 스크립트가 로드된 후에 btnZipcode 함수 호출
+}
 
-//             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-//             if (data.userSelectedType === 'R') {
-//                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-//                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-//                 if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-//                     extraAddr += data.bname;
-//                 }
-//                 // 건물명이 있고, 공동주택일 경우 추가한다.
-//                 if (data.buildingName !== '' && data.apartment === 'Y') {
-//                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-//                 }
-//                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-//                 if (extraAddr !== '') {
-//                     extraAddr = ' (' + extraAddr + ')';
-//                 }
-//                 addr += extraAddr;
-//             }
+initialize(); // 초기화 함수 호출
 
-//             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-//             document.querySelector("#zipcode").value = data.zonecode;
-//             document.querySelector("#address1").value = addr;
-//             document.querySelector("#address2").focus();
-//         }
-//     }).open();
-// }
+//실제 우편 api 내용
+function findZipcode() { 
+    new window.daum.Postcode({
+        oncomplete: function(data) {
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
 
+            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.roadAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if (data.userSelectedType === 'R') {
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if (extraAddr !== '') {
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                addr += extraAddr;
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            // document.querySelector("#zipcode").value = data.zonecode;
+            // document.querySelector("#address1").value = addr;
+            // document.querySelector("#address2").focus();
+            zipcode.value = data.zonecode; // 우편번호 필드에 값 할당
+            address1.value = addr; // 주소 필드에 값 할당
+            document.querySelector("#address2").focus(); // 상세주소 필드로 포커스 이동
+        }
+    }).open();
+}
+
+onMounted(() => {
+  const initializePage = () => {
+    const userId = document.getElementById("userId");
+    const pass1 = document.getElementById("pass");
+    const pass2 = document.getElementById("pass2");
+    const emailId = document.getElementById("emailId");
+    // const customDomain = document.getElementById("customDomain");
+    
+    pass1.addEventListener("keyup", inputCharReplace);
+    pass2.addEventListener("keyup", inputCharReplace);
+    userId.addEventListener("keyup", inputCharReplace);
+    emailId.addEventListener("keyup", inputCharReplace);
+    // customDomain.addEventListener("keyup", inputEmailDomainReplace);
+  };
+  initializePage();
+});
 
 function btnHome(){
     router.push("/")
@@ -118,29 +193,18 @@ const inputCharReplace = (event) => {
   }
 }
 
-const inputEmailDomainReplace = (event) => {
-  const regExp = /[^A-Za-z0-9.@]/gi;
-  const inputElement = event.target;
+// const inputEmailDomainReplace = (event) => {
+//   const regExp = /[^A-Za-z0-9.]/gi;
+//   const inputElement = event.target;
   
-  if (regExp.test(inputElement.value)) {
-    alert("영문 대소문자, 숫자, 점(.), @만 입력할 수 있습니다.");
-    inputElement.value = inputElement.value.replace(regExp, "");
-  }
-}
+//   if (regExp.test(inputElement.value)) {
+//     alert("영문 대소문자, 숫자, 점(.)만 입력할 수 있습니다.");
+//     inputElement.value = inputElement.value.replace(regExp, "");
+//   }
+// }   
 
-onMounted(() => {
-  const userId = document.getElementById("userId");
-  const pass1 = document.getElementById("pass");
-  const pass2 = document.getElementById("pass2");
-  const emailId = document.getElementById("emailId");
-  const emailDomain = document.getElementById("emailDomain")
-  pass1.addEventListener("keyup", inputCharReplace);
-  pass2.addEventListener("keyup", inputCharReplace);
-  userId.addEventListener("keyup", inputCharReplace);
-  emailId.addEventListener("keyup", inputCharReplace);
-  emailDomain.addEventListener("keyup", inputEmailDomainReplace);
-});
-    
+
+
 </script>
 
 <template>
@@ -155,9 +219,20 @@ onMounted(() => {
                                     <h1>회원가입 창</h1>
                             </v-col>
                         </v-row>
-                        <v-form>
+                        <v-form id="joinForm" name="joinForm">
                             <v-row>
-                                <v-col cols="8">
+                                <v-col cols="4 offset+4">
+                                    <v-text-field
+                                    v-model="name"
+                                    name="name"
+                                    label="이름"
+                                    placeholder="이름을 입력해주세요."
+                                    id="name"
+                                    maxlength="10"
+                                    >
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="4">
                                     <v-text-field
                                     v-model="userId"
                                     name="id"
@@ -176,6 +251,7 @@ onMounted(() => {
                             <v-row>
                                 <v-col cols="6">
                                     <v-text-field
+                                    v-model="pass"
                                     name="pass"
                                     label="비밀번호"
                                     placeholder="사용할 비밀번호를 입력해주세요"
@@ -198,12 +274,19 @@ onMounted(() => {
                             </v-row> <!-- 비밀번호 끝 라인 -->
 
                             <v-row>
+                                <v-col>
+                                    <span>우편번호</span>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
                                 <v-col cols="4 offset+3">
                                     <v-text-field
+                                    v-model=zipcode
                                     name="zipcode"
-                                    label="우편번호"
+                                    label=""
                                     id="zipcode"
-                                    readonly>
+                                    readonly disabled>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="4">
@@ -214,15 +297,16 @@ onMounted(() => {
                             <v-row>
                                 <v-col cols="7">
                                     <v-text-field
-                                    name="address"
-                                    label="자택주소"
-                                    id="address"
-                                    readonly>                                         
+                                    v-model=address1
+                                    label= ""
+                                    name="address1" 
+                                    id="address1"
+                                    readonly disabled>                                         
                                     </v-text-field>
                                 </v-col>
                                 <v-col>
                                     <v-text-field
-                                    name="address2"
+                                    v-model="address2"
                                     label="상세주소"
                                     id="address2">                                        
                                     </v-text-field>
@@ -232,56 +316,47 @@ onMounted(() => {
                             <v-row>
                                 <v-col cols="5">
                                     <v-text-field
+                                    v-model="emailId"
                                     label="이메일 아이디"
-                                    id="emailId"
-                                    name="emailId">
+                                    id="emailId">
                                     </v-text-field>
                                 </v-col>
                                 <!-- 중간에 @ 표시 추가해야함 -->
                                 <!-- 도메인을 선택했을 때  emailDomain에 출력 후 선택하세요로 리턴
                                 직접입력했을 때 reonly가 풀리면서 창입력할 수 있게끔 -->
-                                <v-col
-                                    v-if="emailDomain === '직접입력'"
-                                    cols="5"
-                                    label="직접입력"
-                                    id="custom"
-                                >
-                                    <v-text-field name="emailDomain" type="text"></v-text-field>
-                                </v-col>
                                 <v-col cols="1 pt-5 text-center">
                                     <span>@</span>
                                 </v-col>
 
                                 <v-col cols="5" v-if="emailDomain !== '직접입력'">
                                     <v-select
+                                    v-model="emailDomain"
                                     label="선택해주세요"
                                     :items="['naver.com', 'hanmail.net', 'gmail.com', '직접입력']"
-                                    id="emailDomain"
-                                    name="emailDomain"
+                                    id="selectDomain"
                                     >
                                     </v-select>                                             
                                 </v-col>
-                                <v-col v-else cols="5">
+                                <v-col cols="5" v-else>
                                     <v-text-field
-                                        label="직접입력"
-                                        name="emailDomain"
-                                        id="emailDomain">
+                                        v-model="emailDomain"
+                                        id="customDomain">
                                     </v-text-field>
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="3">
                                     <v-select
+                                    v-model="phone1"
                                     label="휴대전화"
-                                    id="mobile1"
-                                    name="mobile1"
+                                    id="phone1"
                                     :items="['010']">
                                     </v-select>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field
-                                    id="mobile2"
-                                    name="mobile2"
+                                    v-model="phone2"
+                                    id="phone2"                                    
                                     maxlength="4">
 
                                     </v-text-field>
@@ -289,8 +364,8 @@ onMounted(() => {
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field
-                                    id="mobile3"
-                                    name="mobile3"
+                                    v-model="phone3"
+                                    id="phone3"                                    
                                     maxlength="4">
 
                                     </v-text-field>
@@ -300,8 +375,8 @@ onMounted(() => {
                             <v-row>
                                 <v-col>
                                     <v-radio-group>
-                                        <v-radio label="이메일 수신 동의" value="ture" id="emailOk" name="emailGet"></v-radio>
-                                        <v-radio label="이메일 수신 미동의" value="false" id="emailNo" name="emailGet"></v-radio>
+                                        <v-radio v-model="emailGet" label="이메일 수신 동의" value="true" id="emailOk" ></v-radio>
+                                        <v-radio v-model="emailGet" label="이메일 수신 미동의" value="false" id="emailNo"></v-radio>
                                     </v-radio-group>
                                 </v-col>
                             </v-row>
