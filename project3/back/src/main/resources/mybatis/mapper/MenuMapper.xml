@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.back.mapper.MenuMapper">
 
-    <select id="menuList" resultType="MenuDto">
+    <select id="menuList" parameterType="map" resultType="MenuDto">
         SELECT * FROM menu ORDER BY menuNo DESC
     </select>
 
@@ -24,6 +24,7 @@
         <result property="regDate" column="reg_date" />
         <result property="heart" column="heart" />
         <result property="mImg" column="mImg" />
+        <result property="mdImg" column="mdImg" />
     </resultMap>
 </mapper>
 

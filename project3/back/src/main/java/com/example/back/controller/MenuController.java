@@ -25,15 +25,15 @@ public class MenuController {
 
     @GetMapping("/menuList")
     public List<MenuDto> getAllMenu(){
-        log.info("ddd");
+        log.info("메뉴리스트 들어갔어");
         return menuService.menuList();
     }
 
     @GetMapping("/menuDetail")
     @CrossOrigin(origins = "*")
-    public List<MenuDto> noticeDetail(int menuNo) throws Exception {
+    public List<MenuDto> menuDetail(int menuNo) throws Exception {System.out.println("요청!");
         List<MenuDto> menuDetail = menuService.menuDetail(menuNo);
-        System.out.println("Dsadsadas"+menuDetail);
+        System.out.println("잘들어갔어"+menuDetail);
 
         return menuDetail;
     }

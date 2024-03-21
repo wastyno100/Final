@@ -7,6 +7,7 @@
         SELECT
             *
         FROM board
+        WHERE boardCate = #{boardCate}
         ORDER BY boardNo DESC
     </select>
 
@@ -18,8 +19,8 @@
     </select>
 
     <insert id="boardWrite">
-        INSERT INTO board(userNo, title, content, boardCate, boardImg)
-        VALUES (1, #{title}, #{content}, #{boardCate}, #{boardImg})
+        INSERT INTO board(userNo, title, content, boardCate, eventStart, eventEnd, boardImg)
+        VALUES (1, #{title}, #{content}, #{boardCate}, #{eventStart}, #{eventEnd}, #{boardImg})
     </insert>
 
     <update id="boardUpdate">

@@ -5,7 +5,7 @@ import com.example.back.dto.BoardDto;
 import java.util.List;
 
 public interface BoardService {
-    List<BoardDto> boardData();
+    List<BoardDto> boardData(String boardCate);
 
     List<BoardDto> boardDetail(int boardNo);
 

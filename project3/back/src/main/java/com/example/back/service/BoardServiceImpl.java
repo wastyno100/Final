@@ -5,6 +5,7 @@ import com.example.back.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,8 +14,8 @@ public class BoardServiceImpl implements BoardService {
     private BoardMapper boardMapper;
 
     @Override
-    public List<BoardDto> boardData() {
-        return boardMapper.boardData();
+    public List<BoardDto> boardData(String boardCate) {
+        return boardMapper.boardData(boardCate);
     }
 
     public List<BoardDto> boardDetail(int boardNo) {
