@@ -5,10 +5,13 @@ import com.example.back.dto.UserDto;
 import com.example.back.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collections;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
 
     @Override
     public User getUser(String id) {
@@ -47,11 +49,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
-        //비밀번호를 저장할 때 BCryptPasswordEncoder를 통해 비밀번호를 암호화
+        //비밀번호를 저장할 때 BCryptPasswordEncoder 를 통해 비밀번호를 암호화
         user.setPass(passwordEncoder.encode(user.getPass()));
+        user.setRole("RULE_A");
 //        user.setPass(user.getPass());
         System.out.println(user.getPass());
         userMapper.addUser(user);
     }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException{
+//        User user = userMapper.getUser(id);
+//
+//        if (user == null){
+//            throw  new UsernameNotFoundException("User not found with username: " + id);
+//        }
+//        return org.springframework.security.core.userdetails.User.builder()
+//                .username(user.getId())
+//                .password(user.getPass())
+//                .authorities(Collections.singleton(new SimpleGrantedAuthority(user.getRole())))
+//                .build();
+//
+//    }
+
 }
 

@@ -22,6 +22,7 @@ public class UserDto {
     private String phone;
     private Boolean emailGet;
     private Timestamp joinDate;
+    private String role;
 
     private String emailId;
     private String emailDomain;
