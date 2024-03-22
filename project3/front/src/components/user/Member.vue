@@ -27,7 +27,7 @@ async function joinFormCheck(){
 
         try{
         await axios.post(`/api/member`, {
-        name: name.value,
+        username: name.value,
         id: userId.value,
         pass: pass.value,
         zipcode: zipcode.value,

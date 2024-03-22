@@ -4,7 +4,6 @@ package com.example.back.controller;
 import com.example.back.domain.User;
 import com.example.back.dto.UserDto;
 import com.example.back.service.UserService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,14 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.http.HttpResponse;
+
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
+
 
     @PostMapping("/login")
     @CrossOrigin(origins = "*")
@@ -34,7 +33,7 @@ public class UserController {
         System.out.println("@@@@@" + loginRequest.getId() + loginRequest.getPass());
         int result = userService.login(loginRequest.getId(), loginRequest.getPass());
 
-        if(result != 1){ // 로그인 실패 시
+        if (result != 1) { // 로그인 실패 시
             // 적절한 실패 메시지 반환
             return result;
         } else { // 로그인 성공 시
@@ -45,15 +44,22 @@ public class UserController {
 
             // 로그인 성공 후 세션에 사용자 정보 저장
             User user = userService.getUser(loginRequest.getId());
-            newSession.setAttribute("isLogin", true);
-            newSession.setMaxInactiveInterval(30*60); // 세션 타임아웃 30분 설정
+            newSession.setAttribute("isLogIn", true);
+            newSession.setAttribute("userId", user.getId());
+            newSession.setAttribute("role", user.getRole()); //사용자 권한 저장
+            newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
+
 
             // 쿠키 설정
             Cookie sessionCookie = new Cookie("JSESSIONID", newSession.getId());
+            sessionCookie.setPath("/");
             sessionCookie.setHttpOnly(true);
+            sessionCookie.setMaxAge(60 * 60);
 //            sessionCookie.setSecure(true); // HTTPS 환경에서만 사용
             response.addCookie(sessionCookie);
 
+            model.addAttribute("isLogIn", true);
+            model.addAttribute("userId", user.getId());
             model.addAttribute("user", user);
             System.out.print("로그인 성공" + user.getId());
 
@@ -61,34 +67,60 @@ public class UserController {
         }
     }
 
+    @PostMapping("/api/logout")
+    @CrossOrigin(origins = "*")
+    public String logout(HttpServletRequest request,HttpServletResponse response) {
+        HttpSession session = request.getSession(false); // 기존 세션 가져오기, 없으면 null 반환
+        if (session != null) {
+            session.invalidate(); // 세션 무효화
+
+//            Cookie cookie = new Cookie("JSESSIONID", null);
+//            cookie.setMaxAge(0);
+//            session.invalidate();
+//            return "로그아웃성공";
+        }
+        return "로그아웃 실패: 세션이 존재하지 않습니다.";
+    }
+
     @PostMapping("/member")
     @CrossOrigin(origins = "*")
-    public String joinUser(@RequestBody User user){
+    public String joinUser(@RequestBody User user) {
         System.out.println(user);
         user.setEmail(user.getEmailId() + "@" + user.getEmailDomain());
         user.setPhone(user.getPhone1() + "-" + user.getPhone2() + "-" + user.getPhone3());
         if (user.getEmailGet() != null) {
             user.setEmailGet(user.getEmailGet());
         }
+        user.setRole("user");
         userService.addUser(user);
         return "회원가입이 성공적으로 완료되었습니다.";
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    public class LoginStatus {
+        private final boolean isLogIn;
+        private final String userId;
+
+        public LoginStatus(boolean isLogIn, String userId) {
+            this.isLogIn = isLogIn;
+            this.userId = userId;
+        }
+
+        public boolean isLogIn() {
+            return isLogIn;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
     }
 
-    @GetMapping("/manager")
-    public String manager() {
-        return "manager";
-    }
+    @PostMapping("/api/status")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public LoginStatus checkLoginStatus(HttpSession session) {
+        boolean isLogIn = session.getAttribute("isLogIn") != null && (Boolean) session.getAttribute("isLogIn");
+        String userId = isLogIn ? (String) session.getAttribute("userId") : null;
 
-    @GetMapping("/admin")
-    public String admin() {
-        System.out.println("어드민페이지입니다.");
-        return "admin";
+        return new LoginStatus(isLogIn, userId);
     }
- }
-
+}
 

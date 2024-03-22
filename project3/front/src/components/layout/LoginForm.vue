@@ -4,6 +4,9 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 
+const link = (url) => router.push(url);
+
+
 const id = ref('');
 const pass = ref('');
 const router = useRouter();
@@ -38,7 +41,10 @@ async function goLogin() {
       alert("로그인 요청 실패");
     }
   }
+
 }
+
+
 </script>
 
 
@@ -54,7 +60,7 @@ async function goLogin() {
       <v-form>
         <v-text-field
           v-model="id"
-          label="이메일"
+          label="아이디"
         ></v-text-field>
         <!-- <v-text-field
           v-model="userId"
@@ -70,6 +76,7 @@ async function goLogin() {
         
       </v-form>
       <v-btn type="button" @click="goLogin" block class="mt-2">로그인</v-btn>
+      <v-btn type="button" @click="link('/Member')">회원가입</v-btn>
     </v-sheet>
   </v-main>
 </template>

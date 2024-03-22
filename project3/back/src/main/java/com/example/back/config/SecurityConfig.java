@@ -3,6 +3,7 @@ package com.example.back.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,13 +23,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //역할 간의 계층 구조 정의
+//    역할 간의 계층 구조 정의
     @Bean
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
-        //C권한은 B의 권한을 상속 받으며, B권한은 A의 권한을 상속받는다.
-        hierarchy.setHierarchy("ROLE_C>ROLE_B\n" +
-                "ROLE_B > ROLE_A");
+        //admin권한은 manager의 권한을 상속 받으며, manager권한은 user의 권한을 상속받는다.
+        hierarchy.setHierarchy("ROLE_admin>ROLE_manager\n" +
+                "ROLE_manager > ROLE_user");
 
         return hierarchy;
     }
@@ -43,20 +44,30 @@ public class SecurityConfig {
                 .csrf((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
                         //경로 설정시 모든 사용자가 권한을 같는다.
-                        .requestMatchers("/login","/api/login","/member", "/api/member").permitAll()
+                        .requestMatchers("/","/login",
+                                "/member", "status", "/api/status"
+                                ).permitAll()
                         //일반 페이지 경로는 권한 A가 있는 유저
-                        .requestMatchers("/").hasAnyRole("A")
+                        .requestMatchers("/boardList")
+                        .hasAnyRole("user")
                         //매니저 페이지는 경로 권한 B가 있는 유저
-                        .requestMatchers("/manager").hasAnyRole("B")
+                        .requestMatchers("/manager/**").hasAnyRole("manager")
                         //어드민 페이지는 경로 권한 C가 있는 유저
-                        .requestMatchers("localhost:5173/api/admin").hasAnyRole("C")
+                        .requestMatchers("/adminUser/**").hasAnyRole("admin")
                         .anyRequest().authenticated()
                 );
-//        http
-//                .formLogin((auth) -> auth.loginPage("/login") // 로그인 페이지의 URL을 "/login"으로 설정합니다.
-//                        .loginProcessingUrl("/api/login") // 로그인 폼이 제출될 때 데이터를 처리할 URL을 "/login"으로 설정합니다.
-//                        .permitAll()
-//                );
+        http
+                .formLogin((auth) -> auth.loginPage("/login") // 로그인 페이지의 URL을 "/login"으로 설정합니다.
+                        .loginProcessingUrl("/api/login") // 로그인 폼이 제출될 때 데이터를 처리할 URL을 "/login"으로 설정합니다.
+                        .permitAll()
+                );
+        http
+                .logout()
+                .logoutUrl("/logout") // 로그아웃 URL 설정
+                .logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 URL 설정
+                .invalidateHttpSession(true) // HTTP 세션 무효화 설정
+                .deleteCookies("JSESSIONID") // 쿠키 삭제 설정
+                .permitAll();
 
         return http.build();
     }

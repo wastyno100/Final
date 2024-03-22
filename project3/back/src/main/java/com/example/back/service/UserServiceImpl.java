@@ -51,26 +51,8 @@ public class UserServiceImpl implements UserService {
     public void addUser(User user) {
         //비밀번호를 저장할 때 BCryptPasswordEncoder 를 통해 비밀번호를 암호화
         user.setPass(passwordEncoder.encode(user.getPass()));
-        user.setRole("RULE_A");
-//        user.setPass(user.getPass());
         System.out.println(user.getPass());
         userMapper.addUser(user);
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException{
-//        User user = userMapper.getUser(id);
-//
-//        if (user == null){
-//            throw  new UsernameNotFoundException("User not found with username: " + id);
-//        }
-//        return org.springframework.security.core.userdetails.User.builder()
-//                .username(user.getId())
-//                .password(user.getPass())
-//                .authorities(Collections.singleton(new SimpleGrantedAuthority(user.getRole())))
-//                .build();
-//
-//    }
-
 }
 
