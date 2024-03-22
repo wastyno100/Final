@@ -23,7 +23,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "*")
+//    @CrossOrigin(origins = "http://localhost:5173")
     public int login(@RequestBody UserDto.LoginRequest loginRequest,
                      Model model,
                      HttpSession session,
@@ -67,23 +67,24 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/logout")
-    @CrossOrigin(origins = "*")
+    @PostMapping("/logout")
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
     public String logout(HttpServletRequest request,HttpServletResponse response) {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기, 없으면 null 반환
         if (session != null) {
             session.invalidate(); // 세션 무효화
 
-//            Cookie cookie = new Cookie("JSESSIONID", null);
-//            cookie.setMaxAge(0);
-//            session.invalidate();
-//            return "로그아웃성공";
+            Cookie cookie = new Cookie("JSESSIONID", null);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return "로그아웃성공";
         }
         return "로그아웃 실패: 세션이 존재하지 않습니다.";
     }
 
     @PostMapping("/member")
-    @CrossOrigin(origins = "*")
+//    @CrossOrigin(origins = "http://localhost:5173")
     public String joinUser(@RequestBody User user) {
         System.out.println(user);
         user.setEmail(user.getEmailId() + "@" + user.getEmailDomain());
@@ -114,8 +115,8 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/status")
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/status")
+    @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
     public LoginStatus checkLoginStatus(HttpSession session) {
         boolean isLogIn = session.getAttribute("isLogIn") != null && (Boolean) session.getAttribute("isLogIn");
         String userId = isLogIn ? (String) session.getAttribute("userId") : null;
