@@ -1,12 +1,10 @@
 package com.example.back.service;
 
-import com.example.back.dto.BoardDto;
 import com.example.back.dto.MenuDto;
 import com.example.back.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.List;
 
 @Service
@@ -25,4 +23,10 @@ public class MenuService {
     public List<MenuDto> menuDetail(int menuNo) {
         return menuMapper.menuDetail(menuNo);
     }
+
+    public void cart(int menuNo){
+        menuMapper.cart(menuNo);
+    }
+
 }
+

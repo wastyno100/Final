@@ -3,6 +3,7 @@
 <template>
   <v-main>
     <H2>메뉴리스트</H2>
+    {{items}}
     <v-col cols="12">
       <v-autocomplete
         :items="items"
@@ -22,9 +23,9 @@
     </v-col>
     <v-row class="testk">
       <v-col cols="12">
-        <v-infinite-scroll :items="menu" :onLoad="load">
+        <v-infinite-scroll :items="items" :onLoad="load">
           <v-row>
-            <v-col cols="12" md="3" v-for="(item, menuNo) in menu" :key="menuNo" @click="gotomenuDetail(item)">
+            <v-col cols="12" md="3" v-for="(item, menuNo) in items" :key="menuNo" @click="gotomenuDetail(item)">
               <v-card class="mx-auto mt-3 card" width="200px" height="250px">
                 <v-img
                   weight="200px"
@@ -52,53 +53,24 @@
     </v-row>
     <v-row ref="observer"></v-row>
   </v-main>
-
 </template>
-
 <script setup>
 import { onMounted, ref,} from 'vue'
 import axios from 'axios';
 import { useRouter } from "vue-router";
 
-//menudata
-const menus = ref([]);
-let menu = ref([]);
+//페이지네이션
+let items = ref([]);
 
 const router = useRouter();
 
-
-// 비동기 API 함수
-// function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
-// const getData = async () => {
-//   try {
-//     console.log("데이터 로딩 중...");
-//     await sleep(1000);
-//
-//     const res = await axios.get('/api/menuList', { params: { page: currentPage } });
-//     loadMoreItems();
-//     console.log("currentPage :"+currentPage);
-//     Math.ceil(res.data.length/8);
-//
-//     currentPage++;
-//     // menu.value = res.data; // 여기서는 전체 데이터를 menu.value에 할당했습니다.
-//   } catch (error) {
-//     console.error('API 호출 중 에러 발생:', error);
-//   } finally {
-//     isLoading.value = false;
-//     console.log("다뿌렸지머야");
-//   }
-// }
 const getData = async () => {
   try {
     const res = await axios.get('/api/menuList')
-    // 예시 URL입니다. 실제 요청할 API 엔드포인트로 변경해야 합니다.
+    items.value = res.data;
     return new Promise(resolve => {
       setTimeout(() => {
-        menus.value = res.data;
-        resolve(Array.from({ length: 10 }, (k, v) => v + (menus.value.at(-1) || 0) + 1))
+        resolve(Array.from({ length: 10 }, (k, v) => v + (res.data.at(-1) || 0) + 1))
       }, 1000)
     })
     // 데이터베이스로부터 받은 데이터를 반환합니다.
@@ -107,47 +79,22 @@ const getData = async () => {
     return []  // 에러가 발생한 경우 빈 배열을 반환
   }
 }
-  const load = async ({ done }) => {
+const load = async ({ done }) => {
+
+  const test = await getData()
+
+  items.value.push(...test);
 
   // 완료 콜백 호출
   done('ok')
 }
-
-//
-// function loadMoreItems() {
-//   const startIndex = (currentPage - 1) * 10;
-//   const endIndex = startIndex + 10;
-//   const itemsToDisplay = menu.value.slice(startIndex, endIndex);
-//
-//   console.log(itemsToDisplay);
-// }
-//
 function gotomenuDetail(item){
   router.push({
     name: 'MenuDetail',
-    state: {dataObj: { menuNo: item.menuNo }}
+    state: { dataObj: { menuNo: item.menuNo }}
   })
 }
-// function handleScroll() {
-//   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-//
-//   if (scrollTop + clientHeight >= scrollHeight - 5 && !isLoading.value) {
-//     getData();
-//   }
-// }
-
 onMounted(() => {
   getData();
-  // window.addEventListener('scroll', handleScroll);
 });
-//
-// watch(() => menu.value, () => {
-//   loadMoreItems();
-// });
-
-
-
-//탭
-
-
 </script>

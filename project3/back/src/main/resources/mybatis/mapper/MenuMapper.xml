@@ -13,6 +13,21 @@
         WHERE menuNo = #{menuNo}
     </select>
 
+    <!-- 장바구니   -->
+    <insert id="insertCart">
+        INSERT INTO cart(cartId, menuNo, userNo, menuCount)
+        VALUES (#{cartId}, #{menuNo}, #{userNo}, #{menuCount})
+    </insert>
+
+    <select id="cart111" resultType="menuDto">
+        SELECT
+            *
+        FROM menu
+        WHERE menuNo = #{menuNo}
+    </select>
+
+
+
     <resultMap id="infoMenuResultMap" type="MenuDto">
         <id property="menuNo" column="menuNo" />
         <result property="goodsNum" column="goodsNum" />
