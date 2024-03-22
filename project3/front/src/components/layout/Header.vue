@@ -16,10 +16,10 @@
         </v-col>
         <v-col cols="12" class="text-center">
           <v-btn @click="link('/')">홈</v-btn>
-          <v-btn @click="link('#')">아무거나1</v-btn>
-          <v-btn @click="link('#')">아무거나2</v-btn>
-          <v-btn @click="link('#')">아무거나3</v-btn>
-          <v-btn @click="link('#')">아무거나4</v-btn>
+          <v-btn @click="link('#')">메뉴</v-btn>
+          <v-btn @click="link('#')">시세</v-btn>
+          <v-btn @click="link('#')">소식</v-btn>
+          <v-btn @click="link('#')">마이페이지</v-btn>
         </v-col>
       </v-row>
     </v-app-bar>

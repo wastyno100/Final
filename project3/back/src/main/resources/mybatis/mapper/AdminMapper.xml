@@ -6,4 +6,22 @@
         SELECT * FROM user
     </select>
 
+    <update id="updateRole">
+        UPDATE user
+        SET role = #{role}
+        WHERE userNo = #{userNo}
+    </update>
+
+    <select id="qnaData" resultType="com.example.back.dto.AdminDto$QnaDto">
+        SELECT qna.*, user.id, user.role
+        FROM qna
+        JOIN user ON qna.userNo = user.userNo
+        ORDER BY qnaNo DESC
+    </select>
+
+    <update id="qnaAnswer">
+        UPDATE qna
+        SET answer = #{answer}, answerDate = #{answerDate}
+        WHERE qnaNo = #{qnaNo}
+    </update>
 </mapper>
