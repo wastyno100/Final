@@ -14,7 +14,7 @@ public class UserDto {
     private int userNo;
     private String id;
     private String pass;
-    private String name;
+    private String username;
     private String email;
     private String zipcode;
     private String address1;
@@ -22,6 +22,7 @@ public class UserDto {
     private String phone;
     private Boolean emailGet;
     private Timestamp joinDate;
+    private String role;
 
     private String emailId;
     private String emailDomain;

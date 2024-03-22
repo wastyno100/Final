@@ -26,8 +26,8 @@ async function joinFormCheck(){
         // joinFormFieldsCheck();
 
         try{
-        await axios.post(`/api/joinUser`, {
-        name: name.value,
+        await axios.post(`/api/member`, {
+        username: name.value,
         id: userId.value,
         pass: pass.value,
         zipcode: zipcode.value,
@@ -42,7 +42,7 @@ async function joinFormCheck(){
     }).then((res)=> {
         console.log(res.data);
     alert("회원가입이 성공적으로 완료되었습니다.")
-    router.push('/');
+    router.push('/login');
     })
     
     }

@@ -8,7 +8,7 @@
 
     <insert id="addUser" parameterType="com.example.back.domain.User"
             useGeneratedKeys="true" keyProperty="userNo">
-        INSERT INTO user (id, name, pass, email, zipcode, address1, address2, phone, email_get, join_date)
-        VALUES (#{id}, #{name}, #{pass}, #{email}, #{zipcode},#{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE())
+        INSERT INTO user (id, username, pass, email, zipcode, address1, address2, phone, email_get, join_date, role)
+        VALUES (#{id}, #{username}, #{pass}, #{email}, #{zipcode},#{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE(), #{role})
     </insert>
 </mapper>

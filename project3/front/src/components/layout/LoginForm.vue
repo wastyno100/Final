@@ -1,46 +1,25 @@
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
 import { useRouter } from "vue-router";
-
+import { useStore } from 'vuex'; // Vuex의 useStore를 import합니다.
 
 const id = ref('');
 const pass = ref('');
 const router = useRouter();
+const store = useStore(); // 스토어 인스턴스를 가져옵니다.
 
+const link = (url) => router.push(url);
+
+// goLogin 함수를 수정합니다.
 async function goLogin() {
   if (!id.value || !pass.value) {
     alert("입력부터 해주세요");
   } else {
-    try {
-      await axios.post(`/api/login`, {
-        id: id.value,
-        pass: pass.value
-      }).then((res)=> {
-      console.log(res.data)
-      if (res.data === 1) {
-        console.log("로그인 성공");
-        alert("로그인 성공");
-        router.push('/');
-
-      } else if (res.data === 0) {
-        console.log("비밀번호가 다릅니다.");
-        alert("비밀번호가 다릅니다."); 
-      } 
-      else if(res.data === -1){
-        console.log("아이디가 존재하지 않습니다.");
-        alert("아이디가 존재하지 않습니다."); 
-      }
-    })
-
-    } catch (error) {
-      console.error("로그인 요청 실패:", error);
-      alert("로그인 요청 실패");
-    }
+    // store.dispatch를 사용하여 'login' 액션을 호출합니다.
+    store.dispatch('login', { id: id.value, pass: pass.value });
   }
 }
 </script>
-
 
 <!-- <input
   :value="text"
@@ -49,29 +28,39 @@ async function goLogin() {
 == <input v-model="text"> -->
 
 <template>
-  <v-main>
-    <v-sheet width="300" class="mx-auto">
-      <v-form>
-        <v-text-field
-          v-model="id"
-          label="이메일"
-        ></v-text-field>
-        <!-- <v-text-field
-          v-model="userId"
-          label="아이디"
-          ></v-text-field> -->
-
-        <v-text-field
-          v-model="pass"
-          label="비밀번호"
-          type="password"
-        ></v-text-field>
-
-        
-      </v-form>
-      <v-btn type="button" @click="goLogin" block class="mt-2">로그인</v-btn>
-    </v-sheet>
-  </v-main>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-main>
+          <v-sheet width="300" class="mx-auto">
+            <v-form>
+              <v-text-field
+                v-model="id"
+                label="아이디"
+              ></v-text-field>
+              <v-text-field
+                v-model="pass"
+                label="비밀번호"
+                type="password"
+              ></v-text-field>
+            </v-form>
+          </v-sheet>
+        </v-main>     
+        <v-row>
+          <v-col cols="5 offset-1" class="text-end">
+            <v-main>
+              <v-btn type="button" @click="goLogin">로그인</v-btn>
+            </v-main>
+          </v-col>
+          <v-col class="text-start">
+            <v-main>
+              <v-btn type="button" @click="link('/Member')">회원가입</v-btn>
+            </v-main>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+</v-container>  
 </template>
 
 <style>
