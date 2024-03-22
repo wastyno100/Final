@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "v3-carousel": "^2.0.3",
+    "vue3-carousel": "^0.3.1"
+  }
+}

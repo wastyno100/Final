@@ -8,8 +8,9 @@ import BoardView from "@/views/BoardView.vue";
 import BoardDetailView from "@/views/BoardDetailView.vue";
 import BoardWriteView from "@/views/BoardWriteView.vue";
 import BoardUpdateView from "@/views/BoardUpdateView.vue";
-import MenuDetail from '@/views/MenuDetail.vue'
-import MenuCart from '@/views/MenuCart.vue'
+import MenuDetail from '@/views/MenuDetail.vue';
+import MenuCart from '@/views/MenuCart.vue';
+import qouteView from '@/views/quote.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +69,11 @@ const router = createRouter({
       path: '/board/update',
       name: 'update',
       component: BoardUpdateView,
+    },
+    {
+      path: '/qoute',
+      name: 'qoute',
+      component: qouteView,
     },
   ]
 })

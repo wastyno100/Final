@@ -46,7 +46,7 @@ const getImg = () => {
 
 onMounted(() => { 
   getData().then(() => { getImg() })
-  })
+})
 </script>
 
 <template>

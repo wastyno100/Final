@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -18,5 +19,13 @@ public class AdminServiceImpl implements AdminService {
     public List<AdminDto> userData() {
         return adminMapper.userData();
     }
+
+    public void updateRole(AdminDto adminDto) { adminMapper.updateRole(adminDto); }
+
+    public List<AdminDto.QnaDto> qnaData() {
+        return adminMapper.qnaData();
+    }
+
+    public void qnaAnswer(AdminDto.QnaDto qnaDto) { adminMapper.qnaAnswer(qnaDto); }
 }
 
