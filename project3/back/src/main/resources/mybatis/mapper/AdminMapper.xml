@@ -24,4 +24,23 @@
         SET answer = #{answer}, answerDate = #{answerDate}
         WHERE qnaNo = #{qnaNo}
     </update>
+
+    <select id="reportData" resultType="com.example.back.dto.AdminDto$ReportDto">
+        SELECT reply.*, user.id, menu.menuTitle
+        FROM reply
+        JOIN user ON reply.userNo = user.userNo
+        JOIN menu ON reply.menuNo = menu.menuNo
+        WHERE report = 1
+    </select>
+
+    <update id="reportKeep">
+        UPDATE reply
+        SET report = 0
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <delete id="reportDelete">
+        DELETE FROM reply
+        WHERE replyNo = #{replyNo}
+    </delete>
 </mapper>

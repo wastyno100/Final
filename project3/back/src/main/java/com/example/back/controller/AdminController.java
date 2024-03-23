@@ -47,4 +47,22 @@ public class AdminController {
         System.out.println(qnaDto);
         adminService.qnaAnswer(qnaDto);
     }
+
+    @GetMapping("/reportList")
+    @CrossOrigin(origins = "*")
+    public List<AdminDto.ReportDto> reportList() {
+        return adminService.ReportData();
+    }
+
+    @PutMapping("/reportKeep")
+    @CrossOrigin(origins = "*")
+    public void reportKeep(int replyNo) {
+        adminService.reportKeep(replyNo);
+    }
+
+    @DeleteMapping("/reportDelete")
+    @CrossOrigin(origins = "*")
+    public void reportDelete(int replyNo) {
+        adminService.reportDelete(replyNo);
+    }
 }

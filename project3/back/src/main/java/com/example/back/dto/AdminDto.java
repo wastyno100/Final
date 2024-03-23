@@ -29,6 +29,20 @@ public class AdminDto {
         private String answerDate;
     }
 
+    @Data
+    public static class ReportDto {
+        private int replyNo;
+        private int menuNo;
+        private int userNo;
+        private String replyContent;
+        private int report;
+        private String rImg;
+        private String reg_date;
+        private int heart;
+
+        private String menuTitle;
+        private String id;
+    }
 
 }
 
