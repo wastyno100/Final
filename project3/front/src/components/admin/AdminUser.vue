@@ -116,16 +116,24 @@ watchEffect(() => {
       </v-row>
     </v-card-text>
     <v-card height="500" elevation="3" class="mt-4">
+      <v-card-item style="border-bottom: 2px solid gray;">
+        <v-row class="text-center font-weight-bold">
+          <v-col cols="3">이름</v-col>
+          <v-col cols="3">id</v-col>
+          <v-col cols="3">권한</v-col>
+          <v-col cols="3">정보</v-col>
+        </v-row>
+      </v-card-item>
       <!-- 유저 리스트를 출력 -->
       <v-card-item v-for="item in showItem" v-bind:key="item" class="text-center mt-2">
         <v-row>
-          <v-col>
+          <v-col cols="3">
             <span>{{ item.username }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="3">
             <span>{{ item.id }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="3">
             <span>
               <v-select
                 v-model="item.role"
@@ -135,7 +143,7 @@ watchEffect(() => {
               </v-select>
             </span>
           </v-col>
-          <v-col cols="2">
+          <v-col cols="3">
             <v-btn text="정보"/>
           </v-col>
         </v-row>

@@ -74,7 +74,7 @@ onMounted(() => {
       <v-card-title class="text-center">
         <h3>문의 답변</h3>
       </v-card-title>
-
+      
       <v-card-text>
       <v-row justify="center">
         <v-col cols="3">
@@ -85,7 +85,19 @@ onMounted(() => {
         </v-col>
       </v-row>
     </v-card-text>
+    
     <v-card height="450" elevation="3" class="mt-4">
+
+      <v-card-item style="border-bottom: 2px solid gray;">
+        <v-row class="text-center font-weight-bold">
+          <v-col cols="1">No</v-col>
+          <v-col cols="5">제목</v-col>
+          <v-col cols="2">ID</v-col>
+          <v-col cols="2">작성일</v-col>
+          <v-col cols="2">처리여부</v-col>
+        </v-row>
+      </v-card-item>
+
       <v-card-item
         v-for="item in showItem"
         v-bind:key="item"
