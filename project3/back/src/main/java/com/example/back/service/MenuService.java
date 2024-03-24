@@ -20,12 +20,23 @@ public class MenuService {
         return menuMapper.menuList();
     }
 
+    public List<MenuDto> menuListBest(){
+        return menuMapper.menuListBest();
+    }
+    public List<MenuDto> menuListMenuCate(){
+        return menuMapper.menuListMenuCate();
+    }
+
     public List<MenuDto> menuDetail(int menuNo) {
         return menuMapper.menuDetail(menuNo);
     }
 
     public void cart(int menuNo){
         menuMapper.cart(menuNo);
+    }
+
+    public List<MenuDto> menuBuy(int menuNo) {
+        return menuMapper.menuBuy(menuNo);
     }
 
 }
