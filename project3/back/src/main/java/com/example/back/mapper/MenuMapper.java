@@ -8,9 +8,15 @@ import java.util.List;
 
 @Mapper
 public interface MenuMapper {
-    List<MenuDto> menuList();
+    List<MenuDto> menuListBest();
+
+    List<MenuDto> menuListMenuCate();
 
     List<MenuDto> menuDetail(int menuNo);
 
     List<CartDto> cart(int menuNo);
+
+    List<MenuDto> menuBuy(int menuNo);
+
+    List<MenuDto> menuList();
 }

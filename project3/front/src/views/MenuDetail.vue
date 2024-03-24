@@ -103,6 +103,7 @@
     </v-row>
     <v-divider></v-divider>
     <!--메뉴기본정보끝-->
+    <!--부가정보-->
     <v-tabs v-model="item" bg-color="primary">
       <v-tab value="one">상세정보</v-tab>
       <v-tab value="two">리뷰</v-tab>
@@ -157,16 +158,8 @@ const getData = async () => {
 
 onMounted(() => {
   getData()
+  // console.log(user.value)
 })
-// function addToCart(){
-//   router.push({
-//     name: 'Cart',
-//     state: { cartInfo: {
-//         menuNo: menu.value.menuNo,
-//         count: count.value // 현재 선택한 수량
-//       }} //유저번호, 상품번호
-//   })
-// }
 const saveCart = async () => {
   // 장바구니에 담을 데이터 준비
   const cartData = {
@@ -189,7 +182,7 @@ const addToCart = () => {
       cartInfo: {
         menuNo: menu.value.menuNo, // 현재 페이지에서 선택한 메뉴 번호
         count: count.value, // 현재 선택한 수량
-        userNo:user.userNo
+        // userNo: user.userNo
       }
     }
   });
