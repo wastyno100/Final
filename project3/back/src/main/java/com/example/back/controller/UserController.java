@@ -23,18 +23,22 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody UserDto.LoginRequest loginRequest, HttpSession session) {
+    public Map<String, Object> login(@RequestBody UserDto.LoginRequest loginRequest,
+                                     Model model,
+                                     HttpSession session,
+                                     HttpServletRequest request, // HttpServletRequest 추가
+                                     HttpServletResponse response)
+            throws IOException {
         int result = userService.login(loginRequest.getId(), loginRequest.getPass());
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> responseData = new HashMap<>();
 
         if (result != 1) { // 로그인 실패 시
-            response.put("result", result); // 실패 코드 반환
+            responseData.put("result", result); // 실패 코드 반환
         } else { // 로그인 성공 시
             User user = userService.getUser(loginRequest.getId());
             session.invalidate(); // 기존 세션 무효화
-//            HttpSession newSession = session.getSession(true); // 새 세션 생성
+            HttpSession newSession = request.getSession(true); // 새 세션 생성
 
             // 세션에 사용자 정보 저장
             newSession.setAttribute("isLogIn", true);
@@ -42,11 +46,14 @@ public class UserController {
             newSession.setAttribute("role", user.getRole());
             newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
 
-            response.put("result", result); // 성공 코드 반환
+            responseData.put("result", result); // 성공 코드 반환
+            responseData.put("userId", user.getId()); // 사용자 아이디 반환
+            responseData.put("role", user.getRole()); // 사용자 역할 반환
         }
 
-        return response;
+        return responseData;
     }
+
 //    @PostMapping("/login")
 ////    @CrossOrigin(origins = "http://localhost:5173")
 //    public int login(@RequestBody UserDto.LoginRequest loginRequest,
@@ -72,6 +79,7 @@ public class UserController {
 //            newSession.setAttribute("isLogIn", true);
 //            newSession.setAttribute("userId", user.getId());
 //            newSession.setAttribute("role", user.getRole()); //사용자 권한 저장
+//            System.out.println(user.getRole());
 //            newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
 //
 //
@@ -85,8 +93,10 @@ public class UserController {
 //
 //            model.addAttribute("isLogIn", true);
 //            model.addAttribute("userId", user.getId());
+//            model.addAttribute("role", user.getRole());
 //            model.addAttribute("user", user);
 //            System.out.print("로그인 성공" + user.getId());
+//            System.out.println(user.getRole());
 //
 //            return result;
 //        }

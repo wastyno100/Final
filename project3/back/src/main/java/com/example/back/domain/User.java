@@ -29,4 +29,7 @@ public class User implements Serializable {
     private String phone2;
     private String phone3;
 
+    public String getRole() {
+        return role;
+    }
 }

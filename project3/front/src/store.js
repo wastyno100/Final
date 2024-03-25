@@ -11,9 +11,6 @@ const store = createStore({
   mutations: {
     SET_LOGIN_STATUS(state, payload) {
       state.loginStatus = payload;
-    },
-    SET_ROLE(state, role){
-      state.loginStatus.role = role;
     }
   },
   actions: {
@@ -27,18 +24,18 @@ const store = createStore({
             pass: pass
           });
           console.log(res.data)
-          if (res.data === 1) {
+          if (res.data.result === 1) {
             console.log("로그인 성공");
             alert("로그인 성공");
             sessionStorage.setItem('isLogIn', 'true');
-            sessionStorage.setItem('userId', id);
-            sessionStorage.setItem('role', res.data.role)
-            commit('SET_LOGIN_STATUS', { isLogIn: true, userId: id, role: res.data.role }); // Save user role
+            sessionStorage.setItem('userId', res.data.userId);
+            sessionStorage.setItem('role', res.data.role);
+            commit('SET_LOGIN_STATUS', { isLogIn: true, userId: res.data.userId, role: res.data.role }); // Save user role
             router.push('/');
-          } else if (res.data === 0) {
+          } else if (res.data.result === 0) {
             console.log("비밀번호가 다릅니다.");
             alert("비밀번호가 다릅니다."); 
-          } else if (res.data === -1) {
+          } else if (res.data.result === -1) {
             console.log("아이디가 존재하지 않습니다.");
             alert("아이디가 존재하지 않습니다.");
           }
@@ -64,11 +61,11 @@ const store = createStore({
       try {
         const isLogIn = sessionStorage.getItem('isLogIn') === 'true';
         const userId = sessionStorage.getItem('userId');
-        const role = sessionStorage.getItem('role'); // Retrieve user role from sessionStorage
-        commit('SET_LOGIN_STATUS', { isLogIn, userId, role }); // Save user role
+        const role = sessionStorage.getItem('role'); 
+        commit('SET_LOGIN_STATUS', { isLogIn, userId, role }); 
       } catch (error) {
         console.error('로그인 상태 확인 중 오류 발생:', error);
-        commit('SET_LOGIN_STATUS', { isLogIn: false, userId: null, role: null }); // Clear user role
+        commit('SET_LOGIN_STATUS', { isLogIn: false, userId: null, role: null });
       }
     },
   },

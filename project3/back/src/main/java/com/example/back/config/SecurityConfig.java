@@ -1,17 +1,13 @@
 package com.example.back.config;
 
-//import com.example.back.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,17 +21,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-//    private final UserDetailsServiceImpl userDetailsServiceImpl;
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return userDetailsServiceImpl;
-//    }
 
     //비밀번호 암호화
     @Bean
@@ -54,11 +39,7 @@ public class SecurityConfig {
         return hierarchy;
     }
 
-<<<<<<< HEAD
-    //HTTP 보안설정
-=======
     //    HTTP 보안설정
->>>>>>> 643142f279909c4c253579c50e734e156b7ec001
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
@@ -67,11 +48,7 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
-<<<<<<< HEAD
-                        //경로 설정시 모든 사용자가 권한을 같는다.
-=======
                                 //경로 설정시 모든 사용자가 권한을 같는다.
->>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                        .requestMatchers("/","/login", "api/login",
 //                                "/member", "status", "/api/status", "api/logout", "logout"
 //                                ).permitAll()
@@ -93,7 +70,7 @@ public class SecurityConfig {
                 );
         http
                 .logout()
-                .logoutUrl("/logout") // 로그아웃 URL 설정
+                .logoutUrl("/api/logout") // 로그아웃 URL 설정
                 .logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 URL 설정
                 .invalidateHttpSession(true) // HTTP 세션 무효화 설정
                 .deleteCookies("JSESSIONID") // 쿠키 삭제 설정
@@ -123,10 +100,6 @@ public class SecurityConfig {
 //        http
 ////                .cors() // CORS 활성화 추가
 ////                .and()
-<<<<<<< HEAD
-//
-=======
->>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                .csrf((auth) -> auth.disable())
 //                .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/","/login", "api/login",
@@ -135,11 +108,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/boardList")
 //                        .hasAnyRole("user")
 //                        .requestMatchers("/manager/**").hasAnyRole("manager")
-<<<<<<< HEAD
-//                        .requestMatchers("/admin/**").hasAnyRole("admin")
-=======
 //                        .requestMatchers("/adminUser/**").hasAnyRole("admin")
->>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                        .anyRequest().authenticated()
 //                );
 //        http
