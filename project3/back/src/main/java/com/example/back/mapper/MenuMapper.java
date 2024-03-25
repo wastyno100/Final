@@ -10,13 +10,18 @@ import java.util.List;
 public interface MenuMapper {
     List<MenuDto> menuListBest();
 
-    List<MenuDto> menuListMenuCate();
+    void menuWrite(MenuDto menuDto);
 
     List<MenuDto> menuDetail(int menuNo);
 
-    List<CartDto> cart(int menuNo);
+//    List<CartDto> cartSave(CartDto menuNo);
+    void cartSave(CartDto cartDto);
+
+    List<CartDto> cart(int userNo);
 
     List<MenuDto> menuBuy(int menuNo);
 
     List<MenuDto> menuList();
+
+    void menuDelete(int menuNo);
 }
