@@ -6,9 +6,17 @@
         SELECT * FROM user WHERE id = #{id}
     </select>
 
+    <select id="checkId" resultType="com.example.back.domain.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
     <insert id="addUser" parameterType="com.example.back.domain.User"
             useGeneratedKeys="true" keyProperty="userNo">
         INSERT INTO user (id, username, pass, email, zipcode, address1, address2, phone, email_get, join_date, role)
         VALUES (#{id}, #{username}, #{pass}, #{email}, #{zipcode},#{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE(), #{role})
     </insert>
+
+<!--    <select id="getRole" resultType="com.example.back.domain.User">-->
+<!--            SELECT role FROM user WHERE id = #{id}-->
+<!--    </select>-->
 </mapper>

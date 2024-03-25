@@ -12,6 +12,7 @@ import qouteView from '@/views/quote.vue';
 import Cart from '@/views/Cart.vue'
 import BuyPage from '@/views/BuyPage.vue'
 import MenuDetail from '@/views/MenuDetail.vue'
+import MypageView from '@/views/MypageView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/qoute',
       name: 'qoute',
       component: qouteView,
+    },
+    {
+      path: '/mypage',
+      name: 'Mygage',
+      component: MypageView,
     },
   ]
 })
