@@ -3,6 +3,7 @@ package com.example.back.service;
 import com.example.back.domain.User;
 import com.example.back.dto.UserDto;
 import com.example.back.mapper.UserMapper;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,5 +55,15 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getPass());
         userMapper.addUser(user);
     }
+
+    public boolean checkId(String id){
+        User user = userMapper.getUser(id);
+
+        return user != null;
+    }
+//    @Override
+//    public String getRole(String id) {
+//        return userMapper.getRole(id);
+//    }
 }
 

@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -21,55 +23,88 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/login")
-//    @CrossOrigin(origins = "http://localhost:5173")
-    public int login(@RequestBody UserDto.LoginRequest loginRequest,
-                     Model model,
-                     HttpSession session,
-                     HttpServletRequest request, // HttpServletRequest 추가
-                     HttpServletResponse response)
+    public Map<String, Object> login(@RequestBody UserDto.LoginRequest loginRequest,
+                                     Model model,
+                                     HttpSession session,
+                                     HttpServletRequest request, // HttpServletRequest 추가
+                                     HttpServletResponse response)
             throws IOException {
-        System.out.println("@@@@@" + loginRequest.getId() + loginRequest.getPass());
         int result = userService.login(loginRequest.getId(), loginRequest.getPass());
+        Map<String, Object> responseData = new HashMap<>();
 
         if (result != 1) { // 로그인 실패 시
-            // 적절한 실패 메시지 반환
-            return result;
+            responseData.put("result", result); // 실패 코드 반환
         } else { // 로그인 성공 시
-            // 기존 세션 무효화 및 새 세션 생성
-            String originalSessionId = session.getId();
-            session.invalidate();
-            HttpSession newSession = request.getSession(true);
-
-            // 로그인 성공 후 세션에 사용자 정보 저장
             User user = userService.getUser(loginRequest.getId());
+            session.invalidate(); // 기존 세션 무효화
+            HttpSession newSession = request.getSession(true); // 새 세션 생성
+
+            // 세션에 사용자 정보 저장
             newSession.setAttribute("isLogIn", true);
             newSession.setAttribute("userId", user.getId());
-            newSession.setAttribute("role", user.getRole()); //사용자 권한 저장
+            newSession.setAttribute("role", user.getRole());
             newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
 
-
-            // 쿠키 설정
-            Cookie sessionCookie = new Cookie("JSESSIONID", newSession.getId());
-            sessionCookie.setPath("/");
-            sessionCookie.setHttpOnly(true);
-            sessionCookie.setMaxAge(60 * 60);
-//            sessionCookie.setSecure(true); // HTTPS 환경에서만 사용
-            response.addCookie(sessionCookie);
-
-            model.addAttribute("isLogIn", true);
-            model.addAttribute("userId", user.getId());
-            model.addAttribute("user", user);
-            System.out.print("로그인 성공" + user.getId());
-
-            return result;
+            responseData.put("result", result); // 성공 코드 반환
+            responseData.put("userId", user.getId()); // 사용자 아이디 반환
+            responseData.put("role", user.getRole()); // 사용자 역할 반환
         }
+
+        return responseData;
     }
+
+//    @PostMapping("/login")
+////    @CrossOrigin(origins = "http://localhost:5173")
+//    public int login(@RequestBody UserDto.LoginRequest loginRequest,
+//                     Model model,
+//                     HttpSession session,
+//                     HttpServletRequest request, // HttpServletRequest 추가
+//                     HttpServletResponse response)
+//            throws IOException {
+//        System.out.println("@@@@@" + loginRequest.getId() + loginRequest.getPass());
+//        int result = userService.login(loginRequest.getId(), loginRequest.getPass());
+//
+//        if (result != 1) { // 로그인 실패 시
+//            // 적절한 실패 메시지 반환
+//            return result;
+//        } else { // 로그인 성공 시
+//            // 기존 세션 무효화 및 새 세션 생성
+//            String originalSessionId = session.getId();
+//            session.invalidate();
+//            HttpSession newSession = request.getSession(true);
+//
+//            // 로그인 성공 후 세션에 사용자 정보 저장
+//            User user = userService.getUser(loginRequest.getId());
+//            newSession.setAttribute("isLogIn", true);
+//            newSession.setAttribute("userId", user.getId());
+//            newSession.setAttribute("role", user.getRole()); //사용자 권한 저장
+//            System.out.println(user.getRole());
+//            newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
+//
+//
+//            // 쿠키 설정
+//            Cookie sessionCookie = new Cookie("JSESSIONID", newSession.getId());
+//            sessionCookie.setPath("/");
+//            sessionCookie.setHttpOnly(true);
+//            sessionCookie.setMaxAge(60 * 60);
+////            sessionCookie.setSecure(true); // HTTPS 환경에서만 사용
+//            response.addCookie(sessionCookie);
+//
+//            model.addAttribute("isLogIn", true);
+//            model.addAttribute("userId", user.getId());
+//            model.addAttribute("role", user.getRole());
+//            model.addAttribute("user", user);
+//            System.out.print("로그인 성공" + user.getId());
+//            System.out.println(user.getRole());
+//
+//            return result;
+//        }
+//    }
 
     @PostMapping("/logout")
     @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
-    public String logout(HttpServletRequest request,HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기, 없으면 null 반환
         if (session != null) {
             session.invalidate(); // 세션 무효화
@@ -123,5 +158,11 @@ public class UserController {
 
         return new LoginStatus(isLogIn, userId);
     }
-}
 
+    @GetMapping("/checkId")
+    public boolean checkId(@RequestParam(value = "id")String id) {
+
+        return userService.checkId(id);
+    }
+
+}

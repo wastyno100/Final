@@ -70,7 +70,7 @@ public class SecurityConfig {
                 );
         http
                 .logout()
-                .logoutUrl("/logout") // 로그아웃 URL 설정
+                .logoutUrl("/api/logout") // 로그아웃 URL 설정
                 .logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 URL 설정
                 .invalidateHttpSession(true) // HTTP 세션 무효화 설정
                 .deleteCookies("JSESSIONID") // 쿠키 삭제 설정
