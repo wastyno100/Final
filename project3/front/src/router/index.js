@@ -13,6 +13,7 @@ import Cart from '@/views/Cart.vue'
 import BuyPage from '@/views/BuyPage.vue'
 import MenuDetail from '@/views/MenuDetail.vue'
 import MypageView from '@/views/MypageView.vue';
+import MenuWrite from '@/views/MenuWrite.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/Cart',
       name: 'Cart',
       component: Cart
+    },
+    {
+      path: '/menu/write',
+      name: 'menuWrite',
+      component: MenuWrite
     },
     {
       path: '/BuyPage',

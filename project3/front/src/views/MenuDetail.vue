@@ -66,7 +66,7 @@
                 <v-container>
                   <!-- 숫자 조절 버튼과 input 필드 -->
                   <v-row align="center">
-                    <v-text-field id = "number" v-model="count" type="number" class="mx-2" style="width: 100px;"></v-text-field>
+                    <v-text-field id = "number" v-model="menuCount" type="number" class="mx-2" style="width: 100px;"></v-text-field>
                   </v-row>
                 </v-container>
               </v-row>
@@ -94,6 +94,20 @@
                       <v-btn color="primary" @click="dialog = false"> 확인 </v-btn>
                     </template>
                   </v-card>
+
+<!--                    <v-card v-if="sessionStorage.length == '0'"-->
+<!--                            prepend-icon="mdi-map-marker"-->
+<!--                            text="로그인을 원하시면 로그인버튼, 로그인을 원하지 않으시면 확인을 누르시기 바랍니다."-->
+<!--                            title="쇼핑을 하기 위해서는 로그인이 필요합니다."-->
+<!--                    >-->
+<!--                      <template v-slot:actions>-->
+<!--                        <v-spacer></v-spacer>-->
+
+<!--                        <v-btn color="primary" @click="addToCart"> 장바구니 </v-btn>-->
+
+<!--                        <v-btn color="primary" @click="dialog = false"> 확인 </v-btn>-->
+<!--                      </template>-->
+<!--                  </v-card>-->
                 </v-dialog>
               </v-row>
             </v-col>
@@ -101,6 +115,25 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-dialog v-model="deleteQ" max-width="400" persistent>
+      <template v-slot:activator="{ props: activatorPropsD}">
+        <v-btn v-bind="activatorPropsD" text="삭제" />
+      </template>
+
+      <v-card
+        prepend-icon="mdi-map-marker"
+        text="데이터가 삭제를 원하시면 삭제를, 취소를 원하시면 취소를 클릭해주시기 바랍니다."
+        title="메뉴 삭제를 계속 하시겠습니까?"
+      >
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="primary" @click="delData"> 삭제 </v-btn>
+
+          <v-btn color="primary" @click="deleteQ = false"> 취소 </v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
     <v-divider></v-divider>
     <!--메뉴기본정보끝-->
     <!--부가정보-->
@@ -128,6 +161,10 @@
 <style scoped>
 
 </style>
+
+<style scoped>
+
+</style>
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
@@ -145,58 +182,59 @@ const item = ref()
 // 게시글 내용 넣기
 const menu = ref({}) // DB
 // 수량을 관리하는
-const count = ref(1)
+const menuCount = ref(1)
 
 const dialog = ref(false);
+const deleteQ = ref(false);
 
 // 게시글 번호를 서버로 보내서 해당 게시물의 데이터들만 가져오자
 // 게시글 업데이트도 put을 사용해서 해버리자
 const getData = async () => {
   const res = await axios.post(`/api/menuDetail?menuNo=${dataObj.menuNo}`)
   menu.value = res.data[0]
+  console.log("디테일페이지 데이터:"+dataObj.menuNo);
 }
 
+const delData = async() => {
+  await axios.delete(`/api/menuDelete?menuNo=${dataObj.menuNo}`)
+    .then((res) => {
+      if(res.status == 200) {
+        alert("게시글 삭제를 성공 했습니다.")
+        router.push('/menuList')
+      }
+      else alert("메뉴 삭제를 실패 했습니다.")
+    })
+}
 onMounted(() => {
   getData()
-  // console.log(user.value)
 })
-const saveCart = async () => {
-  // 장바구니에 담을 데이터 준비
-  const cartData = {
-    menuValue: menu.value,
-    menuCount: count.value // 현재 선택한 수량
-  };
-  try {
-    // 서버에 장바구니 데이터 전송
-    await axios.post('/api/cart', cartData);
-    // 장바구니 페이지로 이동하거나 다른 행동을 취함
-  } catch (error) {
-    console.error('장바구니 담기 실패:', error);
-    alert('장바구니에 담는 중 문제가 발생했습니다.');
-  }
+
+const saveCart = async() => {
+  console.log(menu.value.menuNo);
+  console.log(sessionStorage.userNo);
+    await axios.post('/api/cartSave',({
+      menuNo: menu.value.menuNo,
+      menuCount: menuCount.value,
+      userNo:sessionStorage.userNo
+    }), {
+    });
 }
-const addToCart = () => {
+
+function addToCart(item){
   router.push({
-    name: 'Cart', // 장바구니 페이지의 라우터 이름
-    state: {
-      cartInfo: {
-        menuNo: menu.value.menuNo, // 현재 페이지에서 선택한 메뉴 번호
-        count: count.value, // 현재 선택한 수량
-        // userNo: user.userNo
-      }
-    }
-  });
-}
+    name: 'Cart',
+    state: { dataObj: { menuNo: item.menuNo }}
+  })
+  }
 
 function buy() {
   router.push({
     name: 'BuyPage',
     state: { buyState:
         { menuNo: menu.value.menuNo,
-          menuCount: count.value
+          menuCount: menuCount.value
         } } //유저번호, 상품번호 , 로그인 했을때만 구매 및 장바구니 가능.
   })
 }
-
 
 </script>

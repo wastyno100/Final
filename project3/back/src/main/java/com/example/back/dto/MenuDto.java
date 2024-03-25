@@ -19,9 +19,7 @@ public class MenuDto {
     private String menuContent;
     private String mImg;
     private String mdImg;
-    private int heaart;
+    private int heart;
     private Timestamp regDate;
     private int readCount;
-
-
 }
