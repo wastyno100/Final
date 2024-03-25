@@ -16,6 +16,8 @@ public interface UserService {
     void addUser(User user);
 
     boolean checkId(String id);
+
+
 //    String getRole(String role);
 
 //    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;

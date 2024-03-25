@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -61,6 +62,8 @@ public class UserServiceImpl implements UserService {
 
         return user != null;
     }
+
+
 //    @Override
 //    public String getRole(String id) {
 //        return userMapper.getRole(id);

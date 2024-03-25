@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,12 +44,14 @@ public class UserController {
             // 세션에 사용자 정보 저장
             newSession.setAttribute("isLogIn", true);
             newSession.setAttribute("userId", user.getId());
+            newSession.setAttribute("userNo", user.getUserNo());
             newSession.setAttribute("role", user.getRole());
             newSession.setMaxInactiveInterval(30 * 60); // 세션 타임아웃 30분 설정
 
             responseData.put("result", result); // 성공 코드 반환
             responseData.put("userId", user.getId()); // 사용자 아이디 반환
             responseData.put("role", user.getRole()); // 사용자 역할 반환
+            responseData.put("userNo", user.getUserNo()); // 사용자 고윺번호 반환
         }
 
         return responseData;
@@ -165,4 +168,8 @@ public class UserController {
         return userService.checkId(id);
     }
 
+    @GetMapping("/userData")
+    public User userData(String id){
+        return userService.getUser(id);
+    }
 }
