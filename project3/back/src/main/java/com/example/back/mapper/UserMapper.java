@@ -15,6 +15,5 @@ public interface UserMapper {
      void addUser(User user);
 
      boolean checkId(String id);
-
 //     String getRole(String id);
 }

@@ -73,7 +73,7 @@ onMounted(() => {
           <v-btn @click="link('#')">메뉴</v-btn>
           <v-btn @click="link('#')">시세</v-btn>
           <v-btn @click="link('#')">소식</v-btn>
-          <v-btn @click="link('#')">마이페이지</v-btn>
+          <v-btn @click="link('/mypage')">마이페이지</v-btn>
         </v-col>
       </v-row> 
     </v-col>
