@@ -43,7 +43,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    역할 간의 계층 구조 정의
+    //    역할 간의 계층 구조 정의
     @Bean
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
@@ -54,7 +54,11 @@ public class SecurityConfig {
         return hierarchy;
     }
 
+<<<<<<< HEAD
     //HTTP 보안설정
+=======
+    //    HTTP 보안설정
+>>>>>>> 643142f279909c4c253579c50e734e156b7ec001
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
@@ -63,7 +67,11 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
+<<<<<<< HEAD
                         //경로 설정시 모든 사용자가 권한을 같는다.
+=======
+                                //경로 설정시 모든 사용자가 권한을 같는다.
+>>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                        .requestMatchers("/","/login", "api/login",
 //                                "/member", "status", "/api/status", "api/logout", "logout"
 //                                ).permitAll()
@@ -79,9 +87,10 @@ public class SecurityConfig {
 
                 );
         http
-                .formLogin((auth) -> auth.loginPage("/login")
+                .formLogin((auth) -> auth.loginPage("/login") // 로그인 페이지의 URL을 "/login"으로 설정합니다.
                         .loginProcessingUrl("/api/login")
-                        .permitAll());
+                        .permitAll()
+                );
         http
                 .logout()
                 .logoutUrl("/logout") // 로그아웃 URL 설정
@@ -114,7 +123,10 @@ public class SecurityConfig {
 //        http
 ////                .cors() // CORS 활성화 추가
 ////                .and()
+<<<<<<< HEAD
 //
+=======
+>>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                .csrf((auth) -> auth.disable())
 //                .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers("/","/login", "api/login",
@@ -123,7 +135,11 @@ public class SecurityConfig {
 //                        .requestMatchers("/boardList")
 //                        .hasAnyRole("user")
 //                        .requestMatchers("/manager/**").hasAnyRole("manager")
+<<<<<<< HEAD
 //                        .requestMatchers("/admin/**").hasAnyRole("admin")
+=======
+//                        .requestMatchers("/adminUser/**").hasAnyRole("admin")
+>>>>>>> 643142f279909c4c253579c50e734e156b7ec001
 //                        .anyRequest().authenticated()
 //                );
 //        http

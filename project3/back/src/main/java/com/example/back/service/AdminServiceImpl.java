@@ -27,5 +27,18 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public void qnaAnswer(AdminDto.QnaDto qnaDto) { adminMapper.qnaAnswer(qnaDto); }
+
+    public List<AdminDto.ReportDto> ReportData() {
+        return adminMapper.reportData();
+    }
+
+
+    public void reportKeep(int replyNo) {
+        adminMapper.reportKeep(replyNo);
+    }
+
+    public void reportDelete(int replyNo) {
+        adminMapper.reportDelete(replyNo);
+    }
 }
 

@@ -3,98 +3,112 @@
 <template>
   <v-main>
     <H2>메뉴리스트</H2>
-    {{items}}
-    <v-col cols="12">
-      <v-autocomplete
-        :items="items"
-        class="mx-auto"
-        density="comfortable"
-        menu-icon=""
-        placeholder="검색어를 입력하세요"
-        prepend-inner-icon="mdi-magnify"
-        style="max-width: 350px"
-        theme="light"
-        variant="solo"
-        auto-select-first
-        item-props
-        rounded
-        @input="searchItems"
-      ></v-autocomplete>
-    </v-col>
-    <v-row class="testk">
-      <v-col cols="12">
-        <v-infinite-scroll :items="items" :onLoad="load">
-          <v-row>
-            <v-col cols="12" md="3" v-for="(item, menuNo) in items" :key="menuNo" @click="gotomenuDetail(item)">
-              <v-card class="mx-auto mt-3 card" width="200px" height="250px">
-                <v-img
-                  weight="200px"
-                  height="100px"
-                  src=""
-                  cover
-                ></v-img>
-                <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
-                <v-card-title>{{item.menuNo}}</v-card-title>
-                <v-card-title> {{ item.menuTitle }} </v-card-title>
-                <v-card-subtitle>
-                  {{ item.menuPrice }}원
-                </v-card-subtitle>
-                <v-btn
-                  class="ma-2"
-                  color="blue-lighten-2"
-                  icon="mdi-thumb-up"
-                  variant="text"
-                ></v-btn>{{item.heart}}
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-infinite-scroll>
-      </v-col>
-    </v-row>
+    <v-tabs v-model="item" bg-color="primary">
+      <v-tab value="new">신제품</v-tab>
+      <v-tab value="best">인기순</v-tab>
+      <v-tab value="생선" >생선</v-tab>
+      <v-tab value="게/새우류" >게/새우류</v-tab>
+      <v-tab value="조개/전복류">조개/전복류</v-tab>
+      <v-tab value="멍게/해삼류">멍게/해삼류</v-tab>
+      <v-tab value="낙지/문어류">낙지/문어류</v-tab>
+      <v-tab value="김/미역류">김/미역류</v-tab>
+    </v-tabs>
+        <v-card-text>
+          <v-window v-model="item">
+            <v-window-item value="new">
+              <v-col cols="12">
+                  <v-row>
+                    <v-col cols="12" md="3"
+                           v-for="item in showItem"
+                           v-bind:key="item"
+                           @click="gotomenuDetail(item)">
+                      <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+                        <v-img
+                          weight="200px"
+                          height="100px"
+                          src=""
+                          cover
+                        ></v-img>
+                        <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
+<!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
+                        <v-card-title> {{ item.menuTitle }} </v-card-title>
+                        <v-card-subtitle>
+                          {{ item.menuPrice }}원
+                        </v-card-subtitle>
+                        <v-btn
+                          class="ma-2"
+                          color="blue-lighten-2"
+                          icon="mdi-thumb-up"
+                          variant="text"
+                        ></v-btn>{{item.heart}}
+                      </v-card>
+                    </v-col>
+                  </v-row>
+              </v-col>
+              <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+            </v-window-item>
+            <v-window-item value="best">
+             <MenuListBest/>
+            </v-window-item>
+            <MenuListCateMenu :category = "item"/>
+          </v-window>
+        </v-card-text>
     <v-row ref="observer"></v-row>
   </v-main>
 </template>
 <script setup>
-import { onMounted, ref,} from 'vue'
+import { computed, onMounted, ref, watch} from 'vue'
 import axios from 'axios';
 import { useRouter } from "vue-router";
+import MenuListBest from '@/components/menu/MenuListBest.vue'
+import MenuListCateMenu from '@/components/menu/MenuListCateMenu.vue'
 
 //페이지네이션
-let items = ref([]);
-
+const item = ref('');
+const menu = ref([]);
 const router = useRouter();
+const currentPage = ref(1)
+const pageGroup = 8
+const allPage = computed(() => {
+  return Math.ceil(menu.value.length / pageGroup)
+}) // 데이터의 개수를 페이지당 보여줄 항목수로 나누고 올림 함
+
+const showItem = computed(() => {
+  const start = (currentPage.value - 1) * pageGroup
+  const end = start + pageGroup
+  return menu.value.slice(start, end)
+})
+
+const pageUpdate = () => {
+  const start = (currentPage.value - 1) * pageGroup
+  const end = start + pageGroup
+  showItem.value = menu.value.slice(start, end)
+}
 
 const getData = async () => {
-  try {
     const res = await axios.get('/api/menuList')
-    items.value = res.data;
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(Array.from({ length: 10 }, (k, v) => v + (res.data.at(-1) || 0) + 1))
-      }, 1000)
-    })
-    // 데이터베이스로부터 받은 데이터를 반환합니다.
-  } catch (error) {
-    console.error('API 호출 중 에러 발생:', error)
-    return []  // 에러가 발생한 경우 빈 배열을 반환
-  }
+    menu.value = res.data;
+    console.log("리스트 잘 들어왔어")
 }
-const load = async ({ done }) => {
 
-  const test = await getData()
 
-  items.value.push(...test);
-
-  // 완료 콜백 호출
-  done('ok')
-}
 function gotomenuDetail(item){
   router.push({
     name: 'MenuDetail',
     state: { dataObj: { menuNo: item.menuNo }}
   })
 }
+
+watch(currentPage, () => {
+  sessionStorage.setItem('menuList', currentPage.value)
+})
+
 onMounted(() => {
   getData();
+  console.log(menu.value)
+
+  currentPage.value = JSON.parse(sessionStorage.getItem('menuList')) || 1
 });
+
+
 </script>

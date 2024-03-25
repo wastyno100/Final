@@ -18,4 +18,10 @@ public interface AdminMapper {
 
      void qnaAnswer(AdminDto.QnaDto qnaDto);
 
+     List<AdminDto.ReportDto> reportData();
+
+     void reportKeep(int replyNo);
+
+     void reportDelete(int replyNo);
+
 }

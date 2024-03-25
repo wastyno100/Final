@@ -1,6 +1,7 @@
 package com.example.back.service;
 
 import com.example.back.dto.AdminDto;
+import com.example.back.dto.BoardDto;
 import com.example.back.dto.UserDto;
 import com.example.back.mapper.UserMapper;
 
@@ -16,4 +17,10 @@ public interface AdminService {
     List<AdminDto.QnaDto> qnaData();
 
     void qnaAnswer(AdminDto.QnaDto qnaDto);
+
+    List<AdminDto.ReportDto> ReportData();
+
+    void reportKeep(int replyNo);
+
+    void reportDelete(int replyNo);
 }

@@ -38,7 +38,7 @@ const router = createRouter({
       component: MenuListView
     },
     {
-      path: '/MenuDetail',
+      path: '/MenuList/MenuDetail',
       name: 'MenuDetail',
       component: MenuDetail,
     },

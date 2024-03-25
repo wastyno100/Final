@@ -18,7 +18,7 @@ public class MenuController {
 
 
     @Autowired
-    public MenuController(MenuService menuService){
+    public MenuController(MenuService menuService) {
         this.menuService = menuService;
     }
 
@@ -26,6 +26,18 @@ public class MenuController {
     public List<MenuDto> getAllMenu(){
         log.info("메뉴리스트 들어갔어");
         return menuService.menuList();
+    }
+
+    @GetMapping("/menuListBest")
+    public List<MenuDto> getBestMenu(){
+        log.info("베스트 메뉴 들어갔어");
+        return menuService.menuListBest();
+    }
+
+    @GetMapping("/menuListMenuCate")
+    public List<MenuDto> getFishMenu(@RequestParam(name="menuCate") String menuCate){
+        log.info("생선카테고리 들어갔어");
+        return menuService.menuListMenuCate();
     }
 
     @PostMapping("/menuDetail")
@@ -44,11 +56,13 @@ public class MenuController {
         menuService.cart(cartDto.getMenuNo());
         return "카트db에 저장";
     }
-//    public List<CartDto> cart(int menuNo) throws Exception {System.out.println("카트요청!");
-//        List<CartDto> cart = menuService.cart(menuNo);
-//        System.out.println("잘들어갔어"+ cart);
-//
-//        return cart;
-//    }
+    @PostMapping("/menuBuy")
+    @CrossOrigin(origins = "*")
+    public List<MenuDto> menuBuy(int menuNo) throws Exception {System.out.println("결제요청!");
+        List<MenuDto> menuBuy = menuService.menuBuy(menuNo);
+        System.out.println("잘들어갔어"+menuBuy);
+
+        return menuBuy;
+    }
 
 }
