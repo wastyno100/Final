@@ -29,15 +29,15 @@ public class SecurityConfig {
     }
 
     //    역할 간의 계층 구조 정의
-    @Bean
-    public RoleHierarchy roleHierarchy(){
-        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
-        //admin권한은 manager의 권한을 상속 받으며, manager권한은 user의 권한을 상속받는다.
-        hierarchy.setHierarchy("ROLE_admin>ROLE_manager\n" +
-                "ROLE_manager > ROLE_user");
-
-        return hierarchy;
-    }
+//    @Bean
+//    public RoleHierarchy roleHierarchy(){
+//        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+//        //admin권한은 manager의 권한을 상속 받으며, manager권한은 user의 권한을 상속받는다.
+//        hierarchy.setHierarchy("ROLE_admin>ROLE_manager\n" +
+//                "ROLE_manager > ROLE_user");
+//
+//        return hierarchy;
+//    }
 
     //    HTTP 보안설정
     @Bean

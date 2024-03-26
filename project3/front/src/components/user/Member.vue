@@ -27,8 +27,9 @@ const isFormValid = ref(false); //폼 유효성 상태
 const passwordMatchErrorMessages = ref([]);
 const passwordMatchSuccessMessages = ref([]);
 const successMessage = ref('');
-const modal = ref(false);
 const errorMessage = ref('');
+const modal = ref(false);
+
 
 // 입력 필드 값 변경 시 폼 유효성 검사 함수
 // function joinFormFieldsCheck() {
@@ -463,9 +464,9 @@ function openModal() {
                             </v-row>
                             <v-row>
                                 <v-col>
-                                    <v-radio-group>
-                                        <v-radio v-model="emailGet" label="이메일 수신 동의(소식, 광고 등)" value="true" id="emailOk" ></v-radio>
-                                        <v-radio v-model="emailGet" label="이메일 수신 미동의" value="false" id="emailNo"></v-radio>
+                                    <v-radio-group v-model="emailGet">
+                                        <v-radio  label="이메일 수신 동의(소식, 광고 등)" value="true" id="emailOk" ></v-radio>
+                                        <v-radio  label="이메일 수신 미동의" value="false" id="emailNo"></v-radio>
                                     </v-radio-group>
                                 </v-col>
                             </v-row>

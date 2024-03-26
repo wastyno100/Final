@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from 'vuex'; // Vuex의 useStore를 import합니다.
+import { useStore } from 'vuex'; 
 
 const id = ref('');
 const pass = ref('');

@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUserData(String id) {
+        return userMapper.getUserData(id);
+    }
+
+    @Override
     public int login(String id, String pass) {
         User user = userMapper.getUser(id);
         int result = -1;
@@ -61,6 +66,28 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUser(id);
 
         return user != null;
+    }
+
+    @Override
+    public boolean passCheck(String id, String pass) {
+        String dbPass = userMapper.passCheck(id);
+        boolean result = false;
+
+        if(dbPass != null) {
+            if (passwordEncoder.matches(pass, dbPass)) {
+                result = true;
+
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void updateUser(User user) {
+
+        user.setPass(passwordEncoder.encode(user.getPass()));
+
+        userMapper.updateUser(user);
     }
 
 
