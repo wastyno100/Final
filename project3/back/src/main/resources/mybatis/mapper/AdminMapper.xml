@@ -6,6 +6,11 @@
         SELECT * FROM user
     </select>
 
+    <delete id="userDelete">
+        DELETE FROM user
+        WHERE userNo = #{userNo}
+    </delete>
+
     <update id="updateRole">
         UPDATE user
         SET role = #{role}

@@ -45,7 +45,7 @@ onMounted(() => {
       </v-card-title>
 
     <v-card height="450" elevation="3" class="mt-4">
-      <v-card-item style="border-bottom: 2px solid gray;">
+      <v-card-item style="border-bottom: 1px solid gray; background-color: whitesmoke;">
         <v-row class="text-center font-weight-bold">
           <v-col cols="2">글번호</v-col>
           <v-col cols="5">메뉴명</v-col>
@@ -62,8 +62,10 @@ onMounted(() => {
       <v-card-item
         v-for="item in showItem"
         :key="item.replyNo"
-        class="text-center mt-1"
-        :class="{ 'v-row-hover': true }">
+        class="text-center"
+        :class="{ 'v-row-hover': true }"
+        style="border-bottom: 1px solid lightgray;"
+        >
         <v-row>
           <v-col cols="2">
             <span>{{ item.replyNo }}</span>

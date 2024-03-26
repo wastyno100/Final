@@ -1,21 +1,19 @@
 <script setup>
 import axios from 'axios'
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import UserModal from './UserModal.vue'
 
 // 데이터를 담자
 const userData = ref([])
 
 // 페이징용
 const currentPage = ref(1)
-const pageGroup = 10
+const pageGroup = 7
 const allPage = computed(() => { return Math.ceil(userData.value.length / pageGroup) }) // 데이터의 개수를 페이지당 보여줄 항목수로 나누고 올림 함
 const originalRole = ref()
 
 // 검색용
 const searchText = ref("")
-
-// 권한수정
-const editDisabled = ref(true)
 
 // 데이터를 가져옴
 const getData = async () => {
@@ -69,31 +67,6 @@ const searchFind = computed(() => {
   else return ""
 })
 
-// 수정버튼 클릭 시
-const editBtn = () => { editDisabled.value = false }
-// 완료버튼 클릭 시
-const updateBtn = () => { 
-  editDisabled.value = true
-  alert("수정완료")
-}
-
-const updateRole = () => { 
-  // 권한이 바뀐것만 필터링
-  const roleChange = computed(() => {
-  return showItem.value.filter((user) => {
-    return user.role != originalRole.value;
-  });
-});
-
-  // 유저번호랑 권한을 보내자
-  if (roleChange.value.length > 0) {
-    axios.put('/api/updateRole', { userNo: roleChange.value[0].userNo, role: roleChange.value[0].role})
-  }
-}
-
-watchEffect(() => {
-  updateRole()
-})
 </script>
 
 <template>
@@ -107,8 +80,9 @@ watchEffect(() => {
           <v-text-field
           v-model="searchText"
           :loading="loading"
-          density="dense"
-          variant="outlined"
+          class="custom-select"
+          density="compact"
+          variant="underlined"
           label="검색"
           hide-details>
           </v-text-field>
@@ -116,17 +90,20 @@ watchEffect(() => {
       </v-row>
     </v-card-text>
     <v-card height="500" elevation="3" class="mt-4">
-      <v-card-item style="border-bottom: 2px solid gray;">
+      <v-card-item style="border-bottom: 1px solid gray; background-color: whitesmoke;">
         <v-row class="text-center font-weight-bold">
           <v-col cols="3">이름</v-col>
-          <v-col cols="3">id</v-col>
+          <v-col cols="3">ID</v-col>
           <v-col cols="3">권한</v-col>
           <v-col cols="3">정보</v-col>
         </v-row>
       </v-card-item>
       <!-- 유저 리스트를 출력 -->
-      <v-card-item v-for="item in showItem" v-bind:key="item" class="text-center mt-2">
-        <v-row>
+      <v-card-item 
+        v-for="item in showItem" 
+        v-bind:key="item" class="text-center" 
+        style="font-size: 12px; border-bottom: 1px solid lightgray;">
+        <v-row align="center">
           <v-col cols="3">
             <span>{{ item.username }}</span>
           </v-col>
@@ -135,27 +112,20 @@ watchEffect(() => {
           </v-col>
           <v-col cols="3">
             <span>
-              <v-select
-                v-model="item.role"
-                :items="['일반', '사업자', '관리자']"
-                :disabled="editDisabled"
-                >
-              </v-select>
+              {{ item.role }}
             </span>
           </v-col>
           <v-col cols="3">
-            <v-btn text="정보"/>
+            <UserModal :userData = "item" @reload="getData"/>
           </v-col>
         </v-row>
       </v-card-item>
       <!-- 유저 리스트 출력 끝 -->
     </v-card>
     <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate"></v-pagination>
-    <v-row justify="center">
-      <v-col cols="3">
-        <v-btn v-if="editDisabled" class="mt-4" block text="수정" @click="editBtn" />
-        <v-btn v-if="!editDisabled" class="mt-4" block text="완료" @click="updateBtn" />
-      </v-col>
-    </v-row>
   </v-container>
 </template>
+
+<style scoped>
+
+</style>

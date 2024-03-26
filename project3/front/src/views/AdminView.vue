@@ -1,8 +1,21 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import AdminUser from '../components/admin/AdminUser.vue'
 import AdminReport from '../components/admin/AdminReport.vue'
 import AdminQna from '../components/admin/AdminQna.vue'
+import { useRouter } from 'vue-router'
+import {useStore} from 'vuex'
+
+const store = useStore()
+const loginStatus = computed(() => store.state.loginStatus);
+const adminCheck = computed(() => loginStatus.value.role)
+
+const router = useRouter()
+
+
+if(adminCheck.value != "admin") {
+    router.push("/")
+}
 
 // onclick에서 변하는 값으로 컴포넌트가 리렌더링 되기 위해 ref사용
 const listNo = ref(1)

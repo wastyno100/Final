@@ -2,7 +2,11 @@
 import axios from 'axios'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import {useStore} from 'vuex'
 
+const store = useStore()
+const loginStatus = computed(() => store.state.loginStatus);
+const adminCheck = computed(() => loginStatus.value.role)
 const router = useRouter()
 const testData = ref([])
 
@@ -77,52 +81,75 @@ onMounted(() => {
 
 <template>
   <v-container>
-    <v-card-text>
-      <v-row justify="center">
-        <v-col cols="3">
-          <v-select
-            v-model="searchCate"
-            label="검색"
-            :items="['제목', '내용']"
-          ></v-select>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-          v-model="searchText"
-          :loading="loading"
-          density="dense"
-          variant="outlined"
-          label="검색"
-          hide-details>
-          </v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-btn @click="router.push('/board/write')">글쓰기</v-btn>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card height="450" elevation="3" class="mt-4">
+    <v-card 
+    class="rounded-0 pt-5 mx-auto" 
+    elevation="1" 
+    height="70"
+    image="https://newhep.co.kr/wp-content/uploads/2021/11/gonggi_top.jpg"
+    >
+    </v-card>
+
+    <v-card height="445" elevation="3" class="rounded-0 mt-5">
+      <v-card-item style="border-bottom: 1px solid gray; background-color: whitesmoke">
+        <v-row class="text-center font-weight-bold">
+          <v-col cols="2">No</v-col>
+          <v-col cols="6">제목</v-col>
+          <v-col cols="2">작성자</v-col>
+          <v-col cols="2">작성일</v-col>
+        </v-row>
+      </v-card-item>
+
       <v-card-item
         v-for="item in showItem"
         v-bind:key="item"
-        class="text-center mt-1"
+        class="text-center"
         :class="{ 'v-row-hover': true }"
+        style="border-bottom: 1px solid lightgray;"
         @click="goDetail(item)">
         <v-row>
-          <v-col>
+          <v-col cols="2">
             <span>{{ item.boardNo }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="6">
             <span>{{ item.title }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <span>관리자</span>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <span>{{ item.boardDate }}</span>
           </v-col>
         </v-row>
       </v-card-item>
+    </v-card>
+    <v-card class="rounded-0 pt-5 mb-5" elevation="3" height="90">
+      <v-card-text>
+      <v-row justify="center" class="custom-row">
+        <v-col cols="2" />
+        <v-col cols="2">
+          <v-select
+            v-model="searchCate"
+            density="compact"
+            variant="underlined"
+            :items="['제목', '내용']"
+          ></v-select>
+        </v-col>
+        <v-col cols="4">
+          <v-text-field
+          v-model="searchText"
+          :loading="loading"
+          density="compact"
+          variant="underlined"
+          label="검색"
+          hide-details>
+          </v-text-field>
+        </v-col>
+        <v-col cols="2" />
+        <v-col cols="2" class="text-end">
+          <v-btn v-if="adminCheck == 'admin'" @click="router.push('/board/write')">글쓰기</v-btn>
+        </v-col>
+      </v-row>
+    </v-card-text>
     </v-card>
     <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
   </v-container>
@@ -132,5 +159,8 @@ onMounted(() => {
 .v-row-hover:hover {
   background-color: lightgray;
   cursor: pointer;
+}
+.custom-row {
+  height: 50px;
 }
 </style>

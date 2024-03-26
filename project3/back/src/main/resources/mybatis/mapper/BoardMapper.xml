@@ -20,14 +20,15 @@
 
     <insert id="boardWrite">
         INSERT INTO board(userNo, title, content, boardCate, eventStart, eventEnd, boardImg)
-        VALUES (1, #{title}, #{content}, #{boardCate}, #{eventStart}, #{eventEnd}, #{boardImg})
+        VALUES (2, #{title}, #{content}, #{boardCate}, #{eventStart}, #{eventEnd}, #{boardImg})
     </insert>
 
     <update id="boardUpdate">
         UPDATE board
         SET title = #{title}
         ,   content = #{content}
-        ,   userNo = 2
+        ,   eventStart = #{eventStart}
+        ,   eventEnd = #{eventEnd}
         WHERE boardNo = #{boardNo}
     </update>
 

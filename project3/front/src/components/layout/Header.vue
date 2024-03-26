@@ -8,6 +8,7 @@
   const store = useStore();
   const loginStatus = computed(() => store.state.loginStatus);
   const isLoggedIn = computed(() => loginStatus.value.isLogIn); // 사용자 로그인 상태
+  const adminCheck = computed(() => loginStatus.value.role)
 
   // @click 파라미터로 받은 url로 이동
   const link = (url) => router.push(url);
@@ -46,16 +47,15 @@ onMounted(() => {
 <template>
   <v-container>
     <v-app-bar app absolute height="100" class="bg-light-blue-darken-3">
+      <v-toolbar-title @click="link('/')" style="cursor: pointer;" class="logo-custom">
+        <img src="https://cdn-icons-png.flaticon.com/512/866/866469.png" style="width: 50%;">
+      </v-toolbar-title>
       <v-row>
-        <v-col class="py-5">
+        <v-col>
           <v-row>
-            <v-col cols="3" class="pl-6">
-              <v-toolbar-title @click="link('/')" style="cursor: pointer;">로고</v-toolbar-title>
-            </v-col>
-          
             <!-- 로그인 상태일 때 -->
             <v-col v-if="isLoggedIn" class="text-end" >
-                    <p>{{ loginStatus.userId }}님, 환영합니다!</p>
+                    <span>{{ loginStatus.userId }}님, 환영합니다!</span>
                     <v-btn @click="logout">로그아웃</v-btn>
             </v-col>
 
@@ -67,13 +67,14 @@ onMounted(() => {
 
 
       </v-row>
-      <v-row> 
-        <v-col cols="12" class="text-center">
+      <v-row class="pt-1"> 
+        <v-col cols="12" class="text-center btn-custom">
           <v-btn @click="link('/')">홈</v-btn>
-          <v-btn @click="link('#')">메뉴</v-btn>
-          <v-btn @click="link('#')">시세</v-btn>
-          <v-btn @click="link('#')">소식</v-btn>
+          <v-btn @click="link('/menuList')">메뉴</v-btn>
+          <v-btn @click="link('/quote')">시세</v-btn>
+          <v-btn @click="link('/board')">소식</v-btn>
           <v-btn @click="link('/mypage')">마이페이지</v-btn>
+          <v-btn v-if="adminCheck == 'admin'" @click="link('/admin')">관리자</v-btn>
         </v-col>
       </v-row> 
     </v-col>
@@ -81,4 +82,16 @@ onMounted(() => {
     </v-app-bar>
   </v-container>
 </template>
+
+<style scoped>
+.logo-custom {
+  position: absolute;
+  width: 300px;
+}
+
+.btn-custom .v-btn:hover{
+  border-radius: 0px;
+  border-bottom: 2px solid white
+}
+</style>
 

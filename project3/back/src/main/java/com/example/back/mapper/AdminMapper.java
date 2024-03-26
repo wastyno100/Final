@@ -24,4 +24,6 @@ public interface AdminMapper {
 
      void reportDelete(int replyNo);
 
+     void userDelete(int userNo);
+
 }

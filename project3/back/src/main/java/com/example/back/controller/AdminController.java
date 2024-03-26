@@ -25,14 +25,21 @@ public class AdminController {
     @PutMapping("/updateRole")
     @CrossOrigin(origins = "*")
     public void updateRole(@RequestBody AdminDto adminDto) {
+        System.out.println("111111" + adminDto);
         String role = adminDto.getRole();
-
         if (role.equals("관리자")) { adminDto.setRole("admin"); }
         if (role.equals("사업자")) { adminDto.setRole("manager"); }
         if (role.equals("일반")) { adminDto.setRole("user"); }
-
+        System.out.println("222222" + adminDto);
         adminService.updateRole(adminDto);
     }
+
+    @DeleteMapping("/deleteUser")
+    @CrossOrigin(origins = "*")
+    public void userDelete(int userNo) {
+        adminService.userDelete(userNo);
+    }
+
 
     @GetMapping("/qnaList")
     @CrossOrigin(origins = "*")
@@ -65,4 +72,5 @@ public class AdminController {
     public void reportDelete(int replyNo) {
         adminService.reportDelete(replyNo);
     }
+
 }
