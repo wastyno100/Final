@@ -9,9 +9,11 @@
     <select id="menuListBest" parameterType="map" resultType="MenuDto">
         SELECT * FROM menu ORDER BY heart DESC
     </select>
-    <select id="menuListCateMenu" parameterType="map" resultType="MenuDto">
-        SELECT * FROM menu WHERE menuCate = #{menuCate};
-    </select>
+
+    <delete id="menuDelete">
+        DELETE FROM menu
+        WHERE menuNo = #{menuNo}
+    </delete>
 
     <select id="menuDetail" resultType="MenuDto">
         SELECT
@@ -20,17 +22,30 @@
         WHERE menuNo = #{menuNo}
     </select>
 
-    <!-- 장바구니   -->
-    <insert id="insertCart">
-        INSERT INTO cart(cartId, menuNo, userNo, menuCount)
-        VALUES (#{cartId}, #{menuNo}, #{userNo}, #{menuCount})
+    <insert id="menuWrite">
+        INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , mImg, mdImg, business)
+        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, #{heart}, #{mImg}, #{mdImg}, #{regDate})
     </insert>
 
-    <select id="cart111" resultType="menuDto">
+    <!-- 장바구니   -->
+    <insert id="cartSave">
+        INSERT INTO cart(menuNo, userNo, menuCount)
+        VALUES (#{menuNo}, #{userNo}, #{menuCount})
+    </insert>
+
+    <select id="cart" resultType="hashmap">
         SELECT
-            *
-        FROM menu
-        WHERE menuNo = #{menuNo}
+            u.userNo,
+            c.menuNo,
+            c.menuCount,
+            m.menuTitle,
+            m.menuPrice
+        FROM
+            user u
+                INNER JOIN cart c ON u.userNo = c.userNo
+                INNER JOIN menu m ON c.menuNo = m.menuNo
+        WHERE
+            u.userNo = #{userNo}
     </select>
 
 

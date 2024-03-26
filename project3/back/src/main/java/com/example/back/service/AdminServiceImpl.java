@@ -20,7 +20,11 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.userData();
     }
 
-    public void updateRole(AdminDto adminDto) { adminMapper.updateRole(adminDto); }
+    public void updateRole(AdminDto adminDto) {
+        System.out.println("333333service" + adminDto);
+        adminMapper.updateRole(adminDto);
+
+    }
 
     public List<AdminDto.QnaDto> qnaData() {
         return adminMapper.qnaData();
@@ -39,6 +43,10 @@ public class AdminServiceImpl implements AdminService {
 
     public void reportDelete(int replyNo) {
         adminMapper.reportDelete(replyNo);
+    }
+
+    public void userDelete(int userNo) {
+        adminMapper.userDelete(userNo);
     }
 }
 

@@ -4,11 +4,21 @@ import com.example.back.dto.BoardDto;
 import com.example.back.dto.CartDto;
 import com.example.back.dto.MenuDto;
 import com.example.back.service.MenuService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -16,6 +26,8 @@ import java.util.List;
 public class MenuController {
     private final MenuService menuService;
 
+    @Value("${upload.path}/menu")
+    private String uploadPath;
 
     @Autowired
     public MenuController(MenuService menuService) {
@@ -34,28 +46,67 @@ public class MenuController {
         return menuService.menuListBest();
     }
 
-    @GetMapping("/menuListMenuCate")
-    public List<MenuDto> getFishMenu(@RequestParam(name="menuCate") String menuCate){
-        log.info("생선카테고리 들어갔어");
-        return menuService.menuListMenuCate();
-    }
-
     @PostMapping("/menuDetail")
     @CrossOrigin(origins = "*")
     public List<MenuDto> menuDetail(int menuNo) throws Exception {System.out.println("디테일요청!");
         List<MenuDto> menuDetail = menuService.menuDetail(menuNo);
-        System.out.println("잘들어갔어"+menuDetail);
+        System.out.println("메뉴 디테일 잘들어갔어 : "+menuDetail);
 
         return menuDetail;
     }
-    @PostMapping("/cart")
+    @PostMapping("/menuWrite")
     @CrossOrigin(origins = "*")
-    public String savePageData(@RequestParam(value = "text") CartDto cartDto) {
-        // 여기서 데이터를 저장하는 로직을 구현합니다. 예를 들어, 데이터베이스에 저장.
-        // 이 예제에서는 단순히 받은 데이터를 콘솔에 출력합니다.
-        menuService.cart(cartDto.getMenuNo());
-        return "카트db에 저장";
+    public ResponseEntity<String> uploadFile(@ModelAttribute MenuDto menuDto,
+                                             @RequestParam(value = "uploadImg", required = false) List<MultipartFile> uploadImgs) throws Exception {
+        System.out.println(uploadImgs);
+        System.out.println(menuDto);
+        List <String> files = new ArrayList<>();
+        Path uploadDir = Paths.get(uploadPath + "/mImg/");
+//        Path uploadDir2 = Paths.get(uploadPath + "/mdImg/");
+        for (MultipartFile mImg : uploadImgs) {
+            // 이미지 uuid 설정
+            String uuid = UUID.randomUUID().toString();
+            String fileName = StringUtils.cleanPath(uuid + "_" + mImg.getOriginalFilename());
+
+            // UUID 설정 된 파일 이름을 dto에 넣고 db에 저장하자
+            files.add(fileName);
+
+            // 이미지를 업로드할 경로 설정
+            Path filePath = uploadDir.resolve(fileName);
+
+            // 이미지를 저장
+            Files.copy(mImg.getInputStream(), filePath);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String filesJson = objectMapper.writeValueAsString(files);
+
+        menuDto.setMImg(filesJson);
+
+        menuService.menuWrite(menuDto);
+
+        return ResponseEntity.ok("저장완료");
     }
+    @DeleteMapping("/menuDelete")
+    @CrossOrigin(origins = "*")
+    public void menuDelete(@RequestParam int menuNo) {
+        menuService.menuDelete(menuNo);
+        log.info("삭제완료");
+    }
+
+    @PostMapping("/cartSave")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> cartSave(@RequestBody CartDto cartDto){
+        System.out.println(cartDto);
+        menuService.cartSave(cartDto);
+        return ResponseEntity.ok("카트에 저장 되버렸다!");
+    }
+
+    @GetMapping("/cart")
+    public List<CartDto> cart(int userNo){
+        log.info("카트 리스트 들어갔어");
+        return menuService.cart(userNo);
+    }
+
     @PostMapping("/menuBuy")
     @CrossOrigin(origins = "*")
     public List<MenuDto> menuBuy(int menuNo) throws Exception {System.out.println("결제요청!");

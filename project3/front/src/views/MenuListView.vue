@@ -2,7 +2,8 @@
 </style>
 <template>
   <v-main>
-    <H2>메뉴리스트</H2>
+    <h2>메뉴리스트</h2>
+    <v-btn @click="router.push('/menu/write')">글쓰기</v-btn>
     <v-tabs v-model="item" bg-color="primary">
       <v-tab value="new">신제품</v-tab>
       <v-tab value="best">인기순</v-tab>

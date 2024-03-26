@@ -45,4 +45,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.writeBtn {
+  display: flex;
+}
 </style>

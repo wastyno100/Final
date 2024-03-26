@@ -13,6 +13,10 @@ public class AdminDto {
     private String pw;
     private String email;
     private String phone;
+    private String zipcode;
+    private String address1;
+    private String address2;
+    private boolean emailGet;
     private String role;
     private String joinDate;
 

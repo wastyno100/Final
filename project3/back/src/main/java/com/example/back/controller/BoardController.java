@@ -61,29 +61,32 @@ public class BoardController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> uploadFile(@ModelAttribute BoardDto boardDto,
                                              @RequestParam(value = "uploadImg", required = false) List<MultipartFile> uploadImgs) throws Exception {
-        System.out.println(uploadImgs);
-        System.out.println(boardDto);
+
         List <String> files = new ArrayList<>();
         Path uploadDir = Paths.get(uploadPath + "/boardImg/");
 
-        for (MultipartFile boardImg : uploadImgs) {
-            // 이미지 uuid 설정
-            String uuid = UUID.randomUUID().toString();
-            String fileName = StringUtils.cleanPath(uuid + "_" + boardImg.getOriginalFilename());
+        if(uploadImgs != null) {
+            for (MultipartFile boardImg : uploadImgs) {
+                // 이미지 uuid 설정
+                String uuid = UUID.randomUUID().toString();
+                String fileName = StringUtils.cleanPath(uuid + "_" + boardImg.getOriginalFilename());
 
-            // UUID 설정 된 파일 이름을 dto에 넣고 db에 저장하자
-            files.add(fileName);
+                // UUID 설정 된 파일 이름을 dto에 넣고 db에 저장하자
+                files.add(fileName);
 
-            // 이미지를 업로드할 경로 설정
-            Path filePath = uploadDir.resolve(fileName);
+                // 이미지를 업로드할 경로 설정
+                Path filePath = uploadDir.resolve(fileName);
 
-            // 이미지를 저장
-            Files.copy(boardImg.getInputStream(), filePath);
+                // 이미지를 저장
+                Files.copy(boardImg.getInputStream(), filePath);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String filesJson = objectMapper.writeValueAsString(files);
+
+            boardDto.setBoardImg(filesJson);
+
+            boardService.boardWrite(boardDto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        String filesJson = objectMapper.writeValueAsString(files);
-
-        boardDto.setBoardImg(filesJson);
 
         boardService.boardWrite(boardDto);
 
