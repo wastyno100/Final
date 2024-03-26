@@ -1,6 +1,9 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+//import { useStore } from 'vuex';
+
+//const store = useStore();
 
 const b_no = ref('');
 const tax_type = ref('');
@@ -28,7 +31,8 @@ async function bizRegi(){
         utccYn: utcc_yn.value,
         bizZipcode: bizZipcode.value,
         bizAddress1: bizAddress1.value,
-        bizAddress2: bizAddress2.value
+        bizAddress2: bizAddress2.value,
+//        userNo: store.state.loginStatus.userNo
       }).then((res)=> {
         console.log(res.data)
       })
