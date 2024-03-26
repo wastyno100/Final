@@ -10,7 +10,7 @@
           <v-img
             weight="200px"
             height="100px"
-            src=""
+            :src="item.menuImg"
             cover
           ></v-img>
           <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -42,7 +42,7 @@
               <v-img
                 weight="200px"
                 height="100px"
-                src=""
+                :src="item.menuImg"
                 cover
               ></v-img>
               <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -74,7 +74,7 @@
             <v-img
               weight="200px"
               height="100px"
-              src=""
+              :src="item.menuImg"
               cover
             ></v-img>
             <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -106,7 +106,7 @@
             <v-img
               weight="200px"
               height="100px"
-              src=""
+              :src="item.menuImg"
               cover
             ></v-img>
             <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -138,7 +138,7 @@
             <v-img
               weight="200px"
               height="100px"
-              src=""
+              :src="item.menuImg"
               cover
             ></v-img>
             <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -170,7 +170,7 @@
             <v-img
               weight="200px"
               height="100px"
-              src=""
+              :src="item.menuImg"
               cover
             ></v-img>
             <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -229,10 +229,6 @@ function gotomenuDetail(item){
   })
 }
 
-watch(currentPage, () => {
-  sessionStorage.setItem('menuList?menuCate', currentPage.value)
-})
-
 const props = defineProps({
   category: String
 })
@@ -243,15 +239,31 @@ watch(() => props.category, async (newCategory) => {
     const res = await axios.get(`/api/menuList`);
     const categorys = res.data.filter(menu => menu.menuCate === newCategory);
     menu.value = categorys;
+    menu.value.forEach( async (item) => {
+
+      item.menuImg = JSON.parse(item.menuImg)
+
+      await axios.get(`/api/getMImage/${item.menuImg}`)
+        .then((res) => {
+
+          item.menuImg = res.data
+
+        });
+    });
   }catch (error) {
       console.error("에러발생" + error);
     }
   }
 }, { immediate: true });
 
+watch(menu, (newValue, oldValue) => {
+  if(newValue != oldValue){
+    currentPage.value = 1
+  }
+});
+
 onMounted(() => {
   console.log(props.category);
-  currentPage.value = JSON.parse(sessionStorage.getItem('menuList?menuCate')) || 1
 });
 </script>
 <style scoped>

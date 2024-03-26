@@ -41,13 +41,18 @@
 
     <insert id="menuWrite">
         INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , mImg, mdImg, business)
-        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, #{heart}, #{mImg}, #{mdImg}, #{regDate})
+        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, 0, #{mImg}, #{mdImg}, #{regDate})
     </insert>
 
     <!-- 장바구니   -->
     <insert id="cartSave">
         INSERT INTO cart(menuNo, userNo, menuCount)
         VALUES (#{menuNo}, #{userNo}, #{menuCount})
+    </insert>
+
+    <insert id="insertReply">
+        INSERT INTO reply(menuNo, userNo, replyContent, rImg ,report, heart)
+        VALUES (#{menuNo}, #{userNo}, #{replyContent}, #{rImg}, 0, 1)
     </insert>
 
     <select id="cart" resultType="hashmap">
@@ -65,7 +70,31 @@
             u.userNo = #{userNo}
     </select>
 
+    <select id="getReply" resultType="ReplyDto">
+        SELECT reply.*, user.id
+        FROM reply
+                 JOIN user ON reply.userNo = user.userNo
+--                  JOIN menu ON reply.menuNo = menu.menuNo
+        WHERE menuNo = #{menuNo}
+    </select>
 
+    <update id="replyReport">
+        UPDATE reply
+        SET report = 1
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <update id="replyLike">
+        UPDATE reply
+        SET heart = heart + 1
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <update id="menuLike">
+        UPDATE menu
+        SET heart = heart + 1
+        WHERE menuNo = #{menuNo}
+    </update>
 
     <resultMap id="infoMenuResultMap" type="MenuDto">
         <id property="menuNo" column="menuNo" />

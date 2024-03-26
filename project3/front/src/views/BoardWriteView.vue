@@ -46,7 +46,7 @@ const reqAxios = async () => {
   file.value.forEach((item) => {
     formData.append('uploadImg', item);
   })
-  
+  console.log("제발!!")
   await axios.post("/api/boardWrite", formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
