@@ -140,10 +140,16 @@ public class UserController {
     }
 
     @PostMapping("/bizRegi")
-    public void bizUser(@RequestBody User.BizUser bizUser){
+    public String bizUser(@RequestBody User.BizUser bizUser){
 
+
+        bizUser.setUserNo(bizUser.getUserNo());
+        System.out.println(bizUser);
+        bizUser.setBStt("계속사업자");
         userService.addBizUser(bizUser);
         System.out.println(bizUser);
+
+        return "success";
     }
 
     public class LoginStatus {
