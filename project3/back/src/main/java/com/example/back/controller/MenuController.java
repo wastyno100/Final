@@ -3,6 +3,7 @@ package com.example.back.controller;
 import com.example.back.dto.BoardDto;
 import com.example.back.dto.CartDto;
 import com.example.back.dto.MenuDto;
+import com.example.back.dto.ReplyDto;
 import com.example.back.service.MenuService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,12 @@ public class MenuController {
         return menuService.menuList();
     }
 
+    @GetMapping("/reply")
+    public List<ReplyDto> getReply(int userNo){
+        log.info("리플 들어 갔어");
+        return menuService.reply(userNo);
+    }
+
     @GetMapping("/menuListBest")
     public List<MenuDto> getBestMenu(){
         log.info("베스트 메뉴 들어갔어");
@@ -54,6 +61,14 @@ public class MenuController {
 
         return menuDetail;
     }
+    @GetMapping("/getMImage/{menuImg}")
+    public String getImage(@PathVariable String menuImg) throws Exception {
+        System.out.println("이미지 겟" + menuImg);
+        String imagePath = "http://localhost:8080/menu/mImg/" + menuImg;
+        System.out.println(imagePath);
+        return imagePath;
+    }
+
     @PostMapping("/menuWrite")
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> uploadFile(@ModelAttribute MenuDto menuDto,
@@ -80,7 +95,7 @@ public class MenuController {
         ObjectMapper objectMapper = new ObjectMapper();
         String filesJson = objectMapper.writeValueAsString(files);
 
-        menuDto.setMImg(filesJson);
+        menuDto.setMenuImg(filesJson);
 
         menuService.menuWrite(menuDto);
 

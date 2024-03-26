@@ -2,6 +2,7 @@ package com.example.back.mapper;
 
 import com.example.back.dto.CartDto;
 import com.example.back.dto.MenuDto;
+import com.example.back.dto.ReplyDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface MenuMapper {
     void cartSave(CartDto cartDto);
 
     List<CartDto> cart(int userNo);
+
+    List<ReplyDto> reply(int replyNo);
 
     List<MenuDto> menuBuy(int menuNo);
 

@@ -16,6 +16,7 @@
     </v-row>
   </v-container>
   <v-list>
+    <v-row>
     <v-list-item v-for="item in showItem"
                  v-bind:key="item">
       <v-list-item-content>
@@ -30,6 +31,7 @@
         </v-btn>
       </v-list-item-action>
     </v-list-item>
+    </v-row>
     <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
   </v-list>
   <v-card>
@@ -87,8 +89,6 @@ watch(currentPage, () => {
 })
 
 //자동계산
-
-
 onMounted(() => {
   getData();
   currentPage.value = JSON.parse(sessionStorage.getItem('cart')) || 1

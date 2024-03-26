@@ -21,6 +21,23 @@
         FROM menu
         WHERE menuNo = #{menuNo}
     </select>
+    <select id="reply" resultType="hashmap">
+        SELECT
+            u.userNo,
+            u.username
+            r.replyNo,
+            r.menuNo,
+            r.replyContent,
+            r.rImg,
+            r.regDate,
+            r.heart
+        FROM
+            reply r
+                INNER JOIN reply r ON u.userNo = r.userNo
+                INNER JOIN menu m ON r.menuNo = m.menuNo
+        WHERE
+            .userNo = #{userNo}
+    </select>
 
     <insert id="menuWrite">
         INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , mImg, mdImg, business)
