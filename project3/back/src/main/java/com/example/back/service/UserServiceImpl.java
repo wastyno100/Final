@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
         userMapper.addUser(user);
     }
 
+    @Override
+    public void addBizUser(User.BizUser bizUser) {
+        userMapper.addBizUser(bizUser);
+    }
+
     public boolean checkId(String id){
         User user = userMapper.getUser(id);
 

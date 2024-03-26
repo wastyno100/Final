@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import MyPage from '../components/user/MyPage.vue'
+import bizRage from '../components/user/bizRegi.vue'
 // import AdminReport from '../components/admin/AdminReport.vue'
 // import AdminQna from '../components/admin/AdminQna.vue'
 
@@ -13,7 +14,7 @@ const mypageList = (no) => listNo.value = no;
 // 카테고리를 v-for로 돌리기위해 배열에 담음
 const mypages = [
   { no: 1, name: '내 정보', icon: 'mdi-account-group' },
-//   { no: 2, name: '주문내역', icon: 'mdi-alert-circle' },
+  { no: 2, name: '사업자등록', icon: 'mdi-alert-circle' },
 //   { no: 3, name: '저장소', icon: 'mdi-email' },
 ]
 
@@ -54,7 +55,7 @@ onMounted(() => {
             <v-divider></v-divider>
             <v-card-text>
               <MyPage v-if="listNo === 1" />
-              <!-- <AdminReport v-if="listNo === 2" /> -->
+              <bizRage v-if="listNo === 2" />
               <!-- <AdminQna v-if="listNo === 3" /> -->
             </v-card-text>
           </v-card>

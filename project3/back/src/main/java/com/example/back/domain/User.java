@@ -29,6 +29,26 @@ public class User implements Serializable {
     private String phone2;
     private String phone3;
 
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class BizUser{
+        private int bNo;
+        private int userNo;
+        private String storeName;
+        private String bizName;
+        private String texType;
+        private String bStt;
+        private String utccYn;
+        private String bizZipcode;
+        private String bizAddress1;
+        private String bizAddress2;
+
+        public String getBStt(){
+            return bStt;
+        }
+    }
     public String getRole() {
         return role;
     }

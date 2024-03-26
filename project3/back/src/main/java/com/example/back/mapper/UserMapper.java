@@ -16,6 +16,8 @@ public interface UserMapper {
 
      void addUser(User user);
 
+     void addBizUser(User.BizUser bizUser);
+
      boolean checkId(String id);
 
      String passCheck(String id);

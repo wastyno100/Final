@@ -139,6 +139,13 @@ public class UserController {
         return "회원가입이 성공적으로 완료되었습니다.";
     }
 
+    @PostMapping("/bizRegi")
+    public void bizUser(@RequestBody User.BizUser bizUser){
+
+        userService.addBizUser(bizUser);
+        System.out.println(bizUser);
+    }
+
     public class LoginStatus {
         private final boolean isLogIn;
         private final String userId;

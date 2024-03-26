@@ -17,6 +17,8 @@ public interface UserService {
 
     void addUser(User user);
 
+    void addBizUser(User.BizUser bizUser);
+
     boolean checkId(String id);
 
     boolean passCheck(String id, String pass);

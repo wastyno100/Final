@@ -93,6 +93,11 @@ const router = createRouter({
       name: 'Mygage',
       component: MypageView,
     },
+    {
+      path: '/bizRegi',
+      name: 'bizRegi',
+      component: MypageView,
+    },
   ]
 })
 
