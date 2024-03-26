@@ -11,14 +11,17 @@ import java.util.List;
 public interface UserService {
     User getUser(String id);
 
+    List <User> getUserData(String id);
+
     int login(String id, String pass);
 
     void addUser(User user);
 
+    void addBizUser(User.BizUser bizUser);
+
     boolean checkId(String id);
 
+    boolean passCheck(String id, String pass);
 
-//    String getRole(String role);
-
-//    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    void updateUser(User user);
 }

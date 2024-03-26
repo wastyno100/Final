@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.back.mapper.UserMapper">
     <!-- SQL 매핑 정의 -->
+    
     <select id="getUser" resultType="com.example.back.domain.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <select id="getUserData" resultType="com.example.back.domain.User">
         SELECT * FROM user WHERE id = #{id}
     </select>
 
@@ -16,7 +21,19 @@
         VALUES (#{id}, #{username}, #{pass}, #{email}, #{zipcode},#{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE(), #{role})
     </insert>
 
-<!--    <select id="getRole" resultType="com.example.back.domain.User">-->
-<!--            SELECT role FROM user WHERE id = #{id}-->
-<!--    </select>-->
+    <select id="passCheck" resultType="String">
+        SELECT pass FROM user WHERE id=#{id}
+    </select>
+
+    <update id="updateUser" parameterType="com.example.back.domain.User">
+        UPDATE user
+        SET pass=#{pass}, email=#{email}, zipcode=#{zipcode}, address1=#{address1}, address2=#{address2},
+            phone=#{phone}, email_get=#{emailGet}, join_date=SYSDATE()
+        WHERE userNo = #{userNo}
+    </update>
+
+    <insert id="addBizUser" parameterType="com.example.back.domain.User$BizUser">
+        INSERT INTO bizuser (bNo, userNo, storeName, bizName, texType, bStt, utccYn,bizZipcode,bizAddress1, bizAddress2)
+        VALUES (#{bNo}, #{userNo}, #{storeName}, #{bizName}, #{texType}, #{bStt}, #{utccYn}, #{bizZipcode}, #{bizAddress1}, #{bizAddress2})
+    </insert>
 </mapper>

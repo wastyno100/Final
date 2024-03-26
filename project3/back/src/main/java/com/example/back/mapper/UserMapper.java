@@ -11,9 +11,18 @@ import java.util.List;
 public interface UserMapper {
 
      User getUser(String id);
-//     String getUser(String id);
+
+     List<User> getUserData(String id);
+
      void addUser(User user);
 
+     void addBizUser(User.BizUser bizUser);
+
      boolean checkId(String id);
-//     String getRole(String id);
+
+     String passCheck(String id);
+
+     void updateUser(User user);
+
+
 }

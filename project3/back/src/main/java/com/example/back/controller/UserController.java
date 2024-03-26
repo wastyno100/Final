@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody UserDto.LoginRequest loginRequest,
                                      Model model,
                                      HttpSession session,
-                                     HttpServletRequest request, // HttpServletRequest 추가
+                                     HttpServletRequest request,
                                      HttpServletResponse response)
             throws IOException {
         int result = userService.login(loginRequest.getId(), loginRequest.getPass());
@@ -128,11 +132,18 @@ public class UserController {
         user.setEmail(user.getEmailId() + "@" + user.getEmailDomain());
         user.setPhone(user.getPhone1() + "-" + user.getPhone2() + "-" + user.getPhone3());
         if (user.getEmailGet() != null) {
-            user.setEmailGet(user.getEmailGet());
+            user.setEmailGet(Boolean.valueOf(user.getEmailGet()));
         }
         user.setRole("user");
         userService.addUser(user);
         return "회원가입이 성공적으로 완료되었습니다.";
+    }
+
+    @PostMapping("/bizRegi")
+    public void bizUser(@RequestBody User.BizUser bizUser){
+
+        userService.addBizUser(bizUser);
+        System.out.println(bizUser);
     }
 
     public class LoginStatus {
@@ -168,8 +179,44 @@ public class UserController {
         return userService.checkId(id);
     }
 
-    @GetMapping("/userData")
-    public User userData(String id){
-        return userService.getUser(id);
+    @GetMapping("/mypage")
+    public List<User> getUserData(@RequestParam(value = "id") String id){
+        List<User> userData = userService.getUserData(id);
+        for (User user : userData) {
+            user.setEmailGet(Boolean.valueOf(user.getEmailGet()));
+        }
+        return userData;
+    }
+    @PostMapping("/checkPass")
+    public Map<String, Object> passCheck(@RequestBody Map<String, String> requestData){
+        String id = requestData.get("id");
+        String pass = requestData.get("pass");
+
+        System.out.println(id);
+        System.out.println(pass);
+
+        boolean result = userService.passCheck(id, pass);
+        System.out.println(result);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
+
+    @PutMapping("/mypage")
+    @CrossOrigin("*")
+    public String updateUser(@RequestBody User user){
+
+        System.out.println(user.getPass());
+        System.out.println(user.getEmailGet());
+        System.out.println(user.getPhone());
+        System.out.println(user.getUserNo());
+    try {
+        user.setEmailGet(Boolean.valueOf(user.getEmailGet()));
+        userService.updateUser(user);
+        return "success";
+    }catch (Exception e){
+        return "error";
+    }
     }
 }
