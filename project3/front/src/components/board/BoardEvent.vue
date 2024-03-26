@@ -40,6 +40,7 @@ const getData = async () => {
     // 2. 이미지 이름으로 요청
     if(item.boardImg != null) {
       item.boardImg = JSON.parse(item.boardImg)
+      
       await axios.get(`/api/getImage/${item.boardImg[0]}`)
       .then((res) => {
       item.boardImg = res.data

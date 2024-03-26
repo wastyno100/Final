@@ -27,4 +27,14 @@ public interface MenuMapper {
     List<MenuDto> menuList();
 
     void menuDelete(int menuNo);
+
+    List<ReplyDto> getReply(int menuNo);
+
+    void insertReply(ReplyDto replyDto);
+
+    void replyReport(int replyNo);
+
+    void replyLike(int replyNo);
+
+    void menuLike(int menuNo);
 }

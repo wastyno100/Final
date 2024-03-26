@@ -15,10 +15,14 @@
       <v-col cols="6">
         <!--메뉴기본정보-->
         <!--이미지슬라이드-->
-        <v-carousel show-arrows="hover" >
-          <v-carousel-item v-for="(item, i) in imgFile" :src="item" :key="i"
+        <!-- <v-carousel show-arrows="hover" >
+          <v-carousel-item 
+          v-for="item in imgFile" 
+          :src="item" 
+          :key="item.menuNo"
           ></v-carousel-item>
-        </v-carousel>
+        </v-carousel> -->
+        <img :src="imgFile[0]" height="250">
       </v-col>
       <!--메뉴디비출력-->
       <v-col cols="6">
@@ -34,6 +38,7 @@
                   color="blue-lighten-2"
                   icon="mdi-thumb-up"
                   variant="text"
+                  @click="menuLike"
                 ></v-btn></h4>
                 <h4><a href="#">리뷰</a></h4>
               </v-row>
@@ -125,7 +130,7 @@
           <MenuDetailInfo />
         </v-window-item>
         <v-window-item value="two">
-          <MenuReply />
+          <MenuReply :dataObj="dataObj" />
         </v-window-item>
         <v-window-item value="three">
           <MenuQeustion />
@@ -171,18 +176,21 @@ const imgFile =ref([]);
 const getData = async () => {
   const res = await axios.post(`/api/menuDetail?menuNo=${dataObj.menuNo}`)
   menu.value = res.data[0]
-  console.log(menu.value.menuImg);
   if(menu.value.menuImg != null) {
     menu.value.menuImg = JSON.parse(res.data[0].menuImg)
     menu.value.menuImg.forEach( async (menuImg) => {
       await axios.get(`/api/getMImage/${menuImg}`)
         .then((res) => {
           imgFile.value.push(res.data)
+          console.log(imgFile.value);
         });
     });
   }
 }
-
+const getData2 = async () => {
+  const res = await axios.post(`/api/menuDetail?menuNo=${dataObj.menuNo}`)
+  menu.value = res.data[0]
+}
 // const getmenuImg = () => {
 //   menu.value.menuImg.forEach( async (menuImg) => {
 //     await axios.get(`/api/getMImage/${menuImg}`)
@@ -216,6 +224,14 @@ const saveCart = async() => {
       userNo:sessionStorage.userNo
     }), {
     });
+}
+
+const menuLike = async () => {
+  console.log("제발",menu.value)
+  await axios.put(`/api/menuLike?menuNo=${menu.value.menuNo}`)
+  .then(() => {
+    getData2()
+  })
 }
 
 function addToCart(item){

@@ -50,6 +50,22 @@ public class MenuService {
         menuMapper.menuDelete(menuNo);
     }
 
+    public List<ReplyDto> getReply(int menuNo) { return menuMapper.getReply(menuNo); }
 
+    public void insertReply(ReplyDto replyDto) {
+        menuMapper.insertReply(replyDto);
+    }
+
+    public void replyReport(int replyNo) {
+        menuMapper.replyReport(replyNo);
+    }
+
+    public void replyLike(int replyNo) {
+        menuMapper.replyLike(replyNo);
+    }
+
+    public void menuLike(int menuNo) {
+        menuMapper.menuLike(menuNo);
+    }
 }
 
