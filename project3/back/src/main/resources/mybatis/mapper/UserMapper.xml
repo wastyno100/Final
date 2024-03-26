@@ -33,7 +33,9 @@
     </update>
 
     <insert id="addBizUser" parameterType="com.example.back.domain.User$BizUser">
-        INSERT INTO bizuser (bNo, userNo, storeName, bizName, texType, bStt, utccYn, bizZipcode, bizAddress1, bizAddress2)
+        INSERT INTO bizuser (bNo, userNo, storeName, bizName, texType, bStt, utccYn,bizZipcode,bizAddress1, bizAddress2)
+        --        주석풀고 위에거 삭제 또는 삭제 안해도 상관없을듯?
+--         INSERT INTO bizuser (bNo, userNo, storeName, bizName, texType, bStt, utccYn, bizZipcode, bizAddress1, bizAddress2)
         VALUES (#{bNo}, #{userNo}, #{storeName}, #{bizName}, #{texType}, #{bStt}, #{utccYn}, #{bizZipcode}, #{bizAddress1}, #{bizAddress2})
     </insert>
 </mapper>

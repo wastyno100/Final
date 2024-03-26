@@ -140,17 +140,24 @@ public class UserController {
     }
 
     @PostMapping("/bizRegi")
-    public String bizUser(@RequestBody User.BizUser bizUser){
+    public void bizUser(@RequestBody User.BizUser bizUser){
 
-
-        bizUser.setUserNo(bizUser.getUserNo());
-        System.out.println(bizUser);
-        bizUser.setBStt("계속사업자");
         userService.addBizUser(bizUser);
         System.out.println(bizUser);
-
-        return "success";
     }
+//  주석 풀고 위에꺼 삭제
+//    @PostMapping("/bizRegi")
+//    public String bizUser(@RequestBody User.BizUser bizUser){
+//
+//
+//        bizUser.setUserNo(bizUser.getUserNo());
+//        System.out.println(bizUser);
+//        bizUser.setBStt("계속사업자");
+//        userService.addBizUser(bizUser);
+//        System.out.println(bizUser);
+//
+//        return "success";
+//    }
 
     public class LoginStatus {
         private final boolean isLogIn;
