@@ -23,4 +23,6 @@ public interface AdminService {
     void reportKeep(int replyNo);
 
     void reportDelete(int replyNo);
+
+    void userDelete(int userNo);
 }

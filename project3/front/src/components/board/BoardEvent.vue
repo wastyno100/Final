@@ -2,7 +2,11 @@
 import axios from 'axios'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import {useStore} from 'vuex'
 
+const store = useStore()
+const loginStatus = computed(() => store.state.loginStatus);
+const adminCheck = computed(() => loginStatus.value.role)
 const router = useRouter()
 const boardData = ref([])
 
@@ -95,59 +99,83 @@ onMounted(() => {
 
 <template>
   <v-container>
-    <v-card-text>
-      <v-row justify="center">
-        <v-col cols="3">
-          <v-select
-            v-model="searchCate"
-            label="검색"
-            :items="['제목', '내용']"
-          ></v-select>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field
-          v-model="searchText"
-          :loading="loading"
-          density="dense"
-          variant="outlined"
-          label="검색"
-          hide-details>
-          </v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-btn @click="router.push('/board/write')">글쓰기</v-btn>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card height="450" elevation="3" class="mt-4">
+    <v-card 
+    class="rounded-0 pt-5 mx-auto" 
+    elevation="1" 
+    height="70"
+    image="https://st4.depositphotos.com/15985744/29588/v/1600/depositphotos_295885612-stock-illustration-party-people-vector-horizontal-banner.jpg"
+    >
+    </v-card>
+    <v-card height="466" elevation="3" class="mt-5 rounded-0">
+      <v-card-item style="border-bottom: 1px solid gray; background-color: whitesmoke;">
+          <v-row class="text-center font-weight-bold">
+            <v-col cols="2">No</v-col>
+            <v-col cols="6">제목</v-col>
+            <v-col cols="2">작성자</v-col>
+            <v-col cols="2">작성일</v-col>
+          </v-row>
+        </v-card-item>
+
       <v-card-item
         v-for="item in showItem"
         v-bind:key="item"
-        class="text-center mt-1"
+        class="text-center"
         :class="{ 'v-row-hover': true }"
+        style="border-bottom: 1px solid lightgray;"
         @click="goDetail(item)">
         <v-row align="center">
-          <v-col>
+          <v-col cols="2">
             <span>{{ item.boardNo }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <img :src="item.boardImg" :width="60" />
           </v-col>
-          <v-col>
+          <v-col cols="4" class="text-start">
             <span v-if="item.eventEnd > today" style="color: blue;">(진행중) </span>
             <span v-if="item.eventEnd < today" style="color: red;">(종료) </span>
             <span>{{ item.title }}</span>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <span>관리자</span>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <span>{{ item.boardDate }}</span>
           </v-col>
         </v-row>
       </v-card-item>
     </v-card>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    
+    <v-card class="rounded-0 pt-5 mb-5" elevation="3" height="90">
+        <v-card-text>
+      <v-row justify="center" class="custom-row">
+        <v-col cols="2" />
+        <v-col cols="2">
+          <v-select
+            v-model="searchCate"
+            density="compact"
+            variant="underlined"
+            :items="['제목', '내용']"
+          ></v-select>
+        </v-col>
+        <v-col cols="4">
+          <v-text-field
+          v-model="searchText"
+          :loading="loading"
+          density="compact"
+          variant="underlined"
+          label="검색"
+          hide-details>
+          </v-text-field>
+        </v-col>
+        <v-col cols="2" />
+        <v-col cols="2" class="text-end">
+          <v-btn v-if="adminCheck == 'admin'" @click="router.push('/board/write')">글쓰기</v-btn>
+        </v-col>
+      </v-row>
+    </v-card-text>
+    </v-card>
+
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate"/>
   </v-container>
 </template>
 
@@ -155,5 +183,8 @@ onMounted(() => {
 .v-row-hover:hover {
   background-color: lightgray;
   cursor: pointer;
+}
+.custom-row {
+  height: 50px;
 }
 </style>

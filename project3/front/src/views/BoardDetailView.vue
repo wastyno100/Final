@@ -1,7 +1,13 @@
 <script setup>
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import {useStore} from 'vuex'
+
+const store = useStore()
+const loginStatus = computed(() => store.state.loginStatus)
+const adminCheck = computed(() => loginStatus.value.role)
+
 
 const router = useRouter()
 // 게시글 목록에서 선택한 게시글 번호를 선물로 받음
@@ -52,22 +58,41 @@ onMounted(() => {
 <template>
   <v-main>
     <v-container>
-      <img v-for="(item, i) in imgFile" :src="item" :key="i"/>
 
-      <h3>{{ boardData.boardNo }}번</h3><br>
-      제목: {{ boardData.title }}<br>
-      내용: {{ boardData.content }}<br>
-      카테고리: {{ boardData.boardCate }}<br>
-      작성일: {{ boardData.boardDate }}<br>
-      <v-btn @click="
+      <!-- 게시글 정보 -->
+      <v-row justify="center">
+        <v-col cols="12" sm="10" md="8">
+          <v-card class="elevation-3">
+            <v-card-title class="headline">{{ boardData.title }}</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text class="body-1">
+              <div class="caption mb-2"> 관리자</div>
+              <div class="caption text-end pb-3" style="border-bottom: 1px solid lightgray;"> {{ boardData.boardDate }}</div>
+              <v-img v-if="boardData.boardCate == '공지사항'" src="https://newhep.co.kr/wp-content/uploads/2021/11/gonggi_top.jpg" width="100%"/>
+              <v-col cols="12" class="mb-5">
+                <v-img v-for="(item, i) in imgFile" :src="item" :key="i" class="mb-4" width="100%" />
+              </v-col>
+              <div>{{ boardData.content }}</div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <!-- 수정, 삭제 버튼 -->
+      <v-row justify="center" class="mt-4">
+        <v-col v-if="adminCheck == 'admin'" cols="12" sm="10" md="8">
+          <v-btn @click="
           router.push({
             name: 'update',
             state: {dataObj: { no: boardData.boardNo }}
-          })"
-          text="수정" /><br>
-      <v-btn @click="delData" text="삭제" />
+          })" color="primary" class="mr-2">수정</v-btn>
+          <v-btn @click="delData" color="error">삭제</v-btn>
+        </v-col>
+        <v-col cols="8">
+          <v-btn v-if="adminCheck != 'admin'" @click="router.push('/board')" color="primary" class="mr-2">목록</v-btn>
+        </v-col>
+      </v-row>
     </v-container>
-  
   </v-main>
 </template>
 
