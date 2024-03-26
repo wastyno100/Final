@@ -24,12 +24,7 @@
                            v-bind:key="item"
                            @click="gotomenuDetail(item)">
                       <v-card class="mx-auto mt-3 card" width="200px" height="250px">
-                        <v-img
-                          weight="200px"
-                          height="100px"
-                          src=""
-                          cover
-                        ></v-img>
+                        <img :src="item.mImg" :width="100" />
                         <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
 <!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
                         <v-card-title> {{ item.menuTitle }} </v-card-title>

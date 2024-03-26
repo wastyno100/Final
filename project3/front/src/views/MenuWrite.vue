@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-container>
+    <v-container class="mx-auto">
       <v-card height="1000" elevation="3" class="mt-4">
         <v-sheet class="mx-auto" width="1000">
           <v-col>
@@ -11,16 +11,15 @@
               :items="['생선', '게/새우류', '조개/전복류', '멍게/해삼류', '낙지/문어류', '김/미역류']"
             ></v-select
             ></v-row>
-            <v-btn @click="reqAxios" text="작성" />
           </v-col>
           <v-row justify="center">
-            <v-col cols="8" class="ma-3">
+            <v-col cols="6" class="ma-3">
               <v-text-field v-model="menuTitle" label="제목" />
             </v-col>
             <v-col cols="2" class="ma-3">
               <v-text-field v-model="menuPrice" label="가격" />
             </v-col>
-            <v-col cols="8" class="ma-3">
+            <v-col cols="6" class="ma-3">
               <v-text-field v-model="business" label="사업자" />
             </v-col>
             <v-col cols="2" class="ma-3">
@@ -59,6 +58,7 @@
         </v-sheet>
       </v-card>
     </v-container>
+    <v-btn @click="reqAxios" text="작성" />
   </v-main>
 </template>
 <script setup>

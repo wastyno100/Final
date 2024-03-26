@@ -15,18 +15,8 @@
       <v-col cols="6">
         <!--메뉴기본정보-->
         <!--이미지슬라이드-->
-        <v-carousel show-arrows="hover">
-          <v-carousel-item
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-            cover
-          ></v-carousel-item>
-          <v-carousel-item
-            src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg"
-            cover
-          ></v-carousel-item>
-          <v-carousel-item
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            cover
+        <v-carousel show-arrows="hover" >
+          <v-carousel-item v-for="(item, i) in imgFile" :src="item" :key="i"
           ></v-carousel-item>
         </v-carousel>
       </v-col>
@@ -94,20 +84,6 @@
                       <v-btn color="primary" @click="dialog = false"> 확인 </v-btn>
                     </template>
                   </v-card>
-
-<!--                    <v-card v-if="sessionStorage.length == '0'"-->
-<!--                            prepend-icon="mdi-map-marker"-->
-<!--                            text="로그인을 원하시면 로그인버튼, 로그인을 원하지 않으시면 확인을 누르시기 바랍니다."-->
-<!--                            title="쇼핑을 하기 위해서는 로그인이 필요합니다."-->
-<!--                    >-->
-<!--                      <template v-slot:actions>-->
-<!--                        <v-spacer></v-spacer>-->
-
-<!--                        <v-btn color="primary" @click="addToCart"> 장바구니 </v-btn>-->
-
-<!--                        <v-btn color="primary" @click="dialog = false"> 확인 </v-btn>-->
-<!--                      </template>-->
-<!--                  </v-card>-->
                 </v-dialog>
               </v-row>
             </v-col>
@@ -134,6 +110,7 @@
         </template>
       </v-card>
     </v-dialog>
+    <v-btn text="수정" />
     <v-divider></v-divider>
     <!--메뉴기본정보끝-->
     <!--부가정보-->
@@ -187,13 +164,33 @@ const menuCount = ref(1)
 const dialog = ref(false);
 const deleteQ = ref(false);
 
+const imgFile =ref([]);
+
 // 게시글 번호를 서버로 보내서 해당 게시물의 데이터들만 가져오자
 // 게시글 업데이트도 put을 사용해서 해버리자
 const getData = async () => {
   const res = await axios.post(`/api/menuDetail?menuNo=${dataObj.menuNo}`)
   menu.value = res.data[0]
-  console.log("디테일페이지 데이터:"+dataObj.menuNo);
+  console.log(menu.value.menuImg);
+  if(menu.value.menuImg != null) {
+    menu.value.menuImg = JSON.parse(res.data[0].menuImg)
+    menu.value.menuImg.forEach( async (menuImg) => {
+      await axios.get(`/api/getMImage/${menuImg}`)
+        .then((res) => {
+          imgFile.value.push(res.data)
+        });
+    });
+  }
 }
+
+// const getmenuImg = () => {
+//   menu.value.menuImg.forEach( async (menuImg) => {
+//     await axios.get(`/api/getMImage/${menuImg}`)
+//       .then((res) => {
+//         imgFile.value.push(res.data)
+//       })
+//   });
+// }
 
 const delData = async() => {
   await axios.delete(`/api/menuDelete?menuNo=${dataObj.menuNo}`)
@@ -207,6 +204,7 @@ const delData = async() => {
 }
 onMounted(() => {
   getData()
+  // getmenuImg()
 })
 
 const saveCart = async() => {
@@ -236,5 +234,7 @@ function buy() {
         } } //유저번호, 상품번호 , 로그인 했을때만 구매 및 장바구니 가능.
   })
 }
+
+
 
 </script>
