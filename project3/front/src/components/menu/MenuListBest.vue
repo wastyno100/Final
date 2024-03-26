@@ -9,7 +9,7 @@
             <v-img
               weight="200px"
               height="100px"
-              src=""
+              :src="item.menuImg"
               cover
             ></v-img>
             <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
@@ -32,7 +32,7 @@
 </template>
 <script setup>
 
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
@@ -63,7 +63,19 @@ const getData = async () => {
   const res = await axios.get('/api/menuListBest')
   menu.value = res.data;
   console.log(res.data)
-}
+
+
+    menu.value.forEach( async (item) => {
+      item.menuImg = JSON.parse(item.menuImg)
+
+      await axios.get(`/api/getMImage/${item.menuImg}`)
+        .then((res) => {
+
+          item.menuImg = res.data
+
+        });
+    });
+  }
 
 function gotomenuDetail(item){
   router.push({
@@ -72,13 +84,8 @@ function gotomenuDetail(item){
   })
 }
 
-watch(currentPage, () => {
-  sessionStorage.setItem('menuListBest', currentPage.value)
-})
 onMounted(() => {
   getData();
-
-  currentPage.value = JSON.parse(sessionStorage.getItem('menuListBest')) || 1
 });
 
 </script>

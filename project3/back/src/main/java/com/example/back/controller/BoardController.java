@@ -28,7 +28,7 @@ public class BoardController {
 
     @GetMapping("/getImage/{imgName}")
     public String getImage(@PathVariable String imgName) throws Exception {
-       String imagePath = "http://localhost:8080/boardImg/" + imgName;
+       String imagePath = "http://localhost:8080/" + imgName;
         System.out.println(imagePath);
             return imagePath;
     }
@@ -86,6 +86,8 @@ public class BoardController {
             boardDto.setBoardImg(filesJson);
 
             boardService.boardWrite(boardDto);
+
+            return ResponseEntity.ok("저장완료");
         }
 
         boardService.boardWrite(boardDto);

@@ -21,16 +21,38 @@
         FROM menu
         WHERE menuNo = #{menuNo}
     </select>
+    <select id="reply" resultType="hashmap">
+        SELECT
+            u.userNo,
+            u.username
+            r.replyNo,
+            r.menuNo,
+            r.replyContent,
+            r.rImg,
+            r.regDate,
+            r.heart
+        FROM
+            reply r
+                INNER JOIN reply r ON u.userNo = r.userNo
+                INNER JOIN menu m ON r.menuNo = m.menuNo
+        WHERE
+            .userNo = #{userNo}
+    </select>
 
     <insert id="menuWrite">
         INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , mImg, mdImg, business)
-        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, #{heart}, #{mImg}, #{mdImg}, #{regDate})
+        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, 0, #{mImg}, #{mdImg}, #{regDate})
     </insert>
 
     <!-- 장바구니   -->
     <insert id="cartSave">
         INSERT INTO cart(menuNo, userNo, menuCount)
         VALUES (#{menuNo}, #{userNo}, #{menuCount})
+    </insert>
+
+    <insert id="insertReply">
+        INSERT INTO reply(menuNo, userNo, replyContent, rImg ,report, heart)
+        VALUES (#{menuNo}, #{userNo}, #{replyContent}, #{rImg}, 0, 1)
     </insert>
 
     <select id="cart" resultType="hashmap">
@@ -48,7 +70,31 @@
             u.userNo = #{userNo}
     </select>
 
+    <select id="getReply" resultType="ReplyDto">
+        SELECT reply.*, user.id
+        FROM reply
+                 JOIN user ON reply.userNo = user.userNo
+--                  JOIN menu ON reply.menuNo = menu.menuNo
+        WHERE menuNo = #{menuNo}
+    </select>
 
+    <update id="replyReport">
+        UPDATE reply
+        SET report = 1
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <update id="replyLike">
+        UPDATE reply
+        SET heart = heart + 1
+        WHERE replyNo = #{replyNo}
+    </update>
+
+    <update id="menuLike">
+        UPDATE menu
+        SET heart = heart + 1
+        WHERE menuNo = #{menuNo}
+    </update>
 
     <resultMap id="infoMenuResultMap" type="MenuDto">
         <id property="menuNo" column="menuNo" />

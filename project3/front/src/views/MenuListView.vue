@@ -24,12 +24,12 @@
                            v-bind:key="item"
                            @click="gotomenuDetail(item)">
                       <v-card class="mx-auto mt-3 card" width="200px" height="250px">
-                        <v-img
-                          weight="200px"
-                          height="100px"
-                          src=""
-                          cover
-                        ></v-img>
+                        <img 
+                        weight="200px"
+                        height="100px"
+                        :src="item.menuImg"
+                        cover
+                         />
                         <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
 <!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
                         <v-card-title> {{ item.menuTitle }} </v-card-title>
@@ -58,7 +58,7 @@
   </v-main>
 </template>
 <script setup>
-import { computed, onMounted, ref, watch} from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import axios from 'axios';
 import { useRouter } from "vue-router";
 import MenuListBest from '@/components/menu/MenuListBest.vue'
@@ -90,8 +90,18 @@ const getData = async () => {
     const res = await axios.get('/api/menuList')
     menu.value = res.data;
     console.log("리스트 잘 들어왔어")
-}
 
+    menu.value.forEach( async (item) => {
+      item.menuImg = JSON.parse(item.menuImg)
+
+      await axios.get(`/api/getMImage/${item.menuImg}`)
+        .then((res) => {
+
+          item.menuImg = res.data
+
+        });
+    });
+}
 
 function gotomenuDetail(item){
   router.push({
@@ -100,15 +110,15 @@ function gotomenuDetail(item){
   })
 }
 
-watch(currentPage, () => {
-  sessionStorage.setItem('menuList', currentPage.value)
-})
+watch(item, (newValue, oldValue) => {
+  if(newValue != oldValue){
+    currentPage.value = 1
+  }
+});
 
 onMounted(() => {
   getData();
   console.log(menu.value)
-
-  currentPage.value = JSON.parse(sessionStorage.getItem('menuList')) || 1
 });
 
 
