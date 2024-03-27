@@ -46,44 +46,49 @@ onMounted(() => {
 
 <template>
   <v-container>
-    <v-app-bar app absolute height="100" class="bg-light-blue-darken-3">
+    <!-- class="bg-light-blue-darken-4" -->
+    <v-app-bar app absolute height="100" style="background-color: #004393;">
       <v-toolbar-title @click="link('/')" style="cursor: pointer;" class="logo-custom">
         <img src="https://cdn-icons-png.flaticon.com/512/866/866469.png" style="width: 50%;">
       </v-toolbar-title>
+
       <v-row>
         <v-col>
           <v-row>
             <!-- 로그인 상태일 때 -->
             <v-col v-if="isLoggedIn" class="text-end" >
-                    <span>{{ loginStatus.userId }}님, 환영합니다!</span>
+                    <span style="color: white;">{{ loginStatus.userId }}님, 환영합니다!</span>
                     <v-btn @click="logout">로그아웃</v-btn>
             </v-col>
 
             <!-- 비로그인 상태일 때 -->
             <v-col v-else class="text-end">
-              <v-btn @click="link('/login')">로그인</v-btn>
-              <v-btn @click="link('/Member')">회원가입</v-btn>
+              <v-btn @click="link('/login')" style="color: white;">로그인</v-btn>
+              <v-btn @click="link('/Member')" style="color: white;">회원가입</v-btn>
             </v-col>
 
 
       </v-row>
+
       <v-row class="pt-1"> 
         <v-col cols="12" class="text-center btn-custom">
-          <v-btn @click="link('/')">홈</v-btn>
-          <v-btn @click="link('/menuList')">메뉴</v-btn>
-          <v-btn @click="link('/qoute')">시세</v-btn>
-          <v-btn @click="link('/board')">소식</v-btn>
-          <v-btn @click="link('/mypage')">마이페이지</v-btn>
-          <v-btn v-if="adminCheck == 'admin'" @click="link('/admin')">관리자</v-btn>
+          <v-btn @click="link('/')" style="color: white;">홈</v-btn>
+          <v-btn @click="link('/menuList')" style="color: white;">메뉴</v-btn>
+          <v-btn @click="link('/qoute')" style="color: white;">시세</v-btn>
+          <v-btn @click="link('/board')" style="color: white;">소식</v-btn>
+          <v-btn @click="link('/mypage')" style="color: white;">마이페이지</v-btn>
+          <v-btn v-if="adminCheck == 'admin'" @click="link('/admin')" style="color: white;">관리자</v-btn>
         </v-col>
       </v-row> 
-    </v-col>
+
+        </v-col>
       </v-row>
     </v-app-bar>
   </v-container>
 </template>
 
 <style scoped>
+
 .logo-custom {
   position: absolute;
   width: 300px;

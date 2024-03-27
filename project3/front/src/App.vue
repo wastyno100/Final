@@ -22,4 +22,5 @@ const getURL = () => {
 </template>
 
 <style>
+
 </style>

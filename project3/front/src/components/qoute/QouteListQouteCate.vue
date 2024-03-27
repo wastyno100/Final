@@ -1,12 +1,12 @@
 <template>
-  <v-window-item value="생선">
+  <v-window-item value="생선">  
     <v-col cols="12">
       <v-row>
         <v-col cols="12" md="3"
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
 
             <v-img
               weight="200px"
@@ -14,15 +14,23 @@
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+              <div class="card-overlay">
+                <v-card-title> {{ item.name }} </v-card-title>
+                <v-card-subtitle>
+                  <v-row>
+                    <v-col>
+                      가격 : {{ item.price }} 원 <br>
+                      등록일 : {{ item.date }}
+                    </v-col>
+                  </v-row>
+                  
+                </v-card-subtitle>
+              </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
   </v-window-item>
 
 
@@ -33,22 +41,30 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+            <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
   </v-window-item>
   <v-window-item value="조개/전복류" >
     <v-col cols="12">
@@ -57,22 +73,30 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+            <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
   </v-window-item>
   <v-window-item value="멍게/해삼류" >
     <v-col cols="12">
@@ -81,22 +105,30 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+            <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;"/>
   </v-window-item>
   <v-window-item value="낙지/문어류" >
     <v-col cols="12">
@@ -105,22 +137,30 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+            <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
   </v-window-item>
   <v-window-item value="김/미역류" >
     <v-col cols="12">
@@ -129,24 +169,65 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-            <v-card-title> {{ item.name }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.price }}원 {{item.date}}
-            </v-card-subtitle>
+            <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
     </v-col>
-    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+    <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
   </v-window-item>
 </template>
+
+<style scoped>
+.carousel-image {
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  height: 200px; /* 칸의 높이를 조정 */
+  border: solid 1px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 100%; /* 이미지를 칸에 꽉 채움 */
+  height: 100%; /* 이미지를 칸에 꽉 채움 */
+  object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
+}
+
+.card-overlay {
+  /* position: absolute; */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);/* 투명한 검은색 배경 */
+  padding: 5px;
+  color: white;
+  transition: opacity 0.3s ease; /* 투명도 변화에 대한 부드러운 전환 */
+  opacity: 1; 
+ 
+}
+
+</style>
+
 <script setup>
 
 import { computed, onMounted, ref, watch } from 'vue'
@@ -159,7 +240,7 @@ let qoute = ref([]);
 const router = useRouter();
 // 페이징용
 const currentPage = ref(1)
-const pageGroup = 8
+const pageGroup = 12
 const allPage = computed(() => {
   return Math.ceil(qoute.value.length / pageGroup)
 }) // 데이터의 개수를 페이지당 보여줄 항목수로 나누고 올림 함
