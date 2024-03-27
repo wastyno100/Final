@@ -1,5 +1,6 @@
 package com.example.back.mapper;
 
+import com.example.back.dto.AdminDto;
 import com.example.back.dto.CartDto;
 import com.example.back.dto.MenuDto;
 import com.example.back.dto.ReplyDto;
@@ -37,4 +38,10 @@ public interface MenuMapper {
     void replyLike(int replyNo);
 
     void menuLike(int menuNo);
+
+    void plusCart(CartDto cartDto);
+    void minusCart(CartDto cartDto);
+    void deleteCart(int cartId);
+
+    List<AdminDto> buyUser(int userNo);
 }

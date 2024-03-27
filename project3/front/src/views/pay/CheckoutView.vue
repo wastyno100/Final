@@ -9,13 +9,13 @@
               <!-- 이용약관 UI -->
               <div id="agreement"></div>
               <!-- 쿠폰 체크박스 -->
-              <div style="padding-left: 25px">
+              <!-- <div style="padding-left: 25px">
                 <div class="checkable typography--p">
                   <label for="coupon-box" class="checkable__label typography--regular"
                     ><input @change="updateAmount" id="coupon-box" class="checkable__input" type="checkbox" aria-checked="true" /><span class="checkable__label-text">5,000원 쿠폰 적용</span></label
                   >
                 </div>
-              </div>
+              </div> -->
               <!-- 결제하기 버튼 -->
               <div class="result wrapper text-center">
                 <button @click="requestPayment" class="button" id="payment-button" style="margin-top: 30px">결제하기</button>
@@ -40,7 +40,9 @@ export default {
       // TODO: customerKey는 구매자와 1:1 관계로 무작위한 고유값을 생성하세요.
       clientKey: "test_ck_Z61JOxRQVEok74v4QRl28W0X9bAq",
       customerKey: nanoid(),
-      amount: 50000,
+      amount: 0,
+      menu: [],
+      buyData: {},
     };
   },
   methods: {
@@ -53,10 +55,10 @@ export default {
           // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
           await this.paymentWidget.requestPayment({
             orderId: nanoid(),
-            orderName: "토스 티셔츠 외 2건",
-            customerName: "김토스",
-            customerEmail: "customer123@gmail.com",
-            customerMobilePhone: "01012341234",
+            orderName: `${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`,
+            customerName: this.buyData.username,
+            customerEmail: this.buyData.email,
+            customerMobilePhone: this.buyData.phone,
             successUrl: `${window.location.origin}/success`,
             failUrl: `${window.location.origin}/fail`,
           });
@@ -88,6 +90,14 @@ export default {
     // ------  이용약관 UI 렌더링 ------
     // @docs https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자-옵션
     this.paymentWidget.renderAgreement("#agreement", { variantKey: "AGREEMENT" });
+
+    this.menu = JSON.parse(sessionStorage.getItem("menu"))
+    this.buyData = JSON.parse(sessionStorage.getItem("buyData"))
+    this.paymentMethodWidget.updateAmount(JSON.parse(sessionStorage.getItem("totalPrice")));
+    this.buyData.phone = this.buyData.phone.replace(/-/g, "")
+    console.log(`${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`)
+    console.log(this.buyData.phone)
+    console.log(this.amount)
   },
 };
 </script>

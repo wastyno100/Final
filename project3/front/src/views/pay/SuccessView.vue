@@ -13,9 +13,11 @@
                 />
                 결제 성공
               </h2>
-            <p>paymentKey = {{ this.$route.query.paymentKey }}</p>
-            <p>orderId = {{ this.$route.query.orderId }}</p>
-            <p>amount = {{ this.$route.query.amount }}</p>
+            <!-- <p>paymentKey = {{ this.$route.query.paymentKey }}</p>
+            <p>orderId = {{ this.$route.query.orderId }}</p> -->
+            <p>주문번호 = 넣자</p>
+            <p>주문명 = {{ this.$route.query.orderName }}</p>
+            <p>가격 = {{ this.$route.query.amount }}</p>
             <div class="result wrapper">
                 <button class="button" onclick="location.href='https://docs.tosspayments.com/guides/payment-widget/integration';"
                 style="margin-top:30px; margin-right: 10px">연동 문서</button>
@@ -44,6 +46,7 @@ export default {
     onMounted(async () => {
       const requestData = {
         orderId: route.query.orderId,
+        orderName: route.query.orderName,
         amount: route.query.amount,
         paymentKey: route.query.paymentKey,
       };

@@ -1,5 +1,6 @@
 package com.example.back.service;
 
+import com.example.back.dto.AdminDto;
 import com.example.back.dto.CartDto;
 import com.example.back.dto.MenuDto;
 import com.example.back.dto.ReplyDto;
@@ -66,6 +67,20 @@ public class MenuService {
 
     public void menuLike(int menuNo) {
         menuMapper.menuLike(menuNo);
+    }
+
+    public void plusCart(CartDto cartDto) {
+        menuMapper.plusCart(cartDto);
+    }
+    public void minusCart(CartDto cartDto) {
+        menuMapper.minusCart(cartDto);
+    }
+    public void deleteCart(int cartId) {
+        menuMapper.deleteCart(cartId);
+    }
+
+    public List<AdminDto> buyUser(int userNo) {
+        return menuMapper.buyUser(userNo);
     }
 }
 

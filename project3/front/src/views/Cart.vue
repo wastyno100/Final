@@ -25,8 +25,17 @@
         <v-list-item-subtitle>총개수:{{ item.menuCount }}개</v-list-item-subtitle>
         <v-list-item-subtitle>총금액:{{ item.menuPrice * item.menuCount }}원</v-list-item-subtitle>
       </v-list-item-content>
+
       <v-list-item-action>
-        <v-btn icon @click="removeFromCart(item)">
+        <v-btn icon @click="plusCart(item)">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+
+        <v-btn icon @click="minusCart(item)">
+          <v-icon>mdi-minus</v-icon>
+        </v-btn>
+        
+        <v-btn icon @click="deleteCart(item)">
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </v-list-item-action>
@@ -38,7 +47,7 @@
     <v-card-title>결제 요약</v-card-title>
     <v-card-text>
       <div>총 금액: {{ totalPrice }}원</div>
-      <v-btn color="primary">결제하기</v-btn>
+      <v-btn color="primary" @click="goBuy">결제하기</v-btn>
     </v-card-text>
   </v-card>
   </v-main>
@@ -50,12 +59,50 @@ import { useRouter } from 'vue-router'
 const menu = ref([]);
 const router = useRouter();
 
+const totalPrice = ref(0)
+
+const goBuy = () => {
+  sessionStorage.setItem("menu", JSON.stringify(menu.value))
+  sessionStorage.setItem("totalPrice", JSON.stringify(totalPrice.value))
+  router.push("/BuyPage")
+}
+
+const plusCart = async (item) => {
+  await axios.put("/api/plusCart", { menuCount: item.menuCount, cartId: item.cartId })
+  .then(() => { 
+    getData() 
+  })
+}
+
+const minusCart = async (item) => {
+  console.log(item)
+  await axios.put("/api/minusCart", { menuCount: item.menuCount, cartId: item.cartId })
+  .then(() => { 
+    getData() 
+  })
+}
+
+const deleteCart = async (item) => {
+  await axios.delete(`/api/deleteCart?cartId=${item.cartId}`)
+  .then(() => { 
+    getData() 
+  })
+}
+
+const updateTotalPrice = () => {
+  totalPrice.value = 0;
+  menu.value.forEach((item) => {
+    totalPrice.value += item.menuPrice * item.menuCount;
+  });
+}
+
 const getData = async () => {
   try {
     console.log(sessionStorage.userNo);
     const res = await axios.get(`/api/cart?userNo=${sessionStorage.userNo}`);
     console.log(res.data);
     menu.value = res.data;
+    updateTotalPrice();
   } catch (error) {
     console.error(error);
     alert("장바구니에 담기 위해서는 로그인을 해야합니다.로그인창으로 이동합니다.")
@@ -64,7 +111,6 @@ const getData = async () => {
 }
 
 //페이지네이션
-const item = ref('');
 const currentPage = ref(1);
 const pageGroup = 5;
 const allPage = computed(() => {
@@ -93,6 +139,7 @@ onMounted(() => {
   getData();
   currentPage.value = JSON.parse(sessionStorage.getItem('cart')) || 1
 });
+
 
 </script>
 <style scoped>
