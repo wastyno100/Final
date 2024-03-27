@@ -140,24 +140,17 @@ public class UserController {
     }
 
     @PostMapping("/bizRegi")
-    public void bizUser(@RequestBody User.BizUser bizUser){
+    public String bizUser(@RequestBody User.BizUser bizUser){
 
+        System.out.println(bizUser);
+        System.out.println(bizUser.getBNo());
+        bizUser.setBNo(101844232);
+        bizUser.setBStt("계속사업자");
         userService.addBizUser(bizUser);
         System.out.println(bizUser);
+
+        return "success";
     }
-//  주석 풀고 위에꺼 삭제
-//    @PostMapping("/bizRegi")
-//    public String bizUser(@RequestBody User.BizUser bizUser){
-//
-//
-//        bizUser.setUserNo(bizUser.getUserNo());
-//        System.out.println(bizUser);
-//        bizUser.setBStt("계속사업자");
-//        userService.addBizUser(bizUser);
-//        System.out.println(bizUser);
-//
-//        return "success";
-//    }
 
     public class LoginStatus {
         private final boolean isLogIn;
@@ -231,5 +224,18 @@ public class UserController {
     }catch (Exception e){
         return "error";
     }
+    }
+
+    @PostMapping("/event/{id}")
+    public String event(@PathVariable String id) throws Exception {
+        String path = id;
+        System.out.println(path);
+        return path;
+    }
+    @PutMapping("/eventUpdate")
+    @CrossOrigin(origins = "*")
+    public void eventUpdate(@RequestBody int event) {
+        System.out.println("dsadsadsaasd" + event);
+        userService.eventUpdate(event);
     }
 }

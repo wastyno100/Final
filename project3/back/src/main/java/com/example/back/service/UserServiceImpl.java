@@ -95,6 +95,10 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUser(user);
     }
 
+    @Override
+    public void eventUpdate(int event){
+        userMapper.eventUpdate(event);
+    }
 
 //    @Override
 //    public String getRole(String id) {

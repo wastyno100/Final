@@ -24,5 +24,6 @@ public interface UserMapper {
 
      void updateUser(User user);
 
+     void eventUpdate(int event);
 
 }
