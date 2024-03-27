@@ -18,11 +18,15 @@ onMounted(() => {
 
 <template>
 <!--        <img src="src{{menu.mdImg}}"></img>-->
+<div id="menuContent">
   {{items.menuContent}}
+</div>
   <h2>{{items.mimg}}</h2>
     {{items.mdImg}}
 </template>
 
 <style scoped>
-
+  #menuContent{
+    border: solid 1px black;
+  }
 </style>

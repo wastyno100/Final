@@ -2,9 +2,9 @@
 </style>
 <template>
   <v-main>
-    <h2>메뉴리스트</h2>
+   
     <v-btn @click="router.push('/menu/write')" v-if="isAdmin">글쓰기</v-btn>
-    <v-tabs v-model="item" bg-color="primary">
+    <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
       <v-tab value="new">신제품</v-tab>
       <v-tab value="best">인기순</v-tab>
       <v-tab value="생선" >생선</v-tab>

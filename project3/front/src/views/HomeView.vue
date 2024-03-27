@@ -1,16 +1,29 @@
-<template>
-  <v-main>
-    <Carousel  :autoplay="2000" :wrap-around="true">
+<template >
+
+  <v-container> 
+    <v-main>
+    <v-row>
+      <v-col>   
+    <Carousel  :autoplay="2000" :wrap-around="true" >
       <Slide v-for="(image, index) in images" :key="index">
-        <img :src="image.src" :alt="image.alt">
+        <img :src="image.src" :alt="image.alt" style="width: 100%; height: inherit; ">
       </Slide>
 
       <template #addons>
         <Pagination />
       </template>
     </Carousel>
-    <h2> 현재 시세</h2>
-    <v-tabs v-model="item" bg-color="primary" style="margin-top: 100px;">
+      </v-col>
+    </v-row>
+  </v-main>
+  </v-container>
+
+    <v-container> 
+      <v-card-title class="text-center">
+        <h3>오늘의 시세</h3><br>
+        <h5>시세 확인하고 현명한 쇼핑하세요!</h5>
+      </v-card-title>
+    <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
       <v-tab value="생선">생선</v-tab>
       <v-tab value="게/새우류" >게/새우류</v-tab>
       <v-tab value="조개/전복류">조개/전복류</v-tab>
@@ -21,37 +34,79 @@
     <v-card-text>
       <v-window v-model="item">
         <v-window-item value="new">
-          <v-col cols="12">
+          <v-col cols="12" class="my-3 py-5">
             <v-row>
               <v-col cols="12" md="3"
                      v-for="item in showItem"
                      v-bind:key="item"
                      @click="gotoqouteDetail(item)">
-                <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+                <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
                   <v-img
                     weight="200px"
                     height="100px"
                     :src="`/images/${item.qouteNo}.jpg`"
+                    aspect-ratio="1.5"
                     cover
                   ></v-img>
-                  <v-card-title> {{ item.qouteNo }} </v-card-title>
-                  <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle>
-                    {{ item.price }} 원
-                    {{ item.date }}
-                  </v-card-subtitle>
+                  <div class="card-overlay">
+                    <v-card-title> {{ item.name }} </v-card-title>
+                    <v-card-subtitle>
+                      <v-row>
+                        <v-col>
+                         가격 : {{ item.price }} 원 <br>
+                         등록일 : {{ item.date }}
+                        </v-col>
+                      </v-row>
+                      
+                    </v-card-subtitle>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
           </v-col>
-          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
         </v-window-item>
         <QouteListQouteCate :category = "item"/>
       </v-window>
     </v-card-text>
 
-</v-main>
+  </v-container>
+
+
 </template>
+
+<style scoped>
+.carousel-image {
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  height: 200px; /* 칸의 높이를 조정 */
+  border: solid 1px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 100%; /* 이미지를 칸에 꽉 채움 */
+  height: 100%; /* 이미지를 칸에 꽉 채움 */
+  object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
+}
+
+.card-overlay {
+  /* position: absolute; */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);/* 투명한 검은색 배경 */
+  padding: 5px;
+  color: white;
+  transition: opacity 0.3s ease; /* 투명도 변화에 대한 부드러운 전환 */
+  opacity: 1; 
+ 
+}
+
+</style>
+
 <script setup>
 import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
@@ -61,9 +116,9 @@ import { useRouter } from 'vue-router'
 import QouteListQouteCate from '@/components/qoute/QouteListQouteCate.vue'
 
 const images = [
-  { src: '/images/1.jpg', alt: 'Image 1' },
-  { src: '/images/1.jpg', alt: 'Image 2' },
-  { src: '/images/1.jpg', alt: 'Image 3' },
+  { src: '/images/바지락.jpg', alt: 'Image 1' },
+  { src: '/images/멍게.jpg', alt: 'Image 2' },
+  { src: '/images/꼬막.jpg', alt: 'Image 3' },
   // Add more images as needed
 ];
 
@@ -72,8 +127,8 @@ const images = [
 const item = ref('');
 const qoute = ref([]);
 const router = useRouter();
-const currentPage = ref(1)
-const pageGroup = 8
+const currentPage = ref('');
+const pageGroup = 12
 const allPage = computed(() => {
   return Math.ceil(qoute.value.length / pageGroup)
 }) // 데이터의 개수를 페이지당 보여줄 항목수로 나누고 올림 함
