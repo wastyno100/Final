@@ -133,6 +133,11 @@ const getData = async () => {
   console.log(menu.value)
 }
 
+const processPayment = () => {
+  window.open("/pay", "_blank", "width=480, height=720")
+}
+
+
 onMounted(() => {
   console.log("구매를 진행시켜라!!!!!" + buyState);
   getData()
