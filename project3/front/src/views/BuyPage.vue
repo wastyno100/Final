@@ -79,7 +79,8 @@
           <v-card-title>결제 요약</v-card-title>
           <v-card-text>
             <span v-if="menu && menu.length > 0">
-              메뉴명: {{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}
+              <span v-if="menu.length == 1">메뉴명: {{ `${menu[0].menuTitle}` }}</span>
+              <span v-else>메뉴명: {{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}</span>
             </span>
             <div>총 금액: {{ totalPrice }}원</div>
             <v-btn color="primary" @click="processPayment">결제하기</v-btn>
@@ -97,9 +98,9 @@
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 // const { buyState } = history.state
-
 const router = useRouter()
 const menu = ref([])
 const totalPrice = ref(0)
@@ -109,14 +110,15 @@ const getData = async () => {
 //   const res = await axios.post(`/api/BuyPage?menuNo=${buyState.menuNo}`)
 //   menu.value = res.data[0]
 //   console.log(menu.value)
-  const res = await axios.get(`/api/buyUser?userNo=${menu.value[0].userNo}`)
+  const userNo = sessionStorage.getItem('userNo')
+  const res = await axios.get(`/api/buyUser?userNo=${userNo}`)
   userData.value = res.data[0]
   console.log(userData.value)
 }
 
 const processPayment = () => {
   sessionStorage.setItem("buyData", JSON.stringify(userData.value))
-  window.open("/pay", "_blank", "width=720, height=720")
+  router.push("/pay")
 }
 
 const cancel = () => {

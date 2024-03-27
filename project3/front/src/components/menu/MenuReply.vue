@@ -4,7 +4,6 @@
       <v-card>
         <v-card-title>리뷰쓰기</v-card-title>
         <v-card-text>
-          {{ newComment }}
           <v-textarea
             v-model="newComment"
             label="리뷰를 입력하세요"

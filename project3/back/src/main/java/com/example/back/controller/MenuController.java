@@ -220,9 +220,16 @@ public class MenuController {
     }
 
     @GetMapping("/buyUser")
+    @CrossOrigin(origins = "*")
     public List<AdminDto> buyUser(int userNo){
 
         return menuService.buyUser(userNo);
     }
 
+    @DeleteMapping("/cartDeleteAll")
+    @CrossOrigin(origins = "*")
+    public void cartDeleteAll(int userNo) {
+        System.out.println("다삭제" + userNo);
+        menuService.cartDeleteAll(userNo);
+    }
 }

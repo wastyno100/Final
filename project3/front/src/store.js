@@ -11,7 +11,7 @@ const store = createStore({
   mutations: {
     SET_LOGIN_STATUS(state, payload) {
       state.loginStatus = payload;
-    }
+    },
   },
   actions: {
     async login({ commit }, { id, pass }) {

@@ -82,5 +82,9 @@ public class MenuService {
     public List<AdminDto> buyUser(int userNo) {
         return menuMapper.buyUser(userNo);
     }
+
+    public void cartDeleteAll(int userNo) {
+        menuMapper.cartDeleteAll(userNo);
+    }
 }
 

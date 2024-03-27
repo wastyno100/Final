@@ -19,9 +19,20 @@
               <button class="button" onclick="location.href='https://discord.gg/A4fRFXQhRu';"
               style="margin-top:30px;background-color: #e8f3ff;color:#1b64da ">실시간 문의</button>
             </div>   
+            <v-btn @click="closeBtn">확인</v-btn>
           </div>
         </div>
       </v-col>
     </v-row>
   </v-main>
 </template>
+
+<script setup>
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+    const closeBtn = () => {
+      router.push("/")
+    }
+</script>
