@@ -71,7 +71,7 @@ onMounted(() => {
         <v-col cols="12" class="text-center btn-custom">
           <v-btn @click="link('/')">홈</v-btn>
           <v-btn @click="link('/menuList')">메뉴</v-btn>
-          <v-btn @click="link('/quote')">시세</v-btn>
+          <v-btn @click="link('/qoute')">시세</v-btn>
           <v-btn @click="link('/board')">소식</v-btn>
           <v-btn @click="link('/mypage')">마이페이지</v-btn>
           <v-btn v-if="adminCheck == 'admin'" @click="link('/admin')">관리자</v-btn>
