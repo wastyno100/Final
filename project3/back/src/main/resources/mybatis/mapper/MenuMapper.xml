@@ -59,6 +59,7 @@
         SELECT
             u.userNo,
             c.menuNo,
+            c.cartId,
             c.menuCount,
             m.menuTitle,
             m.menuPrice
@@ -95,6 +96,29 @@
         SET heart = heart + 1
         WHERE menuNo = #{menuNo}
     </update>
+
+    <update id="plusCart">
+        UPDATE cart
+        SET menuCount = menuCount + 1
+        WHERE cartId = #{cartId}
+    </update>
+
+    <update id="minusCart">
+        UPDATE cart
+        SET menuCount = menuCount - 1
+        WHERE cartId = #{cartId}
+    </update>
+
+    <delete id="deleteCart">
+        DELETE FROM cart
+        WHERE cartId = #{cartId}
+    </delete>
+
+    <select id="buyUser" resultType="AdminDto">
+        SELECT *
+        FROM user
+        WHERE userNo = #{userNo}
+    </select>
 
     <resultMap id="infoMenuResultMap" type="MenuDto">
         <id property="menuNo" column="menuNo" />

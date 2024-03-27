@@ -6,14 +6,6 @@
     <v-row>
       <v-col cols="12">
         <h1>결제 페이지</h1>
-            <v-list-group>
-              <list>
-                <v-list-item>
-                  머라고 나오는지 보자
-                  {{menu.menuNo}}
-                </v-list-item>
-              </list>
-            </v-list-group>
             <v-sheet width="600" class="mx-auto my-2">
               <v-container>
                 <v-row>
@@ -37,62 +29,41 @@
                       <v-row>
                         <v-col cols="4 offset+3">
                           <v-text-field
-                            v-model=zipcode
+                            v-model="userData.zipcode"
                             name="zipcode"
                             label=""
                             id="zipcode"
-                            readonly disabled>
+                            >
                           </v-text-field>
-                        </v-col>
-                        <v-col cols="4">
-                          <v-btn type="button" color="primary" id="btnZipcode" @click="btnZipcode">우편번호 찾기</v-btn>
                         </v-col>
                       </v-row>
 
                       <v-row>
-                        <v-col cols="7">
+                        <v-col cols="10">
                           <v-text-field
-                            v-model=address1
+                            v-model="userData.address1"
                             label= ""
                             name="address1"
                             id="address1"
-                            readonly disabled>
+                            >
                           </v-text-field>
                         </v-col>
-                        <v-col>
+                        <v-col cols="5">
                           <v-text-field
-                            v-model="address2"
+                            v-model="userData.address2"
                             label="상세주소"
                             id="address2">
                           </v-text-field>
                         </v-col>
                       </v-row>
                       <v-row>
-                        <v-col cols="3">
-                          <v-select
-                            v-model="phone1"
-                            label="휴대전화"
-                            id="phone1"
-                            :items="['010']">
-                          </v-select>
-                        </v-col>
-                        <v-col cols="3">
+                        <v-col cols="6">
                           <v-text-field
-                            v-model="phone2"
+                            v-model="userData.phone"
                             id="phone2"
                             maxlength="4">
 
                           </v-text-field>
-
-                        </v-col>
-                        <v-col cols="3">
-                          <v-text-field
-                            v-model="phone3"
-                            id="phone3"
-                            maxlength="4">
-
-                          </v-text-field>
-
                         </v-col>
                       </v-row>
                     </v-form>
@@ -100,14 +71,19 @@
                 </v-row>
               </v-container>
             </v-sheet>
+            <v-row>
+        </v-row>
       </v-col>
     </v-row>
         <v-card>
           <v-card-title>결제 요약</v-card-title>
           <v-card-text>
+            <span v-if="menu && menu.length > 0">
+              메뉴명: {{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}
+            </span>
             <div>총 금액: {{ totalPrice }}원</div>
             <v-btn color="primary" @click="processPayment">결제하기</v-btn>
-            <v-btn color="primary" @click="processPayment">취소</v-btn>
+            <v-btn color="primary" @click="cancel">취소</v-btn>
           </v-card-text>
         </v-card>
   </v-container>
@@ -120,27 +96,37 @@
 // 게시글 목록에서 선택한 게시글 번호를 선물로 받음
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const { buyState } = history.state
+// const { buyState } = history.state
 
-const menu = ref({}) // DB
-
-
+const router = useRouter()
+const menu = ref([])
+const totalPrice = ref(0)
+const userData = ref({})
 
 const getData = async () => {
-  const res = await axios.post(`/api/BuyPage?menuNo=${buyState.menuNo}`)
-  menu.value = res.data[0]
-  console.log(menu.value)
+//   const res = await axios.post(`/api/BuyPage?menuNo=${buyState.menuNo}`)
+//   menu.value = res.data[0]
+//   console.log(menu.value)
+  const res = await axios.get(`/api/buyUser?userNo=${menu.value[0].userNo}`)
+  userData.value = res.data[0]
+  console.log(userData.value)
 }
 
 const processPayment = () => {
-  window.open("/pay", "_blank", "width=480, height=720")
+  sessionStorage.setItem("buyData", JSON.stringify(userData.value))
+  window.open("/pay", "_blank", "width=720, height=720")
 }
 
+const cancel = () => {
+  router.push(-1)
+}
 
 onMounted(() => {
-  console.log("구매를 진행시켜라!!!!!" + buyState);
+  menu.value = JSON.parse(sessionStorage.getItem("menu"))
+  console.log(menu.value)
+  totalPrice.value = JSON.parse(sessionStorage.getItem("totalPrice"))
   getData()
-
 })
 </script>

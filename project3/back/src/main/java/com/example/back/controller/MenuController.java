@@ -1,9 +1,6 @@
 package com.example.back.controller;
 
-import com.example.back.dto.BoardDto;
-import com.example.back.dto.CartDto;
-import com.example.back.dto.MenuDto;
-import com.example.back.dto.ReplyDto;
+import com.example.back.dto.*;
 import com.example.back.service.MenuService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -111,7 +108,6 @@ public class MenuController {
 
     @GetMapping("/getRImage/{replyImg}")
     public String replyImage(@PathVariable String replyImg) throws Exception {
-        System.out.println("이미지 겟" + replyImg);
         String imagePath = "http://localhost:8080/reply/" + replyImg;
         System.out.println(imagePath);
         return imagePath;
@@ -119,7 +115,6 @@ public class MenuController {
 
     @GetMapping("/getMImage/{menuImg}")
     public String getImage(@PathVariable String menuImg) throws Exception {
-        System.out.println("이미지 겟" + menuImg);
         String imagePath = "http://localhost:8080/" + menuImg;
         System.out.println(imagePath);
         return imagePath;
@@ -167,7 +162,6 @@ public class MenuController {
     @PostMapping("/cartSave")
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> cartSave(@RequestBody CartDto cartDto){
-        System.out.println(cartDto);
         menuService.cartSave(cartDto);
         return ResponseEntity.ok("카트에 저장 되버렸다!");
     }
@@ -182,7 +176,6 @@ public class MenuController {
     @CrossOrigin(origins = "*")
     public List<MenuDto> menuBuy(int menuNo) throws Exception {System.out.println("결제요청!");
         List<MenuDto> menuBuy = menuService.menuBuy(menuNo);
-        System.out.println("잘들어갔어"+menuBuy);
 
         return menuBuy;
     }
@@ -203,6 +196,33 @@ public class MenuController {
     @CrossOrigin(origins = "*")
     public void menuLike(int menuNo) {
         menuService.menuLike(menuNo);
+    }
+
+    @PutMapping("/plusCart")
+    @CrossOrigin(origins = "*")
+    public void plusCart(@RequestBody CartDto cartDto) {
+        System.out.println("플러스" + cartDto);
+        menuService.plusCart(cartDto);
+    }
+
+    @PutMapping("/minusCart")
+    @CrossOrigin(origins = "*")
+    public void minusCart(@RequestBody CartDto cartDto) {
+        System.out.println("마이너스" + cartDto);
+        menuService.minusCart(cartDto);
+    }
+
+    @DeleteMapping("/deleteCart")
+    @CrossOrigin(origins = "*")
+    public void deleteCart(int cartId) {
+        System.out.println("딜리트" + cartId);
+        menuService.deleteCart(cartId);
+    }
+
+    @GetMapping("/buyUser")
+    public List<AdminDto> buyUser(int userNo){
+
+        return menuService.buyUser(userNo);
     }
 
 }
