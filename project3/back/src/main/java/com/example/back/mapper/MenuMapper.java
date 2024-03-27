@@ -43,5 +43,7 @@ public interface MenuMapper {
     void minusCart(CartDto cartDto);
     void deleteCart(int cartId);
 
+    void cartDeleteAll(int userNo);
+
     List<AdminDto> buyUser(int userNo);
 }

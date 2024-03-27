@@ -103,7 +103,7 @@
           <v-col cols="8 offset-2" class="text-end">
             <v-dialog v-model="deleteQ" max-width="400" persistent>
               <template v-slot:activator="{ props: activatorPropsD}">
-                <v-btn v-bind="activatorPropsD" text="삭제" />
+                <v-btn v-bind="activatorPropsD" text="삭제" v-if="isAdmin" />
               </template>
 
               <v-card
@@ -120,7 +120,7 @@
                 </template>
               </v-card>
             </v-dialog>
-            <v-btn text="수정" />
+            <v-btn text="수정" v-if="isAdmin" />
             <v-divider></v-divider>
           </v-col>  
         </v-row>
@@ -131,7 +131,6 @@
             <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
               <v-tab value="one">상세정보</v-tab>
               <v-tab value="two">리뷰</v-tab>
-              <v-tab value="three">문의사항</v-tab>
             </v-tabs>
             <v-card-text>
               <v-window v-model="item">
@@ -165,7 +164,7 @@
 </style>
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import MenuDetailInfo from '../components/menu/MenuDetailInfo.vue'
 import MenuQeustion from '@/components/menu/MenuQeustion.vue'
 import MenuReply from '@/components/menu/MenuReply.vue'
@@ -216,6 +215,8 @@ const getData2 = async () => {
 //   });
 // }
 
+const isAdmin = computed(() => sessionStorage.getItem('userId') === 'admin');
+
 const delData = async() => {
   await axios.delete(`/api/menuDelete?menuNo=${dataObj.menuNo}`)
     .then((res) => {
@@ -257,7 +258,13 @@ function addToCart(item){
   })
   }
 
-function buy() {
+async function buy() {
+  sessionStorage.removeItem('buyData')
+  sessionStorage.removeItem('totalPrice')
+  sessionStorage.removeItem('menu')
+
+  sessionStorage.setItem('totalPrice', (menuCount.value * menu.value.menuPrice) )
+  sessionStorage.setItem('menu', JSON.stringify([menu.value]))
   router.push({
     name: 'BuyPage',
     state: { buyState:

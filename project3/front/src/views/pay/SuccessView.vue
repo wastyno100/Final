@@ -16,14 +16,15 @@
             <!-- <p>paymentKey = {{ this.$route.query.paymentKey }}</p>
             <p>orderId = {{ this.$route.query.orderId }}</p> -->
             <p>주문번호 = 넣자</p>
-            <p>주문명 = {{ this.$route.query.orderName }}</p>
+            <p>주문명 = {{ orderName  }}</p>
             <p>가격 = {{ this.$route.query.amount }}</p>
             <div class="result wrapper">
                 <button class="button" onclick="location.href='https://docs.tosspayments.com/guides/payment-widget/integration';"
                 style="margin-top:30px; margin-right: 10px">연동 문서</button>
                 <button class="button" onclick="location.href='https://discord.gg/A4fRFXQhRu';"
                 style="margin-top:30px;background-color: #e8f3ff;color:#1b64da ">실시간 문의</button>
-              </div>   
+              </div> 
+              <v-btn @click="closeBtn">확인</v-btn>  
             </div>
           </div>
         </section>
@@ -32,25 +33,33 @@
   </v-main>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { confirmPayment } from "@/confirmPayment";
-
-export default {
-  setup() {
+import axios from "axios";
     const route = useRoute();
     const router = useRouter();
     const confirmed = ref(false);
+    const orderName = sessionStorage.getItem("orderName")
+    const userNo = JSON.parse(sessionStorage.getItem("userNo"))
+
+    const closeBtn = async () => {
+      await axios.delete(`/api/cartDeleteAll?userNo=${userNo}`)
+      .then(() => {
+        router.push("/")
+      })
+    }
+
+
 
     onMounted(async () => {
       const requestData = {
         orderId: route.query.orderId,
-        orderName: route.query.orderName,
         amount: route.query.amount,
         paymentKey: route.query.paymentKey,
       };
-
+      
       async function confirm() {
         try {
           const { response, json } = await confirmPayment(requestData)
@@ -68,9 +77,4 @@ export default {
       confirm();
     });
 
-    return {
-      confirmed
-    };
-  },
-};
 </script>

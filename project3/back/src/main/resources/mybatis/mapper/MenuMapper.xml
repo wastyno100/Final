@@ -114,6 +114,11 @@
         WHERE cartId = #{cartId}
     </delete>
 
+    <delete id="cartDeleteAll">
+        DELETE FROM cart
+        WHERE userNo = #{userNo}
+    </delete>
+
     <select id="buyUser" resultType="AdminDto">
         SELECT *
         FROM user

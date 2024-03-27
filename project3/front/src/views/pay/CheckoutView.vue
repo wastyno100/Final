@@ -30,6 +30,7 @@
 <script>
 import { loadPaymentWidget, ANONYMOUS } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
+import axios from 'axios';
 
 export default {
   data() {
@@ -55,7 +56,7 @@ export default {
           // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
           await this.paymentWidget.requestPayment({
             orderId: nanoid(),
-            orderName: `${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`,
+            orderName: this.menu.length == 1 ? `${this.menu[0].menuTitle}` : `${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`,
             customerName: this.buyData.username,
             customerEmail: this.buyData.email,
             customerMobilePhone: this.buyData.phone,
@@ -95,9 +96,9 @@ export default {
     this.buyData = JSON.parse(sessionStorage.getItem("buyData"))
     this.paymentMethodWidget.updateAmount(JSON.parse(sessionStorage.getItem("totalPrice")));
     this.buyData.phone = this.buyData.phone.replace(/-/g, "")
+    sessionStorage.setItem("orderName", this.menu.length == 1 ? `${this.menu[0].menuTitle}` : `${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`)
     console.log(`${this.menu[0].menuTitle} 외 ${this.menu.length - 1}건`)
     console.log(this.buyData.phone)
-    console.log(this.amount)
   },
 };
 </script>
