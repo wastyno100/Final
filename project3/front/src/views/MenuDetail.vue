@@ -28,7 +28,6 @@
       <v-col cols="6">
         <v-row class="MDmain">
           <v-col cols="12">
-            <h3>{{ menu.menuNo }}</h3>
             <h3>{{ menu.menuTitle }}</h3><br>
             <h4>원산지 : 상세페이지 참조</h4>
             <v-col cols="12">
@@ -40,7 +39,6 @@
                   variant="text"
                   @click="menuLike"
                 ></v-btn></h4>
-                <h4><a href="#">리뷰</a></h4>
               </v-row>
             </v-col>
           </v-col>
@@ -49,9 +47,9 @@
               <v-row>
                 가격: {{ menu.menuPrice }}원<br>
               </v-row>
-              <v-row>
-                {{ menu.menuContent }}<br>
-              </v-row>
+<!--              <v-row>-->
+<!--                {{ menu.menuContent }}<br>-->
+<!--              </v-row>-->
             </v-col>
           </v-col>
           <!--버튼들-->
@@ -98,7 +96,7 @@
     </v-row>
     <v-dialog v-model="deleteQ" max-width="400" persistent>
       <template v-slot:activator="{ props: activatorPropsD}">
-        <v-btn v-bind="activatorPropsD" text="삭제" />
+        <v-btn v-bind="activatorPropsD" text="삭제" v-if="isAdmin" />
       </template>
 
       <v-card
@@ -109,20 +107,20 @@
         <template v-slot:actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="primary" @click="delData"> 삭제 </v-btn>
+          <v-btn color="primary" @click="delData"  > 삭제 </v-btn>
 
           <v-btn color="primary" @click="deleteQ = false"> 취소 </v-btn>
         </template>
       </v-card>
     </v-dialog>
-    <v-btn text="수정" />
+    <v-btn text="수정" v-if="isAdmin" />
     <v-divider></v-divider>
     <!--메뉴기본정보끝-->
     <!--부가정보-->
     <v-tabs v-model="item" bg-color="primary">
       <v-tab value="one">상세정보</v-tab>
       <v-tab value="two">리뷰</v-tab>
-      <v-tab value="three">문의사항</v-tab>
+<!--      <v-tab value="three">문의사항</v-tab>-->
     </v-tabs>
     <v-card-text>
       <v-window v-model="item">
@@ -149,7 +147,7 @@
 </style>
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import MenuDetailInfo from '../components/menu/MenuDetailInfo.vue'
 import MenuQeustion from '@/components/menu/MenuQeustion.vue'
 import MenuReply from '@/components/menu/MenuReply.vue'
@@ -199,6 +197,8 @@ const getData2 = async () => {
 //       })
 //   });
 // }
+
+const isAdmin = computed(() => sessionStorage.getItem('userId') === 'admin');
 
 const delData = async() => {
   await axios.delete(`/api/menuDelete?menuNo=${dataObj.menuNo}`)

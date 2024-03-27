@@ -3,7 +3,7 @@
 <template>
   <v-main>
     <h2>메뉴리스트</h2>
-    <v-btn @click="router.push('/menu/write')">글쓰기</v-btn>
+    <v-btn @click="router.push('/menu/write')" v-if="isAdmin">글쓰기</v-btn>
     <v-tabs v-model="item" bg-color="primary">
       <v-tab value="new">신제품</v-tab>
       <v-tab value="best">인기순</v-tab>
@@ -102,6 +102,8 @@ const getData = async () => {
         });
     });
 }
+
+const isAdmin = computed(() => sessionStorage.getItem('userId') === 'admin');
 
 function gotomenuDetail(item){
   router.push({
