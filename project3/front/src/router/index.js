@@ -109,6 +109,21 @@ const router = createRouter({
       name: 'event',
       component: EventView,
     },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: () => import('../views/pay/CheckoutView.vue')
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: () => import('../views/pay/SuccessView.vue')
+    },
+    {
+      path: '/fail',
+      name: 'fail',
+      component: () => import('../views/pay/FailView.vue')
+    }
   ]
 })
 
