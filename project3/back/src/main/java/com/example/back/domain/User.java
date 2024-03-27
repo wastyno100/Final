@@ -22,7 +22,7 @@ public class User implements Serializable {
     private Boolean emailGet;
     private Timestamp joinDate;
     private String role;
-
+    private int event;
     private String emailId;
     private String emailDomain;
     private String phone1;
@@ -44,6 +44,7 @@ public class User implements Serializable {
         private String bizZipcode;
         private String bizAddress1;
         private String bizAddress2;
+        private int event;
 
         public String getBStt(){
             return bStt;

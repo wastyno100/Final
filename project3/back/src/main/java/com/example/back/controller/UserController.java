@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/login")
+        @PostMapping("/login")
     public Map<String, Object> login(@RequestBody UserDto.LoginRequest loginRequest,
                                      Model model,
                                      HttpSession session,
@@ -140,24 +140,17 @@ public class UserController {
     }
 
     @PostMapping("/bizRegi")
-    public void bizUser(@RequestBody User.BizUser bizUser){
+    public String bizUser(@RequestBody User.BizUser bizUser){
 
+        System.out.println(bizUser);
+        System.out.println(bizUser.getBNo());
+        bizUser.setBNo(101844232);
+        bizUser.setBStt("계속사업자");
         userService.addBizUser(bizUser);
         System.out.println(bizUser);
+
+        return "success";
     }
-//  주석 풀고 위에꺼 삭제
-//    @PostMapping("/bizRegi")
-//    public String bizUser(@RequestBody User.BizUser bizUser){
-//
-//
-//        bizUser.setUserNo(bizUser.getUserNo());
-//        System.out.println(bizUser);
-//        bizUser.setBStt("계속사업자");
-//        userService.addBizUser(bizUser);
-//        System.out.println(bizUser);
-//
-//        return "success";
-//    }
 
     public class LoginStatus {
         private final boolean isLogIn;
@@ -195,6 +188,7 @@ public class UserController {
     @GetMapping("/mypage")
     public List<User> getUserData(@RequestParam(value = "id") String id){
         List<User> userData = userService.getUserData(id);
+        System.out.println(userData);
         for (User user : userData) {
             user.setEmailGet(Boolean.valueOf(user.getEmailGet()));
         }
@@ -231,5 +225,19 @@ public class UserController {
     }catch (Exception e){
         return "error";
     }
+    }
+
+    @GetMapping("/event")
+    public List<UserDto> event(int userNo) {
+        List<UserDto> userData = userService.eventData(userNo);
+            System.out.println(userService.eventData(userNo));
+        return  userData;
+    }
+
+    @PutMapping("/eventUpdate")
+    @CrossOrigin(origins = "*")
+    public void eventUpdate(int userNo) {
+        System.out.println("dsad adsaasd" + userNo);
+        userService.eventUpdate(userNo);
     }
 }

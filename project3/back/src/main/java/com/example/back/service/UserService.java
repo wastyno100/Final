@@ -24,4 +24,8 @@ public interface UserService {
     boolean passCheck(String id, String pass);
 
     void updateUser(User user);
+
+    void eventUpdate(int userNo);
+
+    List <UserDto> eventData(int userNo);
 }

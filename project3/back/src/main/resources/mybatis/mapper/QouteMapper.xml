@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.back.mapper.QouteMapper">
+    <!-- SQL 매핑 정의 -->
+
+    <select id="qouteList" parameterType="map" resultType="QouteDto">
+        SELECT * FROM qoute WHERE DATE(date) = CURDATE();
+    </select>
+
+    <delete id="qouteDelete">
+        DELETE FROM qoute
+        WHERE qouteno = #{qouteNo}
+    </delete>
+
+    <resultMap id="infoQouteResultMap" type="QouteDto">
+        <result property="qouteNo" column="qouteNo" />
+        <result property="qouteCate" column="qouteCate" />
+        <result property="price" column="price" />
+        <result property="name" column="name" />
+        <result property="date" column="date" />
+    </resultMap>
+</mapper>

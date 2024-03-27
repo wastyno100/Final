@@ -8,12 +8,13 @@ import BoardView from "@/views/BoardView.vue";
 import BoardDetailView from "@/views/BoardDetailView.vue";
 import BoardWriteView from "@/views/BoardWriteView.vue";
 import BoardUpdateView from "@/views/BoardUpdateView.vue";
-import qouteView from '@/views/quote.vue';
+import qouteView from '@/views/quoteView.vue';
 import Cart from '@/views/Cart.vue'
 import BuyPage from '@/views/BuyPage.vue'
 import MenuDetail from '@/views/MenuDetail.vue'
 import MypageView from '@/views/MypageView.vue';
 import MenuWrite from '@/views/MenuWrite.vue'
+import EventView from '@/views/EventView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,6 +98,16 @@ const router = createRouter({
       path: '/bizRegi',
       name: 'bizRegi',
       component: MypageView,
+    },
+    {
+      path: '/qoute',
+      name: 'qoute',
+      component: qouteView,
+    },
+    {
+      path: '/event',
+      name: 'event',
+      component: EventView,
     },
   ]
 })
