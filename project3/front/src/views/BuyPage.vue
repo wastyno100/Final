@@ -5,7 +5,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <h1>결제 페이지</h1>
+        <h1 >결제 페이지</h1>
             <v-sheet width="600" class="mx-auto my-2">
               <v-container>
                 <v-row>
@@ -16,10 +16,22 @@
                     </v-row>
                     <v-form id="joinForm" name="joinForm">
                       <v-row>
-                        <v-list-group>
-                          <v-list>
-                          </v-list>
-                        </v-list-group>
+                        <v-col>
+                          <span>주문자명</span>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                      <v-col cols="4 offset+4">
+                        <v-text-field
+                          v-model="userData.username"
+                          name="name"
+                          label="이름"
+                          placeholder="이름을 입력해주세요."
+                          id="name"
+                          maxlength="10"
+                        >
+                        </v-text-field>
+                      </v-col>
                       </v-row>
                       <v-row>
                         <v-col>
@@ -36,8 +48,10 @@
                             >
                           </v-text-field>
                         </v-col>
+                        <v-col cols="4">
+                          <v-btn type="button" color="primary" id="btnZipcode" @click="btnZipcode">우편번호 찾기</v-btn>
+                        </v-col>
                       </v-row>
-
                       <v-row>
                         <v-col cols="10">
                           <v-text-field
@@ -54,6 +68,11 @@
                             label="상세주소"
                             id="address2">
                           </v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row>
+                        <v-col>
+                          <span>전화번호</span>
                         </v-col>
                       </v-row>
                       <v-row>
@@ -125,10 +144,60 @@ const cancel = () => {
   router.push(-1)
 }
 
+// //우편번호 조회
+// async function findZipcode() {
+//   try {
+//     await new Promise((resolve) => {
+//       new window.daum.Postcode({
+//         oncomplete: function(data) {
+//           var addr = ''; // 주소 변수
+//           var extraAddr = ''; // 참고항목 변수
+//
+//           // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+//           if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+//             addr = data.roadAddress;
+//           } else { // 사용자가 지번 주소를 선택했을 경우(J)
+//             addr = data.roadAddress;
+//           }
+//
+//           // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+//           if (data.userSelectedType === 'R') {
+//             // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+//             // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+//             if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+//               extraAddr += data.bname;
+//             }
+//             // 건물명이 있고, 공동주택일 경우 추가한다.
+//             if (data.buildingName !== '' && data.apartment === 'Y') {
+//               extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+//             }
+//             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+//             if (extraAddr !== '') {
+//               extraAddr = ' (' + extraAddr + ')';
+//             }
+//             addr += extraAddr;
+//           }
+//
+//           // 우편번호와 주소 정보를 해당 필드에 넣는다.
+//           zipcode.value = data.zonecode; // 우편번호 필드에 값 할당
+//           address1.value = addr; // 주소 필드에 값 할당
+//           document.querySelector("#address2").focus(); // 상세주소 필드로 포커스 이동
+//
+//           resolve(); // Promise를 해결하여 우편번호 조회가 완료되었음을 알림
+//         }
+//       }).open();
+//     });
+//   } catch (error) {
+//     console.error("우편번호 조회 실패:", error);
+//     alert("우편번호 조회에 실패했습니다.");
+//   }
+// }
+
 onMounted(() => {
   menu.value = JSON.parse(sessionStorage.getItem("menu"))
   console.log(menu.value)
   totalPrice.value = JSON.parse(sessionStorage.getItem("totalPrice"))
   getData()
+  // findZipcode()
 })
 </script>
