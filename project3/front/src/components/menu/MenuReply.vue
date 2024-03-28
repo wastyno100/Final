@@ -106,7 +106,8 @@ const getImg = () => {
 
     if(item.rimg != null) {
       item.rimg = JSON.parse(item.rimg)
-      await axios.get(`/api/getImage/${item.rimg[0]}`)
+      console.log("하이", item.rimg)
+      await axios.get(`/api/getRImage/${item.rimg}`)
       .then((res) => {
       item.rimg = res.data
     })
