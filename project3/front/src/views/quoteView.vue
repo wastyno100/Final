@@ -16,10 +16,10 @@
               <v-col cols="12" md="3"
                      v-for="item in showItem"
                      v-bind:key="item">
-                <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
+                <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative; ">
                   <v-img
                     weight="200px"
-                    height="100px"
+                    height="150px"
                     :src="`/images/${item.qouteNo}.jpg`"
                     cover
                   ></v-img>

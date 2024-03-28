@@ -1,32 +1,29 @@
 <template>
-  <v-col cols="12">
+  <v-col cols="12" class="my-3 py-5">
     <v-row>
-      <v-col cols="12" md="3"
+      <v-col cols="12" md="3" style="height: auto;"
              v-for="item in showItem"
              v-bind:key="item"
              @click="gotomenuDetail(item)">
-       <v-card class="mx-auto mt-3 card" width="200px" height="250px" style=" width: 60%; height: inherit; position: relative; ">
+       <v-card class="mx-auto mt-3 card" width="200px" height="250px" style=" width: 75%; height: inherit; position: relative; ">
                   <img
-                    weight="200px"
-                    height="100px"
+                    style="width: 100%; height: 200px; object-fit: cover;"
                     :src="item.menuImg"
                   />
                   <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
                   <!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
-                  <div class="card-overlay">
+                  <div class="card-overlay" style="padding: 0; margin: 0;">
                   <v-card-title> {{ item.menuTitle }} </v-card-title>
                   <v-card-subtitle>
-                    <span style="font-size: 20px">가격 : {{ item.menuPrice }}원</span>
+                    {{ item.menuPrice }}원
                   </v-card-subtitle>
-                    <v-card-subtitle>
-                      <span style="font-size: 20px"> 추천 : {{item.heart}}</span>
-                    <v-btn
-                      class="ma-2"
-                      color="blue-lighten-2"
-                      icon="mdi-thumb-up"
-                      variant="text"
-                      v-size="small"
-                    ></v-btn></v-card-subtitle>
+                  <v-btn
+                    class="ma-2"
+                    color="blue-lighten-2"
+                    icon="mdi-thumb-up"
+                    variant="text"
+                    v-size="small"
+                  ></v-btn>{{item.heart}}
                   </div>
                 </v-card>
       </v-col>
