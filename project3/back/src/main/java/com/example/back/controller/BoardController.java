@@ -28,7 +28,7 @@ public class BoardController {
 
     @GetMapping("/getImage/{imgName}")
     public String getImage(@PathVariable String imgName) throws Exception {
-       String imagePath = "http://localhost:8080/" + imgName;
+       String imagePath = "/api/" + imgName;
         System.out.println(imagePath);
             return imagePath;
     }

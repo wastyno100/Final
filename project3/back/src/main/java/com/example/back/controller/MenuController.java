@@ -107,14 +107,14 @@ public class MenuController {
 
     @GetMapping("/getRImage/{replyImg}")
     public String replyImage(@PathVariable String replyImg) throws Exception {
-        String imagePath = "http://localhost:8080/reply/" + replyImg;
+        String imagePath = "/api/" + replyImg;
         System.out.println(imagePath);
         return imagePath;
     }
 
     @GetMapping("/getMImage/{menuImg}")
     public String getImage(@PathVariable String menuImg) throws Exception {
-        String imagePath = "http://localhost:8080/" + menuImg;
+        String imagePath = "/api/" + menuImg;
         System.out.println(imagePath);
         return imagePath;
     }
