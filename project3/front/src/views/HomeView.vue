@@ -68,10 +68,15 @@
         <QouteListQouteCate :category = "item"/>
       </v-window>
     </v-card-text>
-
   </v-container>
 
+  <v-dialog v-model="modal" max-width="500px">
 
+    <v-card>
+      <v-img src="/images/event.png" alt="Event Image" class="modal-image" @Click="() => { router.push('/event')}"></v-img>
+      <v-btn @Click="close">닫기</v-btn>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
@@ -123,6 +128,17 @@ const images = [
 
 
 
+const modal = ref(false);
+const selectedImage = ref(null);
+
+const openModal = () => {
+  modal.value = true;
+};
+
+const close = () => {
+  modal.value = false;
+};
+
 const item = ref('');
 const qoute = ref([]);
 const router = useRouter();
@@ -149,6 +165,7 @@ const getData = async () => {
   const res = await axios.get('/api/qouteList')
   qoute.value = res.data;
   console.log("리스트 잘 들어왔어")
+  openModal();
 }
 
 
@@ -165,8 +182,14 @@ watch(currentPage, () => {
 
 onMounted(() => {
   getData();
+  openModal();
   console.log(qoute.value)
 
   currentPage.value = JSON.parse(sessionStorage.getItem('qouteList')) || 1
+
+
+
 });
+
+
 </script>
