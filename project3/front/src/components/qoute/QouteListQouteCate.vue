@@ -6,7 +6,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
 
             <v-img
               weight="200px"
@@ -41,7 +41,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
@@ -73,7 +73,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
@@ -105,7 +105,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
@@ -137,7 +137,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"
@@ -169,7 +169,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative;">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
             <v-img
               weight="200px"
               height="100px"

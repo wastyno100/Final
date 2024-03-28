@@ -33,7 +33,8 @@ onMounted(() => {
       </v-card>
       </v-row>
       <v-row justify="center">  
-        <v-col cols="8" xl="6" xxl="4">
+        <!-- 더 넓게 보이도록 수정 -->
+        <v-col cols="8 offset-1">
           <v-card class="elevation-2 rounded-lg pa-8 v-text-h6" style="font-size: 13px;" max-width="800">
             <BoardNotice v-if="categorys == 0" />
             <BoardEvent v-if="categorys == 1" />

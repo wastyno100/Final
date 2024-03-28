@@ -242,6 +242,7 @@ const checkUserId = () => {
     alert("아이디를 입력해주세요.\n아이디는 5자 이상 15자 이하로 작성해주세요.");
     return false;
   } else if (userId.value.length < 5) {
+       userId.value = '';
     alert("아이디는 5자 이상으로 입력해 주세요.");
     return false;
   }

@@ -17,6 +17,7 @@ h1{
       <v-tab value="낙지/문어류">낙지/문어류</v-tab>
       <v-tab value="김/미역류">김/미역류</v-tab>
     </v-tabs>
+
     <v-card-text>
       <v-window v-model="item">
         <v-window-item value="신제품">
@@ -26,7 +27,7 @@ h1{
                      v-for="item in showItem"
                      v-bind:key="item"
                      @click="gotomenuDetail(item)">
-                <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+                <v-card class="mx-auto mt-3 card" style=" width: 75%; height: inherit; position: relative;">
                   <img
                     weight="200px"
                     height="100px"
@@ -35,6 +36,7 @@ h1{
                   />
                   <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
                   <!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
+                  <div class="card-overlay">
                   <v-card-title> {{ item.menuTitle }} </v-card-title>
                   <v-card-subtitle>
                     {{ item.menuPrice }}원
@@ -45,11 +47,12 @@ h1{
                     icon="mdi-thumb-up"
                     variant="text"
                   ></v-btn>{{item.heart}}
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
           </v-col>
-          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
+          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
         </v-window-item>
         <v-window-item value="인기순">
           <MenuListBest/>
@@ -60,6 +63,39 @@ h1{
     <v-row ref="observer"></v-row>
   </v-main>
 </template>
+
+<style scoped>
+.carousel-image {
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  height: 200px; /* 칸의 높이를 조정 */
+  border: solid 1px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 100%; /* 이미지를 칸에 꽉 채움 */
+  height: 100%; /* 이미지를 칸에 꽉 채움 */
+  object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
+}
+
+.card-overlay {
+  /* position: absolute; */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);/* 투명한 검은색 배경 */
+  padding: 5px;
+  color: white;
+  transition: opacity 0.3s ease; /* 투명도 변화에 대한 부드러운 전환 */
+  opacity: 1; 
+ 
+}
+
+</style>
+
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import axios from 'axios';
