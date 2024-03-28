@@ -62,6 +62,7 @@
             c.cartId,
             c.menuCount,
             m.menuTitle,
+            m.menuImg,
             m.menuPrice
         FROM
             user u

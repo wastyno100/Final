@@ -71,13 +71,18 @@ onMounted(() => {
       </v-row>
 
       <v-row class="pt-1"> 
-        <v-col cols="12" class="text-center btn-custom">
+        <v-col cols="1"/>
+        <v-col cols="10" class="text-center btn-custom">
           <v-btn @click="link('/')" style="color: white;">홈</v-btn>
           <v-btn @click="link('/menuList')" style="color: white;">메뉴</v-btn>
           <v-btn @click="link('/qoute')" style="color: white;">시세</v-btn>
           <v-btn @click="link('/board')" style="color: white;">소식</v-btn>
           <v-btn @click="link('/mypage')" style="color: white;">마이페이지</v-btn>
           <v-btn v-if="adminCheck == 'admin'" @click="link('/admin')" style="color: white;">관리자</v-btn>
+        </v-col>
+
+        <v-col cols="1" v-if="isLoggedIn" class="text-end" >
+          <v-btn @click="() => { router.push('/cart')}" style="color: white;">장바구니</v-btn>
         </v-col>
       </v-row> 
 
