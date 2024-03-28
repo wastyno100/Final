@@ -28,6 +28,7 @@ public class User implements Serializable {
     private String phone1;
     private String phone2;
     private String phone3;
+    private int event;
 
     @Setter
     @Getter

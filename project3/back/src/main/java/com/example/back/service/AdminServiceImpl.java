@@ -46,6 +46,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public void userDelete(int userNo) {
+        adminMapper.cartDelete(userNo);
+        adminMapper.bizuserDelete(userNo);
+        adminMapper.replyDelete(userNo);
+        adminMapper.qnaDelete(userNo);
+        adminMapper.cartDelete(userNo);
         adminMapper.userDelete(userNo);
     }
 }
