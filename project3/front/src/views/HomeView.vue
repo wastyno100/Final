@@ -29,7 +29,6 @@
       <v-tab value="조개/전복류">조개/전복류</v-tab>
       <v-tab value="멍게/해삼류">멍게/해삼류</v-tab>
       <v-tab value="낙지/문어류">낙지/문어류</v-tab>
-      <v-tab value="김/미역류">김/미역류</v-tab>
     </v-tabs>
     <v-card-text>
       <v-window v-model="item">
