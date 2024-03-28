@@ -10,33 +10,33 @@
 }
 </style>
 <template>
- <v-container> 
-  <v-main>
-   
-    <v-row>
-      <v-col cols="12">
-       <!-- 상품 사진 및 이름 등 -->
-        <v-row>
-          <!-- 상품 사진 -->
-          <v-col cols="5 offset-2">
-            <img :src="imgFile[0]" width="80%" height="100%">
-          </v-col>
-         
-           <!-- 상품명 원산지 좋아요 -->
-          <v-col cols="3 offset+2">
-            <!-- 상품명,원산지, 가격 -->
-            <v-row>
-              <v-col>
-                <v-card-text>
-                <h2>{{ menu.menuTitle }}</h2><br>
-                <h3>원산지 : 상세페이지 참조</h3>
-                </v-card-text>  
-                <v-card-text>
-                <h4> 가격: {{ menu.menuPrice }}원</h4> 
-                </v-card-text>
-              </v-col>  
-            </v-row>
-            <!-- 버튼 -->
+  <v-container>
+    <v-main>
+
+      <v-row>
+        <v-col cols="12">
+          <!-- 상품 사진 및 이름 등 -->
+          <v-row>
+            <!-- 상품 사진 -->
+            <v-col cols="5 offset-2">
+              <img :src="imgFile[0]" width="80%" height="100%">
+            </v-col>
+
+            <!-- 상품명 원산지 좋아요 -->
+            <v-col cols="3 offset+2">
+              <!-- 상품명,원산지, 가격 -->
+              <v-row>
+                <v-col>
+                  <v-card-text>
+                    <h2>{{ menu.menuTitle }}</h2><br>
+                    <h3>원산지 : 상세페이지 참조</h3>
+                  </v-card-text>
+                  <v-card-text>
+                    <h4> 가격: {{ menu.menuPrice }}원</h4>
+                  </v-card-text>
+                </v-col>
+              </v-row>
+              <!-- 버튼 -->
               <v-row>
                 <v-col >
 
@@ -45,12 +45,12 @@
                       <!-- 숫자 조절 버튼과 input 필드 -->
                       <v-row >
                         <v-col align="start">
-                        <v-text-field id = "number" v-model="menuCount" type="number" class="mx-2" style="width: 100px;"></v-text-field>
+                          <v-text-field id = "number" v-model="menuCount" type="number" class="mx-2" style="width: 100px;"></v-text-field>
                         </v-col>
                         <v-col>
                           <v-dialog v-model="dialog" max-width="400" persistent>
                             <template v-slot:activator="{ props: activatorProps }">
-                                      <v-btn v-bind="activatorProps" color="primary" @click="saveCart"> 장바구니담기 </v-btn>
+                              <v-btn v-bind="activatorProps" color="primary" @click="saveCart"> 장바구니담기 </v-btn>
                             </template>
 
                             <v-card
@@ -69,89 +69,89 @@
                           </v-dialog>
                         </v-col>
                       </v-row>
-                    </v-col> 
+                    </v-col>
                   </v-row>
 
                   <v-row>
                     <v-col cols="4">
                       <v-btn color="primary" variant = flat @click="buy">
-                      구매하기
+                        구매하기
                       </v-btn>
                     </v-col>
 
                     <v-col cols="6 offset-1" class="heart">
                       <h4 class="heart">{{menu.heart}}
-                      <v-btn 
-                        color="blue-lighten-2"
-                        icon="mdi-thumb-up"
-                        variant="text"
-                        @click="menuLike"
-                      ></v-btn></h4>
-                <!-- <h4><a href="#">리뷰</a></h4> -->
+                        <v-btn
+                          color="blue-lighten-2"
+                          icon="mdi-thumb-up"
+                          variant="text"
+                          @click="menuLike"
+                        ></v-btn></h4>
+                      <!-- <h4><a href="#">리뷰</a></h4> -->
                     </v-col>
                   </v-row>
 
-                 
-                
+
+
                 </v-col>
-              </v-row>  
+              </v-row>
 
-          </v-col>
-        </v-row>
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <v-col cols="8 offset-2" class="text-end">
-            <v-dialog v-model="deleteQ" max-width="400" persistent>
-              <template v-slot:activator="{ props: activatorPropsD}">
-                <v-btn v-bind="activatorPropsD" text="삭제" v-if="isAdmin" />
-              </template>
-
-              <v-card
-                prepend-icon="mdi-map-marker"
-                text="데이터가 삭제를 원하시면 삭제를, 취소를 원하시면 취소를 클릭해주시기 바랍니다."
-                title="메뉴 삭제를 계속 하시겠습니까?"
-              >
-                <template v-slot:actions>
-                  <v-spacer></v-spacer>
-
-                  <v-btn color="primary" @click="delData"> 삭제 </v-btn>
-
-                  <v-btn color="primary" @click="deleteQ = false"> 취소 </v-btn>
+          <v-row>
+            <v-col cols="8 offset-2" class="text-end">
+              <v-dialog v-model="deleteQ" max-width="400" persistent>
+                <template v-slot:activator="{ props: activatorPropsD}">
+                  <v-btn v-bind="activatorPropsD" text="삭제" v-if="isAdmin" />
                 </template>
-              </v-card>
-            </v-dialog>
-            <v-btn text="수정" v-if="isAdmin" />
-            <v-divider></v-divider>
-          </v-col>  
-        </v-row>
 
-        <!-- 리뷰 -->
-        <v-row>
-          <v-col cols="10 offset-1" class="">
-            <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
-              <v-tab value="one">상세정보</v-tab>
-              <v-tab value="two">리뷰</v-tab>
-            </v-tabs>
-            <v-card-text>
-              <v-window v-model="item">
-                <v-window-item value="one">
-                  <MenuDetailInfo />
-                </v-window-item>
-                <v-window-item value="two">
-                  <MenuReply :dataObj="dataObj" />
-                </v-window-item>
-                <v-window-item value="three">
-                  <MenuQeustion />
-                </v-window-item>
-              </v-window>
-            </v-card-text>
-          </v-col>  
-        </v-row>  
+                <v-card
+                  prepend-icon="mdi-map-marker"
+                  text="데이터가 삭제를 원하시면 삭제를, 취소를 원하시면 취소를 클릭해주시기 바랍니다."
+                  title="메뉴 삭제를 계속 하시겠습니까?"
+                >
+                  <template v-slot:actions>
+                    <v-spacer></v-spacer>
 
-      </v-col>  
-    </v-row> 
-  </v-main>
-</v-container> 
+                    <v-btn color="primary" @click="delData"> 삭제 </v-btn>
+
+                    <v-btn color="primary" @click="deleteQ = false"> 취소 </v-btn>
+                  </template>
+                </v-card>
+              </v-dialog>
+<!--              <v-btn text="수정" v-if="isAdmin" />-->
+              <v-divider></v-divider>
+            </v-col>
+          </v-row>
+
+          <!-- 리뷰 -->
+          <v-row>
+            <v-col cols="10 offset-1" class="">
+              <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
+                <v-tab value="one">상세정보</v-tab>
+                <v-tab value="two">리뷰</v-tab>
+              </v-tabs>
+              <v-card-text>
+                <v-window v-model="item">
+                  <v-window-item value="one">
+                    <MenuDetailInfo />
+                  </v-window-item>
+                  <v-window-item value="two">
+                    <MenuReply :dataObj="dataObj" />
+                  </v-window-item>
+                  <v-window-item value="three">
+                    <MenuQeustion />
+                  </v-window-item>
+                </v-window>
+              </v-card-text>
+            </v-col>
+          </v-row>
+
+        </v-col>
+      </v-row>
+    </v-main>
+  </v-container>
 
 </template>
 
@@ -235,20 +235,20 @@ onMounted(() => {
 const saveCart = async() => {
   console.log(menu.value.menuNo);
   console.log(sessionStorage.userNo);
-    await axios.post('/api/cartSave',({
-      menuNo: menu.value.menuNo,
-      menuCount: menuCount.value,
-      userNo:sessionStorage.userNo
-    }), {
-    });
+  await axios.post('/api/cartSave',({
+    menuNo: menu.value.menuNo,
+    menuCount: menuCount.value,
+    userNo:sessionStorage.userNo
+  }), {
+  });
 }
 
 const menuLike = async () => {
   console.log("제발",menu.value)
   await axios.put(`/api/menuLike?menuNo=${menu.value.menuNo}`)
-  .then(() => {
-    getData2()
-  })
+    .then(() => {
+      getData2()
+    })
 }
 
 function addToCart(item){
@@ -256,7 +256,7 @@ function addToCart(item){
     name: 'Cart',
     state: { dataObj: { menuNo: item.menuNo }}
   })
-  }
+}
 
 async function buy() {
   sessionStorage.removeItem('buyData')
