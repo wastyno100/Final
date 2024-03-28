@@ -46,6 +46,7 @@ public class SecurityConfig {
         //cors 비활성화
         //특정경로 접근제어
         http
+                .cors().disable()
                 .csrf((auth) -> auth.disable())
                 .authorizeHttpRequests((auth) -> auth
                                 //경로 설정시 모든 사용자가 권한을 같는다.

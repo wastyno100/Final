@@ -110,7 +110,7 @@ public class UserController {
 //    }
 
     @PostMapping("/logout")
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+    @CrossOrigin(origins = {"http://192.168.219.126:5173", "http://192.168.219.41:5173", "localhost:5173"}, allowCredentials = "true")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false); // 기존 세션 가져오기, 없으면 null 반환
         if (session != null) {
@@ -171,7 +171,7 @@ public class UserController {
     }
 
     @PostMapping("/status")
-    @CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
+    @CrossOrigin(origins =  {"http://192.168.219.126:5173", "http://192.168.219.41:5173", "localhost:5173"}, allowedHeaders = "*")
     public LoginStatus checkLoginStatus(HttpSession session) {
         boolean isLogIn = session.getAttribute("isLogIn") != null && (Boolean) session.getAttribute("isLogIn");
         String userId = isLogIn ? (String) session.getAttribute("userId") : null;

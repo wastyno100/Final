@@ -27,6 +27,7 @@ onMounted(() => {
 
 <style scoped>
   #menuContent{
-    border: solid 1px black;
+    /* overflow-wrap: break-word; */
+    /* text-overflow: ellipsis; */
   }
 </style>
