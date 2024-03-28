@@ -18,7 +18,7 @@
   </v-main>
   </v-container>
 
-    <v-container> 
+    <v-container class="mb-15">
       <v-card-title class="text-center">
         <h3>오늘의 시세</h3><br>
         <h5>시세 확인하고 현명한 쇼핑하세요!</h5>
@@ -63,7 +63,7 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" />
+          <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" style="padding: 20px;" class="mb-15" />
         </v-window-item>
         <QouteListQouteCate :category = "item"/>
       </v-window>
@@ -126,8 +126,6 @@ const images = [
   // Add more images as needed
 ];
 
-
-
 const modal = ref(false);
 const selectedImage = ref(null);
 
@@ -165,7 +163,6 @@ const getData = async () => {
   const res = await axios.get('/api/qouteList')
   qoute.value = res.data;
   console.log("리스트 잘 들어왔어")
-  openModal();
 }
 
 
@@ -182,10 +179,13 @@ watch(currentPage, () => {
 
 onMounted(() => {
   getData();
-  openModal();
+  const eventCheck = sessionStorage.getItem("eventCheck")
+
   console.log(qoute.value)
 
   currentPage.value = JSON.parse(sessionStorage.getItem('qouteList')) || 1
+  if(eventCheck !== "ok") openModal();
+
 
 
 

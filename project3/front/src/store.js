@@ -53,6 +53,7 @@ const store = createStore({
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('role');
         sessionStorage.removeItem('userNo')
+        sessionStorage.removeItem('eventCheck')
         commit('SET_LOGIN_STATUS', { isLogIn: false, userId: null, role: null, userNo:null }); // Clear user role
         console.log('로그아웃 되었습니다.');
         localStorage.clear();
