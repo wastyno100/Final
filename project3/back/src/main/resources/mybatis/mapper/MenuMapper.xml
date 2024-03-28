@@ -40,8 +40,8 @@
     </select>
 
     <insert id="menuWrite">
-        INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , mImg, mdImg, business)
-        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, 0, #{mImg}, #{mdImg}, #{regDate})
+        INSERT INTO menu(goodsNum,menuPrice, menuCate, menuTitle ,menuContent, regDate, readCount, heart , menuImg, mdImg, business)
+        VALUES ( #{goodsNum}, #{menuPrice},#{menuCate}, #{menuTitle}, #{menuContent},#{regDate},#{readCount}, 0, #{menuImg}, #{mdImg}, #{regDate})
     </insert>
 
     <!-- 장바구니   -->

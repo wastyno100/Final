@@ -1,12 +1,15 @@
 <style>
+h1{
+  text-align: center;
+}
 </style>
 <template>
   <v-main>
-   
+    <h1>{{item}}</h1>
     <v-btn @click="router.push('/menu/write')" v-if="isAdmin">글쓰기</v-btn>
     <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
-      <v-tab value="new">신제품</v-tab>
-      <v-tab value="best">인기순</v-tab>
+      <v-tab value="신제품">신제품</v-tab>
+      <v-tab value="인기순">인기순</v-tab>
       <v-tab value="생선" >생선</v-tab>
       <v-tab value="게/새우류" >게/새우류</v-tab>
       <v-tab value="조개/전복류">조개/전복류</v-tab>
@@ -16,7 +19,7 @@
     </v-tabs>
         <v-card-text>
           <v-window v-model="item">
-            <v-window-item value="new">
+            <v-window-item value="신제품">
               <v-col cols="12">
                   <v-row>
                     <v-col cols="12" md="3"
@@ -48,7 +51,7 @@
               </v-col>
               <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
             </v-window-item>
-            <v-window-item value="best">
+            <v-window-item value="인기순">
              <MenuListBest/>
             </v-window-item>
             <MenuListCateMenu :category = "item"/>

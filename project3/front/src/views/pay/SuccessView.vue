@@ -15,7 +15,7 @@
               </h2>
             <!-- <p>paymentKey = {{ this.$route.query.paymentKey }}</p>
             <p>orderId = {{ this.$route.query.orderId }}</p> -->
-            <p>주문번호 = 넣자</p>
+            <p>주문번호 = {{ this.$route.query.orderId }} </p>
             <p>주문명 = {{ orderName  }}</p>
             <p>가격 = {{ this.$route.query.amount }}</p>
             <div class="result wrapper">

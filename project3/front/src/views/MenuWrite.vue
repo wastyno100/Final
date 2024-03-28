@@ -102,7 +102,6 @@ const reqAxios = async () => {
   formData.append('menuPrice', menuPrice.value);
   formData.append('menuContent', menuContent.value);
   formData.append('menuCate', menuCate.value);
-  formData.append('business', business.value);
   // formData.append('regDate', regDate);
 
   file.value.forEach((item) => {

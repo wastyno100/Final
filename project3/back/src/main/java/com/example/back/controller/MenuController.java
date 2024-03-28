@@ -127,12 +127,12 @@ public class MenuController {
         System.out.println(uploadImgs);
         System.out.println(menuDto);
         List <String> files = new ArrayList<>();
-        Path uploadDir = Paths.get(uploadPath + "/menu/mImg/");
+        Path uploadDir = Paths.get(uploadPath + "/menu/");
 //        Path uploadDir2 = Paths.get(uploadPath + "/mdImg/");
-        for (MultipartFile mImg : uploadImgs) {
+        for (MultipartFile menuImg : uploadImgs) {
             // 이미지 uuid 설정
             String uuid = UUID.randomUUID().toString();
-            String fileName = StringUtils.cleanPath(uuid + "_" + mImg.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(uuid + "_" + menuImg.getOriginalFilename());
 
             // UUID 설정 된 파일 이름을 dto에 넣고 db에 저장하자
             files.add(fileName);
@@ -141,7 +141,7 @@ public class MenuController {
             Path filePath = uploadDir.resolve(fileName);
 
             // 이미지를 저장
-            Files.copy(mImg.getInputStream(), filePath);
+            Files.copy(menuImg.getInputStream(), filePath);
         }
         ObjectMapper objectMapper = new ObjectMapper();
         String filesJson = objectMapper.writeValueAsString(files);
