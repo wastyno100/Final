@@ -18,14 +18,14 @@
           <!-- 상품 사진 및 이름 등 -->
           <v-row>
             <!-- 상품 사진 -->
-            <v-col cols="5 offset-2" style="border-top: solid 2px #004393;">
+            <v-col cols="5 offset-2" style="border-top: solid 2px #004393; border-bottom: solid 2px #004393;">
               <img :src="imgFile[0]" width="80%" height="100%">
             </v-col>
 
             <!-- 상품명 원산지 좋아요 -->
             <v-col cols="3 offset+2">
               <!-- 상품명,원산지, 가격 -->
-              <v-row>
+              <v-row > 
                 <v-col style="border-top: solid 2px #004393;">
                   <v-card-text>
                     <h2>{{ menu.menuTitle }}</h2><br>
@@ -40,10 +40,10 @@
               <v-row>
                 <v-col >
 
-                  <v-row style="border-top: solid 2px #cccccc;">
-                    <v-col cols="8 offset+1">
+                  <v-row style="border-top: solid 2px #cccccc; border-bottom: solid 2px #cccccc;" >
+                    <v-col cols="12">
                       <!-- 숫자 조절 버튼과 input 필드 -->
-                      <v-row >
+                      <v-row>
                         <v-col align="start">
                           <v-text-field id = "number" v-model="menuCount" type="number" class="mx-2" style="width: 100px;"></v-text-field>
                         </v-col>
@@ -66,20 +66,18 @@
                                 <v-btn color="primary" @click="dialog = false"> 확인 </v-btn>
                               </template>
                             </v-card>
-                          </v-dialog>
+                          </v-dialog>  
+                      
+                        </v-col>
+                        <v-col>
+                          <v-btn color="primary" variant = flat @click="buy">구매하기</v-btn> 
                         </v-col>
                       </v-row>
                     </v-col>
                   </v-row>
 
-                  <v-row>
-                    <v-col cols="4">
-                      <v-btn color="primary" variant = flat @click="buy">
-                        구매하기
-                      </v-btn>
-                    </v-col>
-
-                    <v-col cols="6 offset-1" class="heart">
+                  <v-row style="border-bottom: solid 2px #004393;">
+                    <v-col cols="6 offset-1" class="heart" >
                       <h4 class="heart">{{menu.heart}}
                         <v-btn
                           color="blue-lighten-2"
@@ -127,7 +125,7 @@
 
           <!-- 리뷰 -->
           <v-row>
-            <v-col cols="10 offset-1" class="">
+            <v-col cols="10 offset-1" class="" style="border-top: solid 2px #cccccc;">
               <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
                 <v-tab value="one">상세정보</v-tab>
                 <v-tab value="two">리뷰</v-tab>

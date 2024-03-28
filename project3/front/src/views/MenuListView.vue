@@ -1,7 +1,17 @@
 
 <template>
   <v-main>
-    <img src="/images/main.jpg" style="margin-left: 300px">
+    <!-- <img src="/images/main.jpg" style="margin-left: 300px"> -->
+    <Carousel  :autoplay="2000" :wrap-around="true" >
+      <Slide v-for="(image, index) in images" :key="index">
+        <img :src="image.src" :alt="image.alt" style="width: 100%; height: inherit; ">
+      </Slide>
+
+      <template #addons>
+        <Pagination />
+      </template>
+    </Carousel>
+
     <v-btn @click="router.push('/menu/write')" v-if="isAdmin">글쓰기</v-btn>
     <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
       <v-tab value="신제품">신제품</v-tab>
@@ -15,32 +25,36 @@
     <v-card-text>
       <v-window v-model="item">
         <v-window-item value="신제품">
-          <v-col cols="12">
+          <v-col cols="12" class="my-3 py-5" >
             <v-row>
-              <v-col cols="12" md="3"
+              <v-col cols="12" md="3" style="height: auto;"
                      v-for="item in showItem"
                      v-bind:key="item"
                      @click="gotomenuDetail(item)">
-                <v-card class="mx-auto mt-3 card" style=" width: 60%; height: inherit; position: relative;">
+                <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 75%; height: inherit; position: relative;">
                   <img
-                    weight="200px"
-                    height="100px"
+                    style="width: 100%; height: 200px; object-fit: cover;"
                     :src="item.menuImg"
-                    cover
                   />
                   <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
                   <!--                        <v-card-title>{{item.menuNo}}</v-card-title>-->
                   <div class="card-overlay">
                   <v-card-title> {{ item.menuTitle }} </v-card-title>
                   <v-card-subtitle>
-                    {{ item.menuPrice }}원
+                    <v-row>
+                      <v-col>
+                        {{ item.menuPrice }}원
+                      <v-btn
+                        class="ma-2"
+                        color="blue-lighten-2"
+                        icon="mdi-thumb-up"
+                        variant="text"
+                        v-size="small"
+                      ></v-btn>{{item.heart}}
+                      </v-col>
+                    </v-row>
+                    
                   </v-card-subtitle>
-                  <v-btn
-                    class="ma-2"
-                    color="blue-lighten-2"
-                    icon="mdi-thumb-up"
-                    variant="text"
-                  ></v-btn>{{item.heart}}
                   </div>
                 </v-card>
               </v-col>
@@ -70,8 +84,8 @@
 }
 
 .card img {
-  width: 220px; /* 이미지를 칸에 꽉 채움 */
-  height: 100px; /* 이미지를 칸에 꽉 채움 */
+  width: 100%; /* 이미지를 칸에 꽉 채움 */
+  height: 100%; /* 이미지를 칸에 꽉 채움 */
   object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
 }
 
@@ -91,11 +105,20 @@
 </style>
 
 <script setup>
+import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
 import { computed, onMounted, ref, watch } from 'vue'
 import axios from 'axios';
 import { useRouter } from "vue-router";
 import MenuListBest from '@/components/menu/MenuListBest.vue'
 import MenuListCateMenu from '@/components/menu/MenuListCateMenu.vue'
+
+const images = [
+  { src: '/images/제철수산물.jpg', alt: 'Image 1' },
+  { src: '/images/신규상품.jpg', alt: 'Image 2' },
+  { src: '/images/꼬막.jpg', alt: 'Image 3' },
+  // Add more images as needed
+];
 
 //페이지네이션
 const item = ref('');

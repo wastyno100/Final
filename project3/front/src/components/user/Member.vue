@@ -304,7 +304,7 @@ function openModal() {
                     <v-col>
                         <v-row>
                             <v-col class="text-center">
-                                    <h1>회원가입 창</h1>
+                                    <h1>회원가입</h1>
                             </v-col>
                         </v-row>
                         <v-form id="joinForm" name="joinForm">
