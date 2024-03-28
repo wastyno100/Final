@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import MyPage from '../components/user/MyPage.vue'
 import bizRage from '../components/user/bizRegi.vue'
+import Qna from '../components/user/Qna.vue'
 // import AdminReport from '../components/admin/AdminReport.vue'
 // import AdminQna from '../components/admin/AdminQna.vue'
 
@@ -15,7 +16,7 @@ const mypageList = (no) => listNo.value = no;
 const mypages = [
   { no: 1, name: '내 정보', icon: 'mdi-account-group' },
   { no: 2, name: '사업자등록', icon: 'mdi-alert-circle' },
-//   { no: 3, name: '저장소', icon: 'mdi-email' },
+  { no: 3, name: '문의하기', icon: 'mdi-email' },
 ]
 
 // 현재 페이지 감지해서 세션에 저장
@@ -32,7 +33,7 @@ onMounted(() => {
 <template>
   <v-main>
     <v-container>
-      <v-row>
+      <v-row justify="center">
         <!-- 카테고리 리스트 -->
         <v-col cols="2" class="d-flex justify-end">
           <v-card class="elevation-2 rounded-lg text-center" max-width="100" height="190">
@@ -49,18 +50,17 @@ onMounted(() => {
         <!-- 카테고리 리스트 끝 -->
 
         <!-- 카테고리에 맞는 페이지 출력 -->
-        <v-col cols="8">
+        <v-col cols="8" xl="8" xxl="4">
           <v-card class="elevation-2 rounded-lg pa-6" max-width="750">
             <v-card-title class="custom-card-title">마이 페이지</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
               <MyPage v-if="listNo === 1" />
               <bizRage v-if="listNo === 2" />
-              <!-- <AdminQna v-if="listNo === 3" /> -->
+              <Qna v-if="listNo === 3" />
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="2"/>
         <!-- 카테고리 페이지 끝 -->
       </v-row>
     </v-container>

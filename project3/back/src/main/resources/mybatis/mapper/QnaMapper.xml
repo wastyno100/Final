@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.back.mapper.QnaMapper">
+    <!-- SQL 매핑 정의 -->
+    <select id="qnaData" resultType="com.example.back.dto.AdminDto$QnaDto">
+        SELECT * FROM qna
+        WHERE userNo = #{userNo}
+        ORDER BY qnaNo DESC
+    </select>
+
+    <insert id="qnaCreate">
+        INSERT INTO qna(userNo, qnaTitle, qnaContent)
+        VALUES (#{userNo}, #{qnaTitle}, #{qnaContent})
+    </insert>
+
+</mapper>

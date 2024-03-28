@@ -40,7 +40,7 @@ onMounted(() => { getImg() })
 
 <template>
   <div class="text-center">
-    <v-btn @click="dialog = true"> 처리 </v-btn>
+    <v-btn @click="dialog = true" style="height: 30px; font-size: 12px;" class="ma-1"> 처리 </v-btn>
 
     <v-dialog v-model="dialog" width="auto">
       <v-card max-width="400" prepend-icon="mdi-update" title="신고 처리">

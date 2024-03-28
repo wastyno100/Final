@@ -26,4 +26,9 @@ public interface AdminMapper {
 
      void userDelete(int userNo);
 
+     void cartDelete(int userNo);
+     void replyDelete(int userNo);
+     void qnaDelete(int userNo);
+     void bizuserDelete(int userNo);
+
 }

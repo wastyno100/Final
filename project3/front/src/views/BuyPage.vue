@@ -141,7 +141,7 @@ const processPayment = () => {
 }
 
 const cancel = () => {
-  router.push(-1)
+  router.push("/menuList")
 }
 
 // //우편번호 조회

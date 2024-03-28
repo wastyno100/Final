@@ -7,8 +7,23 @@
     </select>
 
     <delete id="userDelete">
-        DELETE FROM user
-        WHERE userNo = #{userNo}
+        DELETE FROM user WHERE userNo = #{userNo}
+    </delete>
+
+    <delete id="cartDelete">
+        DELETE FROM cart WHERE userNo = #{userNo}
+    </delete>
+
+    <delete id="bizuserDelete">
+        DELETE FROM bizuser WHERE userNo = #{userNo}
+    </delete>
+
+    <delete id="qnaDelete">
+        DELETE FROM qna WHERE userNo = #{userNo}
+    </delete>
+
+    <delete id="replyDelete">
+        DELETE FROM reply WHERE userNo = #{userNo}
     </delete>
 
     <update id="updateRole">
