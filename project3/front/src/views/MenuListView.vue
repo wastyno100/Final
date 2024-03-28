@@ -25,7 +25,7 @@ h1{
                      v-for="item in showItem"
                      v-bind:key="item"
                      @click="gotomenuDetail(item)">
-                <v-card class="mx-auto mt-3 card" style=" width: 75%; height: inherit; position: relative;">
+                <v-card class="mx-auto mt-3 card" style=" width: 60%; height: inherit; position: relative;">
                   <img
                     weight="200px"
                     height="100px"
