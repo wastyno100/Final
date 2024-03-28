@@ -44,6 +44,7 @@ const checkAttendance = async () => {
     console.log(userEvents)
     console.log("여기 리스트")
     alert("현재 출석일은" + userEvents[0].event + "입니다")
+    sessionStorage.setItem("eventCheck", "ok")
   } else {
     alert('하루에 한 번만 버튼을 클릭할 수 있습니다.');
   }
