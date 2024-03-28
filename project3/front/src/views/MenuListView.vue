@@ -1,11 +1,7 @@
-<style>
-h1{
-  text-align: center;
-}
-</style>
+
 <template>
   <v-main>
-    <h1>{{item}}</h1>
+    <img src="/images/main.jpg" style="margin-left: 300px">
     <v-btn @click="router.push('/menu/write')" v-if="isAdmin">글쓰기</v-btn>
     <v-tabs v-model="item" bg-color="#004393" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center;">
       <v-tab value="신제품">신제품</v-tab>
@@ -162,3 +158,31 @@ onMounted(() => {
 
 
 </script>
+<style scoped>
+
+
+.card {
+  height: 200px; /* 칸의 높이를 조정 */
+  border: solid 1px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 220px; /* 이미지를 칸에 꽉 채움 */
+  height: 120px; /* 이미지를 칸에 꽉 채움 */
+  object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
+}
+
+.card-overlay {
+  /* position: absolute; */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);/* 투명한 검은색 배경 */
+  padding: 5px;
+  color: white;
+  transition: opacity 0.3s ease; /* 투명도 변화에 대한 부드러운 전환 */
+  opacity: 1;
+
+}
+
+</style>
