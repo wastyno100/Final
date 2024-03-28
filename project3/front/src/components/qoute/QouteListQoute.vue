@@ -6,7 +6,7 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
 
             <v-img
               weight="200px"
@@ -14,11 +14,17 @@
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -34,18 +40,24 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -59,18 +71,24 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -84,18 +102,24 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -109,18 +133,24 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -134,18 +164,24 @@
                v-for="item in showItem"
                v-bind:key="item"
                @click="gotoqouteDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-card class="mx-auto mt-3 card" width="250px" height="100%" style=" width: 60%; height: inherit; position: relative; ">
             <v-img
               weight="200px"
               height="100px"
               :src="`/images/${item.qouteNo}.jpg`"
               cover
             ></v-img>
-             <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
-                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
+            <div class="card-overlay">
+                  <v-card-title> {{ item.name }} </v-card-title>
+                  <v-card-subtitle>
+                    <v-row>
+                      <v-col :style="{ color: itemNumberColor(item.difference)}">
+                         <span style="color: aliceblue">가격 : {{ item.price }}원</span> {{ item.difference !== 0 ? arrowIcon(item.difference) + ' ' + item.difference : '변동없음' }}<br>
+                        <span style="color: aliceblue">등록일 : {{ item.date }}</span>
+                      </v-col>
+                    </v-row>
                   </v-card-subtitle>
-                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
+                  </div>
           </v-card>
         </v-col>
       </v-row>
@@ -213,20 +249,55 @@ watch(() => props.category, async (newCategory) => {
     }
   }
 }, { immediate: true });
+
+onMounted(() => {
+  console.log(props.category);
+  currentPage.value = JSON.parse(sessionStorage.getItem('qouteList?qouteCate')) || 1
+});
 const itemNumberColor = (difference) => {
   if (difference > 0) {
     return 'red'; // 숫자가 0보다 큰 경우 빨간색 반환
   } else if (difference < 0) {
     return 'blue'; // 숫자가 0보다 작은 경우 파란색 반환
   } else {
-    return // 숫자가 0인 경우 null 반환
+    return null; // 숫자가 0인 경우 null 반환
   }
 };
-onMounted(() => {
-  console.log(props.category);
-  currentPage.value = JSON.parse(sessionStorage.getItem('qouteList?qouteCate')) || 1
-});
+
+const arrowIcon = (difference) => {
+  if (difference > 0) {
+    return '▲'; // 숫자가 0보다 큰 경우 up arrow 반환
+  } else if (difference < 0) {
+    return '▼'; // 숫자가 0보다 작은 경우 down arrow 반환
+  } else {
+    return ''; // 그 외의 경우에는 아무것도 반환하지 않음
+  }
+};
 </script>
+
 <style scoped>
+.card {
+  height: 200px; /* 칸의 높이를 조정 */
+  border: solid 1px rgba(0, 0, 0, 0.7);
+}
+
+.card img {
+  width: 100%; /* 이미지를 칸에 꽉 채움 */
+  height: 100%; /* 이미지를 칸에 꽉 채움 */
+  object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
+}
+
+.card-overlay {
+  /* position: absolute; */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);/* 투명한 검은색 배경 */
+  padding: 5px;
+  color: white;
+  transition: opacity 0.3s ease; /* 투명도 변화에 대한 부드러운 전환 */
+  opacity: 1;
+
+}
 
 </style>
