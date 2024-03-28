@@ -18,7 +18,7 @@
           <!-- 상품 사진 및 이름 등 -->
           <v-row>
             <!-- 상품 사진 -->
-            <v-col cols="5 offset-2">
+            <v-col cols="5 offset-2" style="border-top: solid 2px #004393;">
               <img :src="imgFile[0]" width="80%" height="100%">
             </v-col>
 
@@ -26,7 +26,7 @@
             <v-col cols="3 offset+2">
               <!-- 상품명,원산지, 가격 -->
               <v-row>
-                <v-col>
+                <v-col style="border-top: solid 2px #004393;">
                   <v-card-text>
                     <h2>{{ menu.menuTitle }}</h2><br>
                     <h3>원산지 : 상세페이지 참조</h3>
@@ -40,7 +40,7 @@
               <v-row>
                 <v-col >
 
-                  <v-row>
+                  <v-row style="border-top: solid 2px #cccccc;">
                     <v-col cols="8 offset+1">
                       <!-- 숫자 조절 버튼과 input 필드 -->
                       <v-row >

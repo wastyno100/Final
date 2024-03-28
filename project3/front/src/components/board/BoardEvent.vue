@@ -100,6 +100,8 @@ onMounted(() => {
 
 <template>
   <v-container>
+    <v-row>
+      <v-col>
     <v-card 
     class="rounded-0 pt-5 mx-auto" 
     elevation="1" 
@@ -177,6 +179,8 @@ onMounted(() => {
     </v-card>
 
     <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate"/>
+   </v-col>
+    </v-row>
   </v-container>
 </template>
 

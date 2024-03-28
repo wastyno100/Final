@@ -51,6 +51,7 @@ async function updateUser() {
 
         // 업데이트 성공 여부 확인
         if (response.data) {
+            store.dispatch('logout');
             alert('사용자 정보가 업데이트되었습니다. 다시 로그인 해주세요!');
             router.push('/login');
         } else {
@@ -195,9 +196,6 @@ async function checkPassword() {
             successMessage.value = ''
             errorMessage.value = '기존 비밀번호가 일치하지 않습니다.'
             oldPass.value = ''
-            setTimeout(() => {
-                closeModal();
-            }, 500);
         }
     } catch(error) {
         console.error('비밀번호 확인 중 오류 발생: ', error);

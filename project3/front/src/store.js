@@ -55,7 +55,6 @@ const store = createStore({
         sessionStorage.removeItem('userNo')
         commit('SET_LOGIN_STATUS', { isLogIn: false, userId: null, role: null, userNo:null }); // Clear user role
         console.log('로그아웃 되었습니다.');
-        alert("로그아웃 되었습니다.");
         localStorage.clear();
       } catch (error) {
         console.error('로그아웃 중 오류 발생:', error);
