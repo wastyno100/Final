@@ -264,7 +264,7 @@ onMounted(() => {
 
 .card img {
   width: 220px; /* 이미지를 칸에 꽉 채움 */
-  height: 100px; /* 이미지를 칸에 꽉 채움 */
+  height: 120px; /* 이미지를 칸에 꽉 채움 */
   object-fit: cover; /* 이미지를 비율 유지하면서 꽉 채움 */
 }
 
