@@ -25,5 +25,8 @@ public interface UserService {
 
     void updateUser(User user);
 
-    void eventUpdate(int event);
+    void eventUpdate(int userNo);
+
+    List <UserDto> eventData(int userNo);
+
 }

@@ -226,16 +226,18 @@ public class UserController {
     }
     }
 
-    @PostMapping("/event/{id}")
-    public String event(@PathVariable String id) throws Exception {
-        String path = id;
-        System.out.println(path);
-        return path;
+    @GetMapping("/event")
+    public List<UserDto> event(int userNo) {
+        List<UserDto> userData = userService.eventData(userNo);
+        System.out.println(userService.eventData(userNo));
+        return userData;
     }
+
     @PutMapping("/eventUpdate")
     @CrossOrigin(origins = "*")
-    public void eventUpdate(@RequestBody int event) {
-        System.out.println("dsadsadsaasd" + event);
-        userService.eventUpdate(event);
+    public void eventUpdate(int userNo) {
+        System.out.println("dsad adsaasd" + userNo);
+        userService.eventUpdate(userNo);
+
     }
 }

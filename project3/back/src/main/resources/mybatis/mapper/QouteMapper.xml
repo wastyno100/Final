@@ -4,7 +4,7 @@
     <!-- SQL 매핑 정의 -->
 
     <select id="qouteList" parameterType="map" resultType="QouteDto">
-        SELECT * FROM qoute ORDER BY qouteNo DESC
+        SELECT * FROM qoute WHERE DATE(date) = CURDATE();
     </select>
 
     <delete id="qouteDelete">
@@ -14,6 +14,7 @@
 
     <resultMap id="infoQouteResultMap" type="QouteDto">
         <result property="qouteNo" column="qouteNo" />
+        <result property="difference" column="difference"/>
         <result property="qouteCate" column="qouteCate" />
         <result property="price" column="price" />
         <result property="name" column="name" />
