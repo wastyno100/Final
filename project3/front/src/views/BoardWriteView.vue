@@ -62,57 +62,68 @@ const reqAxios = async () => {
 <template>
   <v-main>
     <v-container>
-      <v-card height="800" elevation="3" class="mt-4">
-        <v-sheet class="mx-auto" width="1000">
+      <v-row justify="center">
+        <v-col cols="8" xl="8" xxl="4" md="10">
+          <v-card height="1000" elevation="3" class="mt-4 pa-5 mb-15" width="1000">
+            <v-sheet class="mx-auto" width="800">
 
-            <v-row justify="center">
-              <v-col cols="8" class="ma-3">
-                <v-text-field v-model="title" label="제목" />
-              </v-col>
-              <v-col cols="2" class="ma-3">
-                <v-text-field v-model="today" label="작성일" readonly></v-text-field>
-              </v-col>
-            </v-row>
+                <v-row>
+                  <v-col cols="8" class="mt-10">
+                    <v-text-field v-model="title" label="제목" />
+                  </v-col>
+                  <v-col cols="3" class="mt-10">
+                    <v-text-field v-model="today" label="작성일" readonly></v-text-field>
+                  </v-col>
+                </v-row>
 
-            <v-row v-if="boardCate == '이벤트'" justify="center">
-              <v-col cols="3"><v-text-field v-model="eventStart" label="이벤트 시작일" /></v-col>
-              <v-col cols="3"><v-text-field v-model="eventEnd" label="이벤트 종료일" /></v-col>
-            </v-row>
+                <v-row v-if="boardCate == '이벤트'" justify="center">
+                  <v-col cols="3"><v-text-field v-model="eventStart" label="이벤트 시작일" /></v-col>
+                  <v-col cols="3"><v-text-field v-model="eventEnd" label="이벤트 종료일" /></v-col>
+                </v-row>
 
-            <v-row
-              ><v-select
-                v-model="boardCate"
-                label="Select"
-                :items="['공지사항', '이벤트']"
-              ></v-select
-            ></v-row>
-            <v-row justify="center">
-              <v-col cols="11" class="ma-3">
-                <v-textarea label="내용" v-model="content" counter single-line></v-textarea>
-              </v-col>
-            </v-row>
-            <v-row style="height: 200px">
-              <v-col v-show="file == ''" class="text-center mt-12">이미지가 없습니다</v-col>
-              <v-col class="text-center" v-for="(item, i) in file.length" :key="item"
-                ><img
-                  :src="src[i]"
-                  style="max-width: 50%; max-height: 50%; width: auto; height: auto"
-              /></v-col>
-            </v-row>
-            <v-row>
-              <v-file-input
-                label="사진"
-                prepend-icon="mdi-camera"
-                variant="filled"
-                v-model="file"
-                @change="fileChange"
-                multiple
-              ></v-file-input>
-            </v-row>
-            <v-btn @click="reqAxios" text="작성" />
+                <v-row>
+                  <v-col cols="6">
+                    <v-select
+                    v-model="boardCate"
+                    label="Select"
+                    :items="['공지사항', '이벤트']"
+                  ></v-select>
+                  </v-col>
+                </v-row>
+                <v-row justify="center">
+                  <v-col cols="12" class="ma-3">
+                    <v-textarea label="내용" v-model="content" counter single-line></v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row style="height: 200px">
+                  <v-col v-show="file == ''" class="text-center mt-12">이미지가 없습니다</v-col>
+                  <v-col class="text-center" v-for="(item, i) in file.length" :key="item"
+                    ><img
+                      :src="src[i]"
+                      style="max-width: 50%; max-height: 50%; width: auto; height: auto"
+                  /></v-col>
+                </v-row>
+                <v-row>
+                  <v-file-input
+                    label="사진"
+                    prepend-icon="mdi-camera"
+                    variant="filled"
+                    v-model="file"
+                    @change="fileChange"
+                    multiple
+                  ></v-file-input>
+                </v-row>
+                <v-row justify="center">
+                  <v-col cols="4" class="text-center mt-10">
+                    <v-btn @click="reqAxios" text="작성" style="width: 100px" color="primary" />
+                  </v-col>
+                </v-row>
 
-        </v-sheet>
-      </v-card>
+
+            </v-sheet>
+          </v-card>
+      </v-col>
+    </v-row>
     </v-container>
   </v-main>
 </template>
