@@ -24,12 +24,11 @@
                     :src="`/images/${item.qouteNo}.jpg`"
                     cover
                   ></v-img>
-                  <v-card-title> {{ item.qouteNo }} </v-card-title>
                   <v-card-title> {{ item.name }} </v-card-title>
-                  <v-card-subtitle>
-                    {{ item.price }} 원
-                    {{ item.date }}
+                  <v-card-subtitle :style="{ color: itemNumberColor(item.difference) }">
+                    {{ item.price }}원 {{ item.difference !== 0 ? item.difference : '변동없음' }}
                   </v-card-subtitle>
+                  <v-card-subtitle>{{ item.date }}</v-card-subtitle>
                 </v-card>
               </v-col>
             </v-row>
@@ -45,7 +44,7 @@
 <script setup>
 import { computed, onMounted, ref   } from 'vue'
 import axios from 'axios';
-import QouteListQouteCate from '@/components/qoute/QouteListQouteCate.vue'
+import QouteListQouteCate from '@/components/qoute/QouteListQoute.vue'
 const item = ref('');
 const qoute = ref([]);
 const currentPage = ref(1)
@@ -80,5 +79,13 @@ onMounted(() => {
   currentPage.value = JSON.parse(sessionStorage.getItem('qouteList')) || 1
 });
 
-
+const itemNumberColor = (difference) => {
+  if (difference > 0) {
+    return 'red'; // 숫자가 0보다 큰 경우 빨간색 반환
+  } else if (difference < 0) {
+    return 'blue'; // 숫자가 0보다 작은 경우 파란색 반환
+  } else {
+    return // 숫자가 0인 경우 null 반환
+  }
+};
 </script>

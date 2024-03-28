@@ -10,6 +10,7 @@ public class QouteDto {
     private String name;
     private String date;
     private int price;
+    private int difference;
 
 }
 

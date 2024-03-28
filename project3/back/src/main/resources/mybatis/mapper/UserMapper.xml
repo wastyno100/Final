@@ -37,9 +37,12 @@
         VALUES (#{bNo}, #{userNo}, #{storeName}, #{bizName}, #{texType}, #{bStt}, #{utccYn}, #{bizZipcode}, #{bizAddress1}, #{bizAddress2})
     </insert>
 
-    <update id="evntUpdate">
+    <update id="eventUpdate">
         UPDATE user
         SET event = event + 1
-        WHERE id = #{id};
+        WHERE userNo = #{userNo};
     </update>
+    <select id="eventData" resultType="com.example.back.domain.User">
+        SELECT * FROM user WHERE userNo = #{userNo}
+    </select>
 </mapper>

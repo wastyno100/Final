@@ -24,6 +24,7 @@ public interface UserMapper {
 
      void updateUser(User user);
 
-     void eventUpdate(int event);
+     List<UserDto> eventData(int userNo);
+     void eventUpdate(int userNo);
 
 }
