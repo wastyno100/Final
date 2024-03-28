@@ -2,111 +2,108 @@
 
 <template>
   <v-main>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <h1 >결제 페이지</h1>
-            <v-sheet width="600" class="mx-auto my-2">
-              <v-container>
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="6">
+          <v-card class="elevation-6 primary lighten-2 mb-10">
+          <h1 class="text-center mt-3">결제 페이지</h1>
+          <v-sheet width="600" class="mx-auto my-2">
+            <v-container>
+              <v-form id="joinForm" name="joinForm">
                 <v-row>
                   <v-col>
-                    <v-row>
-                      <v-col class="text-center">
-                      </v-col>
-                    </v-row>
-                    <v-form id="joinForm" name="joinForm">
-                      <v-row>
-                        <v-col>
-                          <span>주문자명</span>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                      <v-col cols="4 offset+4">
-                        <v-text-field
-                          v-model="userData.username"
-                          name="name"
-                          label="이름"
-                          placeholder="이름을 입력해주세요."
-                          id="name"
-                          maxlength="10"
-                        >
-                        </v-text-field>
-                      </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col>
-                          <span>우편번호</span>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="4 offset+3">
-                          <v-text-field
-                            v-model="userData.zipcode"
-                            name="zipcode"
-                            label=""
-                            id="zipcode"
-                            >
-                          </v-text-field>
-                        </v-col>
-                        <v-col cols="4">
-                          <v-btn type="button" color="primary" id="btnZipcode" @click="btnZipcode">우편번호 찾기</v-btn>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="10">
-                          <v-text-field
-                            v-model="userData.address1"
-                            label= ""
-                            name="address1"
-                            id="address1"
-                            >
-                          </v-text-field>
-                        </v-col>
-                        <v-col cols="5">
-                          <v-text-field
-                            v-model="userData.address2"
-                            label="상세주소"
-                            id="address2">
-                          </v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col>
-                          <span>전화번호</span>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col cols="6">
-                          <v-text-field
-                            v-model="userData.phone"
-                            id="phone2"
-                            maxlength="4">
-
-                          </v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-form>
+                    <span>주문자명</span>
                   </v-col>
                 </v-row>
-              </v-container>
-            </v-sheet>
-            <v-row>
-        </v-row>
-      </v-col>
-    </v-row>
-        <v-card>
-          <v-card-title>결제 요약</v-card-title>
-          <v-card-text>
-            <span v-if="menu && menu.length > 0">
-              <span v-if="menu.length == 1">메뉴명: {{ `${menu[0].menuTitle}` }}</span>
-              <span v-else>메뉴명: {{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}</span>
-            </span>
-            <div>총 금액: {{ totalPrice }}원</div>
-            <v-btn color="primary" @click="processPayment">결제하기</v-btn>
-            <v-btn color="primary" @click="cancel">취소</v-btn>
-          </v-card-text>
+                <v-row>
+                  <v-col cols="4">
+                    <v-text-field
+                      v-model="userData.username"
+                      name="name"
+                      label="이름"
+                      placeholder="이름을 입력해주세요."
+                      id="name"
+                      maxlength="10"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <span>우편번호</span>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="4">
+                    <v-text-field
+                      v-model="userData.zipcode"
+                      name="zipcode"
+                      label=""
+                      id="zipcode"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-btn type="button" color="primary" id="btnZipcode" @click="btnZipcode">우편번호 찾기</v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="10">
+                    <v-text-field
+                      v-model="userData.address1"
+                      label=""
+                      name="address1"
+                      id="address1"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="5">
+                    <v-text-field
+                      v-model="userData.address2"
+                      label="상세주소"
+                      id="address2"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <span>전화번호</span>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="6">
+                    <v-text-field
+                      v-model="userData.phone"
+                      id="phone2"
+                      maxlength="4"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-container>
+          </v-sheet>
         </v-card>
-  </v-container>
+        </v-col>
+
+        <v-col cols="3" class="text-center mt-15">
+          <v-card class="elevation-6 primary lighten-2">
+            <v-card-title class="text-center" style="font-weight: bold; font-size: 22px">결제 요약</v-card-title><br>
+            <v-card-text style="font-size: 15px">
+              <span v-if="menu && menu.length > 0">
+                <span v-if="menu.length == 1"><strong>메뉴명: </strong>{{ `${menu[0].menuTitle}` }}</span>
+                <span v-else><strong>메뉴명: </strong>{{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}</span>
+              </span>
+              <div class="mt-3"><strong>총 금액: </strong>{{ totalPrice }}원</div>
+            </v-card-text>
+            <v-card-actions>
+              <v-row>
+                <v-col>
+                  <v-btn color="primary" @click="processPayment">결제하기</v-btn>
+                  <v-btn color="primary" @click="cancel">취소</v-btn>
+                </v-col>
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-main>
 </template>
 <style scoped>
