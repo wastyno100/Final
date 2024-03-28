@@ -1,14 +1,13 @@
 <template>
   <div id="app" style="margin-top: 100px">
-    <header>
-      <h2>현재 이벤트 !!</h2>
-      <v-col cols="8" class="css">
-        <br>
-        <br>
-        <img src="/images/event.png" style="height: 700px;">
-        <button class="btn" @click="checkAttendance"><span>출석체크</span></button>
-      </v-col>
-    </header>
+      <v-row justify="center">
+        <v-col cols="8" class="css">
+          <br>
+          <br>
+          <img src="/images/event.png" style="height: 500px;">
+          <button class="btn" @click="checkAttendance"><span>출석체크</span></button>
+        </v-col>
+      </v-row>
 
 
   </div>
@@ -57,7 +56,6 @@ const checkAttendance = async () => {
 .css {
   padding-top: 10px;
   border-radius: 20px;
-  margin-left: 160px;
   text-align: center;
   background-color: #78c7d2;
 
