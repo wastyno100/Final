@@ -12,7 +12,7 @@
       <v-row justify="center" align="center">
         <!-- 장바구니 아이템 리스트 -->
         <v-col cols="12" md="6">
-          <v-card class="elevation-12" height="505">
+          <v-card class="elevation-12" height="550">
             <v-list dense>
               <v-list-item v-for="item in showItem" :key="item.id" class="mb-3" style="border-bottom: 2px solid lightgray;">
                 <!-- 장바구니 아이템 이미지와 정보 -->
@@ -22,17 +22,17 @@
                       <v-img :src="item.menuImg" style="width: 100px; height: 100px" aspect-ratio="1" cover></v-img>
                     </v-list-item-avatar>
                   </v-col>
-                  <v-col>
-                    <v-list-item-content>
-                      <v-list-item-title class="mb-4">{{ item.menuTitle }}</v-list-item-title>
-                      <v-list-item-subtitle class="mb-1"><strong>단가: </strong>{{ item.menuPrice }}원</v-list-item-subtitle>
-                      <v-list-item-subtitle class="mb-1"><strong>총개수: </strong>{{ item.menuCount }}개</v-list-item-subtitle>
-                      <v-list-item-subtitle class="mb-1"><strong>총금액: </strong>{{ item.menuPrice * item.menuCount }}원</v-list-item-subtitle>
-                    </v-list-item-content>
+                  <v-col style="color: black;">
+
+                      <v-list-item-title class="mb-4"><strong>{{ item.menuTitle }}</strong></v-list-item-title>
+                      <p style="font-size: 14px;"><strong>단가: </strong>{{ item.menuPrice }}원</p>
+                      <p style="font-size: 14px;"><strong>개수: </strong>{{ item.menuCount }}개</p>
+                      <p style="font-size: 14px;"><strong>금액: </strong>{{ item.menuPrice * item.menuCount }}원</p>
+
                   </v-col>
                 </v-row>
 
-                <v-list-item-action class="mt-3">
+                <v-list-item-action class="mt-3 mb-3">
                   <v-btn small color="primary" @click="plusCart(item)" class="mr-3">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
@@ -53,7 +53,7 @@
         <!-- 결제 정보 요약 -->
         <v-col cols="12" md="3" class="text-center" align="center">
           <v-card class="elevation-12 primary lighten-2">
-            <v-card-title class="headline white--text">결제 요약</v-card-title>
+            <v-card-title class="headline white--text" style="font-weight: bold; font-size: 22px;">결제 요약</v-card-title>
                 <div v-if="showItem.length > 0" style="display: flex; justify-content: center;">
                   <v-img :src="menu[0].menuImg" style="width: 250px; height: 250px" aspect-ratio="1" cover></v-img>
                 </div>
@@ -61,7 +61,7 @@
             <v-card-text class="text-center" style="font-size: 18px;">
               <div v-if="showItem.length > 0">{{ `${menu[0].menuTitle} 외 ${menu.length - 1}건` }}</div><br><br><br><br>
               <div class="display-2 font-weight-bold">총 금액: {{ totalPrice }}원</div>
-              <v-btn large block color="success" class="mt-5" @click="goBuy">결제하기</v-btn>
+              <v-btn large block color="primary" class="mt-5" @click="goBuy">결제하기</v-btn>
             </v-card-text>
           </v-card>
         </v-col>
