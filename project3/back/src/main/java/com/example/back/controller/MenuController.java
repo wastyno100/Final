@@ -35,7 +35,6 @@ public class MenuController {
 
     @GetMapping("/menuList")
     public List<MenuDto> getAllMenu(){
-        log.info("메뉴리스트 들어갔어");
         return menuService.menuList();
     }
 
