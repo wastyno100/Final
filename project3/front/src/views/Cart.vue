@@ -12,7 +12,7 @@
       <v-row justify="center" align="center">
         <!-- 장바구니 아이템 리스트 -->
         <v-col cols="12" md="6">
-          <v-card class="elevation-12" height="550">
+          <v-card class="elevation-6" height="550">
             <v-list dense>
               <v-list-item v-for="item in showItem" :key="item.id" class="mb-3" style="border-bottom: 2px solid lightgray;">
                 <!-- 장바구니 아이템 이미지와 정보 -->
@@ -52,7 +52,7 @@
         
         <!-- 결제 정보 요약 -->
         <v-col cols="12" md="3" class="text-center" align="center">
-          <v-card class="elevation-12 primary lighten-2">
+          <v-card class="elevation-6 primary lighten-2">
             <v-card-title class="headline white--text" style="font-weight: bold; font-size: 22px;">결제 요약</v-card-title>
                 <div v-if="showItem.length > 0" style="display: flex; justify-content: center;">
                   <v-img :src="menu[0].menuImg" style="width: 250px; height: 250px" aspect-ratio="1" cover></v-img>
