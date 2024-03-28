@@ -1,32 +1,32 @@
 <template>
   <v-col cols="12">
-      <v-row>
-        <v-col cols="12" md="3"
-               v-for="item in showItem"
-               v-bind:key="item"
-               @click="gotomenuDetail(item)">
-          <v-card class="mx-auto mt-3 card" width="200px" height="250px">
-            <v-img
-              weight="200px"
-              height="100px"
-              :src="item.menuImg"
-              cover
-            ></v-img>
-            <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
-<!--            <v-card-title>{{item.menuNo}}</v-card-title>-->
-            <v-card-title> {{ item.menuTitle }} </v-card-title>
-            <v-card-subtitle>
-              {{ item.menuPrice }}원
-            </v-card-subtitle>
-            <v-btn
-              class="ma-2"
-              color="blue-lighten-2"
-              icon="mdi-thumb-up"
-              variant="text"
-            ></v-btn>{{item.heart}}
-          </v-card>
-        </v-col>
-      </v-row>
+    <v-row>
+      <v-col cols="12" md="3"
+             v-for="item in showItem"
+             v-bind:key="item"
+             @click="gotomenuDetail(item)">
+        <v-card class="mx-auto mt-3 card" width="200px" height="250px">
+          <v-img
+            weight="200px"
+            height="100px"
+            :src="item.menuImg"
+            cover
+          ></v-img>
+          <!-- 데이터 바인딩을 item 객체의 속성으로 변경 -->
+          <!--            <v-card-title>{{item.menuNo}}</v-card-title>-->
+          <v-card-title> {{ item.menuTitle }} </v-card-title>
+          <v-card-subtitle>
+            {{ item.menuPrice }}원
+          </v-card-subtitle>
+          <v-btn
+            class="ma-2"
+            color="blue-lighten-2"
+            icon="mdi-thumb-up"
+            variant="text"
+          ></v-btn>{{item.heart}}
+        </v-card>
+      </v-col>
+    </v-row>
   </v-col>
   <v-pagination v-model="currentPage" :length="allPage" @input="pageUpdate" />
 </template>
@@ -65,22 +65,22 @@ const getData = async () => {
   console.log(res.data)
 
 
-    menu.value.forEach( async (item) => {
-      item.menuImg = JSON.parse(item.menuImg)
+  menu.value.forEach(async (item) => {
+    item.menuImg = JSON.parse(item.menuImg)
 
-      await axios.get(`/api/getMImage/${item.menuImg}`)
-        .then((res) => {
+    await axios.get(`/api/getMImage/${item.menuImg}`)
+      .then((res) => {
 
-          item.menuImg = res.data
+        item.menuImg = res.data
 
-        });
-    });
-  }
+      });
+  });
+}
 
-function gotomenuDetail(item){
+function gotomenuDetail(item) {
   router.push({
     name: 'MenuDetail',
-    state: { dataObj: { menuNo: item.menuNo }}
+    state: { dataObj: { menuNo: item.menuNo } }
   })
 }
 
