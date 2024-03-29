@@ -1,0 +1,10 @@
+Git주소 : https://github.com/wastyno100/Final
+
+1. 유저 컨트롤러에 로그아웃 status에 있는 ip주소를 본인의 ip주소로 변경해야 로그아웃 작동 가능합니다.
+
+2. 크롤링 코드는 \Final\project3\front\public\images 에 들어가있습니다.
+	시세 크롤링이 되지않으면 시세 이미지 등 정보가 출력이 안되는것 같습니다.
+
+3. DB연결 세팅입니다. 현재 ec2 탄력적ip로 연결 되어있습니다. \Final\project3\back\src\main\resources\application.properties
+
+4. \Final\여러가지\mySQL 디렉토리에 최종본 sql파일이 있습니다.

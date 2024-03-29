@@ -21,9 +21,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public void updateRole(AdminDto adminDto) {
-        System.out.println("333333service" + adminDto);
         adminMapper.updateRole(adminDto);
-
     }
 
     public List<AdminDto.QnaDto> qnaData() {

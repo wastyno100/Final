@@ -30,7 +30,6 @@ public class AdminController {
         if (role.equals("관리자")) { adminDto.setRole("admin"); }
         if (role.equals("사업자")) { adminDto.setRole("manager"); }
         if (role.equals("일반")) { adminDto.setRole("user"); }
-        System.out.println("222222" + adminDto);
         adminService.updateRole(adminDto);
     }
 
